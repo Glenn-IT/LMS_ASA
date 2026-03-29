@@ -51,7 +51,7 @@ LMS_ASA/
 |------|-----------|-------------|--------|
 | 1 | `LoginForm` | Login UI with username, password, forgot password link | ? Done |
 | 2 | `ForgotPasswordForm` | Security question, new password fields | ? Done |
-| 3 | `AdminDashboardForm` | Left sidebar + main content panel | ? Not Started |
+| 3 | `AdminDashboardForm` | Left sidebar + main content panel | ? Done |
 | 4 | `LoanListForm` | DataGridView with loan records + Add/Update/Delete | ? Not Started |
 | 5 | `NewLoanForm` | Loan entry form with all loan fields | ? Not Started |
 | 6 | `BorrowerListForm` | DataGridView with borrower records | ? Not Started |

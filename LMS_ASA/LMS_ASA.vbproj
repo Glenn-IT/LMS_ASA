@@ -32,6 +32,18 @@
     <Compile Update="AdminDashboardForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="LoanListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="BorrowerListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PaymentListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="BorrowerAccountsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
