@@ -36,41 +36,48 @@ Partial Class LoginForm
         btnUser = New Button()
         lnkForgotPassword = New LinkLabel()
         lblFooter = New Label()
-
         pnlBackground.SuspendLayout()
         pnlCard.SuspendLayout()
         SuspendLayout()
-
-        ' ── pnlBackground ────────────────────────────────────────
-        pnlBackground.BackColor = Color.FromArgb(21, 67, 106)
-        pnlBackground.Dock = DockStyle.Fill
+        ' 
+        ' pnlBackground
+        ' 
+        pnlBackground.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
         pnlBackground.Controls.Add(lblTitle)
         pnlBackground.Controls.Add(lblSubtitle)
         pnlBackground.Controls.Add(pnlCard)
         pnlBackground.Controls.Add(lblFooter)
-
-        ' ── lblTitle ─────────────────────────────────────────────
-        lblTitle.Text = "Loan Management System"
-        lblTitle.Font = New Font("Segoe UI", 24, FontStyle.Bold)
+        pnlBackground.Dock = DockStyle.Fill
+        pnlBackground.Location = New Point(0, 0)
+        pnlBackground.Name = "pnlBackground"
+        pnlBackground.Size = New Size(800, 782)
+        pnlBackground.TabIndex = 0
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
+        lblTitle.Location = New Point(0, 45)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(800, 59)
+        lblTitle.TabIndex = 0
+        lblTitle.Text = "Loan Management System"
         lblTitle.TextAlign = ContentAlignment.MiddleCenter
-        lblTitle.Size = New Size(800, 52)
-        lblTitle.Location = New Point(0, 40)
-        lblTitle.AutoSize = False
-
-        ' ── lblSubtitle ───────────────────────────────────────────
+        ' 
+        ' lblSubtitle
+        ' 
+        lblSubtitle.Font = New Font("Segoe UI", 11F)
+        lblSubtitle.ForeColor = Color.FromArgb(CByte(173), CByte(216), CByte(255))
+        lblSubtitle.Location = New Point(0, 107)
+        lblSubtitle.Name = "lblSubtitle"
+        lblSubtitle.Size = New Size(800, 32)
+        lblSubtitle.TabIndex = 1
         lblSubtitle.Text = "ASA Philippines Foundation, Inc."
-        lblSubtitle.Font = New Font("Segoe UI", 11, FontStyle.Regular)
-        lblSubtitle.ForeColor = Color.FromArgb(173, 216, 255)
         lblSubtitle.TextAlign = ContentAlignment.MiddleCenter
-        lblSubtitle.Size = New Size(800, 28)
-        lblSubtitle.Location = New Point(0, 94)
-        lblSubtitle.AutoSize = False
-
-        ' ── pnlCard ──────────────────────────────────────────────
+        ' 
+        ' pnlCard
+        ' 
         pnlCard.BackColor = Color.White
-        pnlCard.Size = New Size(400, 500)
-        pnlCard.Location = New Point(200, 134)
         pnlCard.Controls.Add(pnlAccent)
         pnlCard.Controls.Add(lblHeader)
         pnlCard.Controls.Add(lblWelcome)
@@ -84,137 +91,181 @@ Partial Class LoginForm
         pnlCard.Controls.Add(btnAdmin)
         pnlCard.Controls.Add(btnUser)
         pnlCard.Controls.Add(lnkForgotPassword)
-
-        ' ── pnlAccent (top colored bar on card) ──────────────────
-        pnlAccent.BackColor = Color.FromArgb(21, 67, 106)
-        pnlAccent.Size = New Size(400, 6)
+        pnlCard.Location = New Point(200, 152)
+        pnlCard.Name = "pnlCard"
+        pnlCard.Size = New Size(400, 567)
+        pnlCard.TabIndex = 2
+        ' 
+        ' pnlAccent
+        ' 
+        pnlAccent.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
         pnlAccent.Location = New Point(0, 0)
-
-        ' ── lblHeader ────────────────────────────────────────────
+        pnlAccent.Name = "pnlAccent"
+        pnlAccent.Size = New Size(400, 7)
+        pnlAccent.TabIndex = 0
+        ' 
+        ' lblHeader
+        ' 
+        lblHeader.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
+        lblHeader.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lblHeader.Location = New Point(20, 23)
+        lblHeader.Name = "lblHeader"
+        lblHeader.Size = New Size(360, 45)
+        lblHeader.TabIndex = 1
         lblHeader.Text = "Sign In"
-        lblHeader.Font = New Font("Segoe UI", 18, FontStyle.Bold)
-        lblHeader.ForeColor = Color.FromArgb(21, 67, 106)
-        lblHeader.AutoSize = False
-        lblHeader.Size = New Size(360, 40)
-        lblHeader.Location = New Point(20, 20)
-
-        ' ── lblWelcome ───────────────────────────────────────────
-        lblWelcome.Text = "Welcome back! Please enter your credentials."
-        lblWelcome.Font = New Font("Segoe UI", 9, FontStyle.Regular)
+        ' 
+        ' lblWelcome
+        ' 
+        lblWelcome.Font = New Font("Segoe UI", 9F)
         lblWelcome.ForeColor = Color.Gray
-        lblWelcome.AutoSize = False
-        lblWelcome.Size = New Size(360, 20)
-        lblWelcome.Location = New Point(20, 62)
-
-        ' ── lblUsername ───────────────────────────────────────────
+        lblWelcome.Location = New Point(20, 70)
+        lblWelcome.Name = "lblWelcome"
+        lblWelcome.Size = New Size(360, 23)
+        lblWelcome.TabIndex = 2
+        lblWelcome.Text = "Welcome back! Please enter your credentials."
+        ' 
+        ' lblUsername
+        ' 
+        lblUsername.Font = New Font("Segoe UI", 8F, FontStyle.Bold)
+        lblUsername.ForeColor = Color.FromArgb(CByte(100), CByte(100), CByte(100))
+        lblUsername.Location = New Point(20, 113)
+        lblUsername.Name = "lblUsername"
+        lblUsername.Size = New Size(360, 20)
+        lblUsername.TabIndex = 3
         lblUsername.Text = "USERNAME"
-        lblUsername.Font = New Font("Segoe UI", 8, FontStyle.Bold)
-        lblUsername.ForeColor = Color.FromArgb(100, 100, 100)
-        lblUsername.AutoSize = False
-        lblUsername.Size = New Size(360, 18)
-        lblUsername.Location = New Point(20, 100)
-
-        ' ── txtUsername ───────────────────────────────────────────
-        txtUsername.Font = New Font("Segoe UI", 10)
-        txtUsername.Size = New Size(360, 28)
-        txtUsername.Location = New Point(20, 120)
+        ' 
+        ' txtUsername
+        ' 
+        txtUsername.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
         txtUsername.BorderStyle = BorderStyle.FixedSingle
-        txtUsername.BackColor = Color.FromArgb(245, 248, 252)
-
-        ' ── lblPassword ───────────────────────────────────────────
+        txtUsername.Font = New Font("Segoe UI", 10F)
+        txtUsername.Location = New Point(20, 136)
+        txtUsername.Name = "txtUsername"
+        txtUsername.Size = New Size(360, 27)
+        txtUsername.TabIndex = 4
+        ' 
+        ' lblPassword
+        ' 
+        lblPassword.Font = New Font("Segoe UI", 8F, FontStyle.Bold)
+        lblPassword.ForeColor = Color.FromArgb(CByte(100), CByte(100), CByte(100))
+        lblPassword.Location = New Point(20, 188)
+        lblPassword.Name = "lblPassword"
+        lblPassword.Size = New Size(360, 20)
+        lblPassword.TabIndex = 5
         lblPassword.Text = "PASSWORD"
-        lblPassword.Font = New Font("Segoe UI", 8, FontStyle.Bold)
-        lblPassword.ForeColor = Color.FromArgb(100, 100, 100)
-        lblPassword.AutoSize = False
-        lblPassword.Size = New Size(360, 18)
-        lblPassword.Location = New Point(20, 166)
-
-        ' ── txtPassword ───────────────────────────────────────────
-        txtPassword.Font = New Font("Segoe UI", 10)
-        txtPassword.Size = New Size(360, 28)
-        txtPassword.Location = New Point(20, 186)
-        txtPassword.PasswordChar = "●"c
+        ' 
+        ' txtPassword
+        ' 
+        txtPassword.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
         txtPassword.BorderStyle = BorderStyle.FixedSingle
-        txtPassword.BackColor = Color.FromArgb(245, 248, 252)
-
-        ' ── btnLogin ──────────────────────────────────────────────
-        btnLogin.Text = "LOGIN"
-        btnLogin.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnLogin.BackColor = Color.FromArgb(21, 67, 106)
-        btnLogin.ForeColor = Color.White
-        btnLogin.FlatStyle = FlatStyle.Flat
-        btnLogin.FlatAppearance.BorderSize = 0
-        btnLogin.Size = New Size(360, 44)
-        btnLogin.Location = New Point(20, 234)
+        txtPassword.Font = New Font("Segoe UI", 10F)
+        txtPassword.Location = New Point(20, 211)
+        txtPassword.Name = "txtPassword"
+        txtPassword.PasswordChar = "●"c
+        txtPassword.Size = New Size(360, 27)
+        txtPassword.TabIndex = 6
+        ' 
+        ' btnLogin
+        ' 
+        btnLogin.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
         btnLogin.Cursor = Cursors.Hand
-
-        ' ── pnlDivider ────────────────────────────────────────────
-        pnlDivider.BackColor = Color.FromArgb(220, 220, 220)
+        btnLogin.FlatAppearance.BorderSize = 0
+        btnLogin.FlatStyle = FlatStyle.Flat
+        btnLogin.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        btnLogin.ForeColor = Color.White
+        btnLogin.Location = New Point(20, 265)
+        btnLogin.Name = "btnLogin"
+        btnLogin.Size = New Size(360, 50)
+        btnLogin.TabIndex = 7
+        btnLogin.Text = "LOGIN"
+        btnLogin.UseVisualStyleBackColor = False
+        ' 
+        ' pnlDivider
+        ' 
+        pnlDivider.BackColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        pnlDivider.Location = New Point(20, 335)
+        pnlDivider.Name = "pnlDivider"
         pnlDivider.Size = New Size(360, 1)
-        pnlDivider.Location = New Point(20, 296)
-
-        ' ── lblRolePrompt ─────────────────────────────────────────
+        pnlDivider.TabIndex = 8
+        ' 
+        ' lblRolePrompt
+        ' 
+        lblRolePrompt.Font = New Font("Segoe UI", 8F, FontStyle.Bold)
+        lblRolePrompt.ForeColor = Color.FromArgb(CByte(160), CByte(160), CByte(160))
+        lblRolePrompt.Location = New Point(20, 349)
+        lblRolePrompt.Name = "lblRolePrompt"
+        lblRolePrompt.Size = New Size(360, 23)
+        lblRolePrompt.TabIndex = 9
         lblRolePrompt.Text = "OR CONTINUE AS"
-        lblRolePrompt.Font = New Font("Segoe UI", 8, FontStyle.Bold)
-        lblRolePrompt.ForeColor = Color.FromArgb(160, 160, 160)
-        lblRolePrompt.AutoSize = False
-        lblRolePrompt.Size = New Size(360, 20)
-        lblRolePrompt.Location = New Point(20, 308)
         lblRolePrompt.TextAlign = ContentAlignment.MiddleCenter
-
-        ' ── btnAdmin ──────────────────────────────────────────────
-        btnAdmin.Text = "Admin"
-        btnAdmin.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnAdmin.BackColor = Color.FromArgb(52, 120, 180)
-        btnAdmin.ForeColor = Color.White
-        btnAdmin.FlatStyle = FlatStyle.Flat
-        btnAdmin.FlatAppearance.BorderSize = 0
-        btnAdmin.Size = New Size(174, 44)
-        btnAdmin.Location = New Point(20, 334)
+        ' 
+        ' btnAdmin
+        ' 
+        btnAdmin.BackColor = Color.FromArgb(CByte(52), CByte(120), CByte(180))
         btnAdmin.Cursor = Cursors.Hand
-
-        ' ── btnUser ───────────────────────────────────────────────
-        btnUser.Text = "Borrower / User"
-        btnUser.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnUser.BackColor = Color.FromArgb(39, 174, 96)
-        btnUser.ForeColor = Color.White
-        btnUser.FlatStyle = FlatStyle.Flat
-        btnUser.FlatAppearance.BorderSize = 0
-        btnUser.Size = New Size(174, 44)
-        btnUser.Location = New Point(206, 334)
+        btnAdmin.FlatAppearance.BorderSize = 0
+        btnAdmin.FlatStyle = FlatStyle.Flat
+        btnAdmin.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        btnAdmin.ForeColor = Color.White
+        btnAdmin.Location = New Point(20, 379)
+        btnAdmin.Name = "btnAdmin"
+        btnAdmin.Size = New Size(174, 50)
+        btnAdmin.TabIndex = 10
+        btnAdmin.Text = "Admin"
+        btnAdmin.UseVisualStyleBackColor = False
+        ' 
+        ' btnUser
+        ' 
+        btnUser.BackColor = Color.FromArgb(CByte(39), CByte(174), CByte(96))
         btnUser.Cursor = Cursors.Hand
-
-        ' ── lnkForgotPassword ─────────────────────────────────────
+        btnUser.FlatAppearance.BorderSize = 0
+        btnUser.FlatStyle = FlatStyle.Flat
+        btnUser.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        btnUser.ForeColor = Color.White
+        btnUser.Location = New Point(206, 379)
+        btnUser.Name = "btnUser"
+        btnUser.Size = New Size(174, 50)
+        btnUser.TabIndex = 11
+        btnUser.Text = "Borrower / User"
+        btnUser.UseVisualStyleBackColor = False
+        ' 
+        ' lnkForgotPassword
+        ' 
+        lnkForgotPassword.ActiveLinkColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        lnkForgotPassword.Font = New Font("Segoe UI", 9F)
+        lnkForgotPassword.LinkColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lnkForgotPassword.Location = New Point(20, 449)
+        lnkForgotPassword.Name = "lnkForgotPassword"
+        lnkForgotPassword.Size = New Size(360, 27)
+        lnkForgotPassword.TabIndex = 12
+        lnkForgotPassword.TabStop = True
         lnkForgotPassword.Text = "Forgot Password?"
-        lnkForgotPassword.Font = New Font("Segoe UI", 9)
-        lnkForgotPassword.LinkColor = Color.FromArgb(21, 67, 106)
-        lnkForgotPassword.ActiveLinkColor = Color.FromArgb(52, 152, 219)
-        lnkForgotPassword.AutoSize = False
-        lnkForgotPassword.Size = New Size(360, 24)
-        lnkForgotPassword.Location = New Point(20, 396)
         lnkForgotPassword.TextAlign = ContentAlignment.MiddleCenter
-
-        ' ── lblFooter ─────────────────────────────────────────────
+        ' 
+        ' lblFooter
+        ' 
+        lblFooter.Font = New Font("Segoe UI", 8F)
+        lblFooter.ForeColor = Color.FromArgb(CByte(120), CByte(160), CByte(200))
+        lblFooter.Location = New Point(0, 739)
+        lblFooter.Name = "lblFooter"
+        lblFooter.Size = New Size(800, 27)
+        lblFooter.TabIndex = 3
         lblFooter.Text = "© 2025 ASA Philippines Foundation, Inc. — For Presentation Use Only"
-        lblFooter.Font = New Font("Segoe UI", 8, FontStyle.Regular)
-        lblFooter.ForeColor = Color.FromArgb(120, 160, 200)
         lblFooter.TextAlign = ContentAlignment.MiddleCenter
-        lblFooter.AutoSize = False
-        lblFooter.Size = New Size(800, 24)
-        lblFooter.Location = New Point(0, 652)
-
-        ' ── LoginForm ─────────────────────────────────────────────
-        Me.AutoScaleDimensions = New SizeF(7F, 15F)
-        Me.AutoScaleMode = AutoScaleMode.Font
-        Me.ClientSize = New Size(800, 690)
-        Me.Controls.Add(pnlBackground)
-        Me.Text = "LMS – Login"
-        Me.StartPosition = FormStartPosition.CenterScreen
-        Me.FormBorderStyle = FormBorderStyle.FixedSingle
-        Me.MaximizeBox = False
-        Me.MinimizeBox = True
-        Me.BackColor = Color.FromArgb(21, 67, 106)
-
+        lblFooter.Visible = False
+        ' 
+        ' LoginForm
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 17F)
+        AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        ClientSize = New Size(800, 782)
+        Controls.Add(pnlBackground)
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        MaximizeBox = False
+        Name = "LoginForm"
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "LMS – Login"
         pnlBackground.ResumeLayout(False)
         pnlCard.ResumeLayout(False)
         pnlCard.PerformLayout()
