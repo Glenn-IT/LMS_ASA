@@ -55,7 +55,7 @@ LMS_ASA/
 | 4 | `LoanListForm` | DataGridView with loan records + Add/Update/Delete | ? Done |
 | 5 | `NewLoanForm` | Loan entry form with all loan fields | ? Done |
 | 6 | `BorrowerListForm` | DataGridView with borrower records | ? Done |
-| 7 | `NewBorrowerForm` | Borrower entry form with personal info fields | ? Not Started |
+| 7 | `NewBorrowerForm` | Borrower entry form with personal info fields | ? Done |
 | 8 | `PaymentListForm` | DataGridView with payment records | ? Not Started |
 | 9 | `BorrowerAccountsForm` | DataGridView with borrower account credentials | ? Not Started |
 | 10 | `BorrowerDashboardForm` | Borrower-side dashboard with menu options | ? Not Started |
