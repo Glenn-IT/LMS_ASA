@@ -434,3 +434,6 @@ BorrowerDashboardForm
 | 12   | `TrackLoanForm`           | Borrower loan tracking page       | ✅ Done |
 | 13   | `ViewLoanApplicationForm` | Displays loan application details | ✅ Done |
 | 14   | `MyAccountForm`           | Borrower account settings         | ✅ Done |
+
+
+Updated to check if the other repos check this file for the development guide. This file is intended to be a comprehensive guide for developing the UI prototype of the Loan Management System (LMS) using VB.NET WinForms. It includes detailed specifications for each form, navigation flow, design guidelines, and a development checklist to ensure all components are implemented correctly.
