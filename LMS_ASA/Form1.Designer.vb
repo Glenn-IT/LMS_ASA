@@ -31,6 +31,9 @@ Partial Class LoginForm
         txtPassword = New TextBox()
         btnLogin = New Button()
         pnlDivider = New Panel()
+        lblRolePrompt = New Label()
+        btnAdmin = New Button()
+        btnUser = New Button()
         lnkForgotPassword = New LinkLabel()
         lblFooter = New Label()
 
@@ -52,7 +55,7 @@ Partial Class LoginForm
         lblTitle.ForeColor = Color.White
         lblTitle.TextAlign = ContentAlignment.MiddleCenter
         lblTitle.Size = New Size(800, 52)
-        lblTitle.Location = New Point(0, 52)
+        lblTitle.Location = New Point(0, 40)
         lblTitle.AutoSize = False
 
         ' ── lblSubtitle ───────────────────────────────────────────
@@ -61,13 +64,13 @@ Partial Class LoginForm
         lblSubtitle.ForeColor = Color.FromArgb(173, 216, 255)
         lblSubtitle.TextAlign = ContentAlignment.MiddleCenter
         lblSubtitle.Size = New Size(800, 28)
-        lblSubtitle.Location = New Point(0, 106)
+        lblSubtitle.Location = New Point(0, 94)
         lblSubtitle.AutoSize = False
 
         ' ── pnlCard ──────────────────────────────────────────────
         pnlCard.BackColor = Color.White
-        pnlCard.Size = New Size(400, 400)
-        pnlCard.Location = New Point(200, 148)
+        pnlCard.Size = New Size(400, 500)
+        pnlCard.Location = New Point(200, 134)
         pnlCard.Controls.Add(pnlAccent)
         pnlCard.Controls.Add(lblHeader)
         pnlCard.Controls.Add(lblWelcome)
@@ -77,6 +80,9 @@ Partial Class LoginForm
         pnlCard.Controls.Add(txtPassword)
         pnlCard.Controls.Add(btnLogin)
         pnlCard.Controls.Add(pnlDivider)
+        pnlCard.Controls.Add(lblRolePrompt)
+        pnlCard.Controls.Add(btnAdmin)
+        pnlCard.Controls.Add(btnUser)
         pnlCard.Controls.Add(lnkForgotPassword)
 
         ' ── pnlAccent (top colored bar on card) ──────────────────
@@ -90,7 +96,7 @@ Partial Class LoginForm
         lblHeader.ForeColor = Color.FromArgb(21, 67, 106)
         lblHeader.AutoSize = False
         lblHeader.Size = New Size(360, 40)
-        lblHeader.Location = New Point(20, 22)
+        lblHeader.Location = New Point(20, 20)
 
         ' ── lblWelcome ───────────────────────────────────────────
         lblWelcome.Text = "Welcome back! Please enter your credentials."
@@ -98,7 +104,7 @@ Partial Class LoginForm
         lblWelcome.ForeColor = Color.Gray
         lblWelcome.AutoSize = False
         lblWelcome.Size = New Size(360, 20)
-        lblWelcome.Location = New Point(20, 64)
+        lblWelcome.Location = New Point(20, 62)
 
         ' ── lblUsername ───────────────────────────────────────────
         lblUsername.Text = "USERNAME"
@@ -106,12 +112,12 @@ Partial Class LoginForm
         lblUsername.ForeColor = Color.FromArgb(100, 100, 100)
         lblUsername.AutoSize = False
         lblUsername.Size = New Size(360, 18)
-        lblUsername.Location = New Point(20, 108)
+        lblUsername.Location = New Point(20, 100)
 
         ' ── txtUsername ───────────────────────────────────────────
         txtUsername.Font = New Font("Segoe UI", 10)
         txtUsername.Size = New Size(360, 28)
-        txtUsername.Location = New Point(20, 128)
+        txtUsername.Location = New Point(20, 120)
         txtUsername.BorderStyle = BorderStyle.FixedSingle
         txtUsername.BackColor = Color.FromArgb(245, 248, 252)
 
@@ -121,12 +127,12 @@ Partial Class LoginForm
         lblPassword.ForeColor = Color.FromArgb(100, 100, 100)
         lblPassword.AutoSize = False
         lblPassword.Size = New Size(360, 18)
-        lblPassword.Location = New Point(20, 178)
+        lblPassword.Location = New Point(20, 166)
 
         ' ── txtPassword ───────────────────────────────────────────
         txtPassword.Font = New Font("Segoe UI", 10)
         txtPassword.Size = New Size(360, 28)
-        txtPassword.Location = New Point(20, 198)
+        txtPassword.Location = New Point(20, 186)
         txtPassword.PasswordChar = "●"c
         txtPassword.BorderStyle = BorderStyle.FixedSingle
         txtPassword.BackColor = Color.FromArgb(245, 248, 252)
@@ -139,13 +145,44 @@ Partial Class LoginForm
         btnLogin.FlatStyle = FlatStyle.Flat
         btnLogin.FlatAppearance.BorderSize = 0
         btnLogin.Size = New Size(360, 44)
-        btnLogin.Location = New Point(20, 252)
+        btnLogin.Location = New Point(20, 234)
         btnLogin.Cursor = Cursors.Hand
 
         ' ── pnlDivider ────────────────────────────────────────────
         pnlDivider.BackColor = Color.FromArgb(220, 220, 220)
         pnlDivider.Size = New Size(360, 1)
-        pnlDivider.Location = New Point(20, 318)
+        pnlDivider.Location = New Point(20, 296)
+
+        ' ── lblRolePrompt ─────────────────────────────────────────
+        lblRolePrompt.Text = "OR CONTINUE AS"
+        lblRolePrompt.Font = New Font("Segoe UI", 8, FontStyle.Bold)
+        lblRolePrompt.ForeColor = Color.FromArgb(160, 160, 160)
+        lblRolePrompt.AutoSize = False
+        lblRolePrompt.Size = New Size(360, 20)
+        lblRolePrompt.Location = New Point(20, 308)
+        lblRolePrompt.TextAlign = ContentAlignment.MiddleCenter
+
+        ' ── btnAdmin ──────────────────────────────────────────────
+        btnAdmin.Text = "Admin"
+        btnAdmin.Font = New Font("Segoe UI", 10, FontStyle.Bold)
+        btnAdmin.BackColor = Color.FromArgb(52, 120, 180)
+        btnAdmin.ForeColor = Color.White
+        btnAdmin.FlatStyle = FlatStyle.Flat
+        btnAdmin.FlatAppearance.BorderSize = 0
+        btnAdmin.Size = New Size(174, 44)
+        btnAdmin.Location = New Point(20, 334)
+        btnAdmin.Cursor = Cursors.Hand
+
+        ' ── btnUser ───────────────────────────────────────────────
+        btnUser.Text = "Borrower / User"
+        btnUser.Font = New Font("Segoe UI", 10, FontStyle.Bold)
+        btnUser.BackColor = Color.FromArgb(39, 174, 96)
+        btnUser.ForeColor = Color.White
+        btnUser.FlatStyle = FlatStyle.Flat
+        btnUser.FlatAppearance.BorderSize = 0
+        btnUser.Size = New Size(174, 44)
+        btnUser.Location = New Point(206, 334)
+        btnUser.Cursor = Cursors.Hand
 
         ' ── lnkForgotPassword ─────────────────────────────────────
         lnkForgotPassword.Text = "Forgot Password?"
@@ -154,7 +191,7 @@ Partial Class LoginForm
         lnkForgotPassword.ActiveLinkColor = Color.FromArgb(52, 152, 219)
         lnkForgotPassword.AutoSize = False
         lnkForgotPassword.Size = New Size(360, 24)
-        lnkForgotPassword.Location = New Point(20, 334)
+        lnkForgotPassword.Location = New Point(20, 396)
         lnkForgotPassword.TextAlign = ContentAlignment.MiddleCenter
 
         ' ── lblFooter ─────────────────────────────────────────────
@@ -164,12 +201,12 @@ Partial Class LoginForm
         lblFooter.TextAlign = ContentAlignment.MiddleCenter
         lblFooter.AutoSize = False
         lblFooter.Size = New Size(800, 24)
-        lblFooter.Location = New Point(0, 572)
+        lblFooter.Location = New Point(0, 652)
 
         ' ── LoginForm ─────────────────────────────────────────────
         Me.AutoScaleDimensions = New SizeF(7F, 15F)
         Me.AutoScaleMode = AutoScaleMode.Font
-        Me.ClientSize = New Size(800, 610)
+        Me.ClientSize = New Size(800, 690)
         Me.Controls.Add(pnlBackground)
         Me.Text = "LMS – Login"
         Me.StartPosition = FormStartPosition.CenterScreen
@@ -197,6 +234,9 @@ Partial Class LoginForm
     Friend WithEvents txtPassword As TextBox
     Friend WithEvents btnLogin As Button
     Friend WithEvents pnlDivider As Panel
+    Friend WithEvents lblRolePrompt As Label
+    Friend WithEvents btnAdmin As Button
+    Friend WithEvents btnUser As Button
     Friend WithEvents lnkForgotPassword As LinkLabel
     Friend WithEvents lblFooter As Label
 

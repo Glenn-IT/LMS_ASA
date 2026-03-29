@@ -220,14 +220,26 @@ Public Class BorrowerDashboardForm
     Private Sub btnTrackLoan_Click(sender As Object, e As EventArgs) Handles btnTrackLoan.Click
         SetActiveButton(btnTrackLoan)
         lblPageTitle.Text = "Track Loan Application"
-        ShowPlaceholder("Your loan application status will appear here.")
+        Dim frm As New TrackLoanForm()
+        frm.TopLevel = False
+        frm.FormBorderStyle = FormBorderStyle.None
+        frm.Dock = DockStyle.Fill
+        pnlContent.Controls.Clear()
+        pnlContent.Controls.Add(frm)
+        frm.Show()
     End Sub
 
     ' ?? My Account ????????????????????????????????????????????????
     Private Sub btnMyAccount_Click(sender As Object, e As EventArgs) Handles btnMyAccount.Click
         SetActiveButton(btnMyAccount)
         lblPageTitle.Text = "My Account"
-        ShowPlaceholder("Your account information will appear here.")
+        Dim frm As New MyAccountForm()
+        frm.TopLevel = False
+        frm.FormBorderStyle = FormBorderStyle.None
+        frm.Dock = DockStyle.Fill
+        pnlContent.Controls.Clear()
+        pnlContent.Controls.Add(frm)
+        frm.Show()
     End Sub
 
     ' ?? Logout ????????????????????????????????????????????????????

@@ -84,7 +84,7 @@ Public Class LoanListForm
         btnAdd.Cursor = Cursors.Hand
 
         ' ?? btnUpdate ?????????????????????????????????????????????
-        btnUpdate.Text = "? Update"
+        btnUpdate.Text = "Update"
         btnUpdate.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
         btnUpdate.ForeColor = Color.White
@@ -95,7 +95,7 @@ Public Class LoanListForm
         btnUpdate.Cursor = Cursors.Hand
 
         ' ?? btnDelete ?????????????????????????????????????????????
-        btnDelete.Text = "? Delete"
+        btnDelete.Text = "Delete"
         btnDelete.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         btnDelete.BackColor = Color.FromArgb(192, 57, 43)
         btnDelete.ForeColor = Color.White
@@ -104,6 +104,7 @@ Public Class LoanListForm
         btnDelete.Size = New Size(90, 34)
         btnDelete.Location = New Point(208, 11)
         btnDelete.Cursor = Cursors.Hand
+        btnDelete.Visible = False
 
         ' ?? lblSearch ?????????????????????????????????????????????
         lblSearch.Text = "Search:"
@@ -269,12 +270,6 @@ Public Class LoanListForm
     End Sub
     Private Sub btnUpdate_MouseLeave(sender As Object, e As EventArgs) Handles btnUpdate.MouseLeave
         btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
-    End Sub
-    Private Sub btnDelete_MouseEnter(sender As Object, e As EventArgs) Handles btnDelete.MouseEnter
-        btnDelete.BackColor = Color.FromArgb(160, 40, 30)
-    End Sub
-    Private Sub btnDelete_MouseLeave(sender As Object, e As EventArgs) Handles btnDelete.MouseLeave
-        btnDelete.BackColor = Color.FromArgb(192, 57, 43)
     End Sub
 
 End Class

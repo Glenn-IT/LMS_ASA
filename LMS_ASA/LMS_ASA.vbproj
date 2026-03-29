@@ -56,6 +56,15 @@
     <Compile Update="LoanApplicationForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="TrackLoanForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewLoanApplicationForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MyAccountForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
