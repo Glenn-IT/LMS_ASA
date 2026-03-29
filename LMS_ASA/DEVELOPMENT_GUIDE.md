@@ -49,7 +49,7 @@ LMS_ASA/
 
 | Step | Form Name | Description | Status |
 |------|-----------|-------------|--------|
-| 1 | `LoginForm` | Login UI with username, password, forgot password link | ? In Progress |
+| 1 | `LoginForm` | Login UI with username, password, forgot password link | ? Done |
 | 2 | `ForgotPasswordForm` | Security question, new password fields | ? Not Started |
 | 3 | `AdminDashboardForm` | Left sidebar + main content panel | ? Not Started |
 | 4 | `LoanListForm` | DataGridView with loan records + Add/Update/Delete | ? Not Started |
