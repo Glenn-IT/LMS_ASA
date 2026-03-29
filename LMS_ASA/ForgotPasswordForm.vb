@@ -1,7 +1,6 @@
 Public Class ForgotPasswordForm
     Inherits Form
 
-    ' ?? Controls ??????????????????????????????????????????????????
     Private pnlBackground As Panel
     Private lblTitle As Label
     Private lblSubtitle As Label
@@ -12,7 +11,7 @@ Public Class ForgotPasswordForm
     Private pnlDividerTop As Panel
     Private grpSecurityQuestion As GroupBox
     Private lblSecurityQuestionStatic As Label
-    Private lblSecurityQuestion As Label
+    Friend cmbSecurityQuestion As ComboBox
     Private lblAnswer As Label
     Friend txtAnswer As TextBox
     Private grpNewPassword As GroupBox
@@ -25,12 +24,10 @@ Public Class ForgotPasswordForm
     Friend btnBackToLogin As Button
     Private lblFooter As Label
 
-    ' ?? Constructor ???????????????????????????????????????????????
     Public Sub New()
         InitializeComponent()
     End Sub
 
-    ' ?? InitializeComponent ???????????????????????????????????????
     Private Sub InitializeComponent()
         pnlBackground = New Panel()
         lblTitle = New Label()
@@ -42,7 +39,7 @@ Public Class ForgotPasswordForm
         pnlDividerTop = New Panel()
         grpSecurityQuestion = New GroupBox()
         lblSecurityQuestionStatic = New Label()
-        lblSecurityQuestion = New Label()
+        cmbSecurityQuestion = New ComboBox()
         lblAnswer = New Label()
         txtAnswer = New TextBox()
         grpNewPassword = New GroupBox()
@@ -85,7 +82,7 @@ Public Class ForgotPasswordForm
 
         ' ?? pnlCard ???????????????????????????????????????????????
         pnlCard.BackColor = Color.White
-        pnlCard.Size = New Size(480, 480)
+        pnlCard.Size = New Size(480, 510)
         pnlCard.Location = New Point(160, 138)
         pnlCard.Controls.Add(pnlButtons)
         pnlCard.Controls.Add(grpNewPassword)
@@ -109,7 +106,7 @@ Public Class ForgotPasswordForm
         lblHeader.Location = New Point(20, 18)
 
         ' ?? lblHeaderSub ??????????????????????????????????????????
-        lblHeaderSub.Text = "Answer the security question to reset your password."
+        lblHeaderSub.Text = "Select a security question and enter your answer to reset your password."
         lblHeaderSub.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblHeaderSub.ForeColor = Color.Gray
         lblHeaderSub.AutoSize = False
@@ -125,41 +122,48 @@ Public Class ForgotPasswordForm
         grpSecurityQuestion.Text = "Security Question"
         grpSecurityQuestion.Font = New Font("Segoe UI", 9, FontStyle.Bold)
         grpSecurityQuestion.ForeColor = Color.FromArgb(21, 67, 106)
-        grpSecurityQuestion.Size = New Size(440, 130)
+        grpSecurityQuestion.Size = New Size(440, 152)
         grpSecurityQuestion.Location = New Point(20, 102)
         grpSecurityQuestion.Controls.Add(txtAnswer)
         grpSecurityQuestion.Controls.Add(lblAnswer)
-        grpSecurityQuestion.Controls.Add(lblSecurityQuestion)
+        grpSecurityQuestion.Controls.Add(cmbSecurityQuestion)
         grpSecurityQuestion.Controls.Add(lblSecurityQuestionStatic)
 
         ' ?? lblSecurityQuestionStatic ?????????????????????????????
-        lblSecurityQuestionStatic.Text = "Question:"
+        lblSecurityQuestionStatic.Text = "SELECT QUESTION"
         lblSecurityQuestionStatic.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblSecurityQuestionStatic.ForeColor = Color.FromArgb(100, 100, 100)
         lblSecurityQuestionStatic.AutoSize = False
-        lblSecurityQuestionStatic.Size = New Size(400, 18)
+        lblSecurityQuestionStatic.Size = New Size(408, 18)
         lblSecurityQuestionStatic.Location = New Point(12, 24)
 
-        ' ?? lblSecurityQuestion ???????????????????????????????????
-        lblSecurityQuestion.Text = "What is your mother's maiden name?"
-        lblSecurityQuestion.Font = New Font("Segoe UI", 10, FontStyle.Italic)
-        lblSecurityQuestion.ForeColor = Color.FromArgb(50, 50, 50)
-        lblSecurityQuestion.AutoSize = False
-        lblSecurityQuestion.Size = New Size(400, 22)
-        lblSecurityQuestion.Location = New Point(12, 44)
+        ' ?? cmbSecurityQuestion ???????????????????????????????????
+        cmbSecurityQuestion.Font = New Font("Segoe UI", 10)
+        cmbSecurityQuestion.Size = New Size(408, 28)
+        cmbSecurityQuestion.Location = New Point(12, 44)
+        cmbSecurityQuestion.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbSecurityQuestion.BackColor = Color.FromArgb(245, 248, 252)
+        cmbSecurityQuestion.FlatStyle = FlatStyle.Flat
+        cmbSecurityQuestion.Items.AddRange(New Object() {
+            "What is your mother's maiden name?",
+            "What was the name of your first pet?",
+            "What is the name of the city where you were born?",
+            "What was the name of your elementary school?",
+            "What is your favorite childhood nickname?"
+        })
 
         ' ?? lblAnswer ?????????????????????????????????????????????
         lblAnswer.Text = "ANSWER"
         lblAnswer.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblAnswer.ForeColor = Color.FromArgb(100, 100, 100)
         lblAnswer.AutoSize = False
-        lblAnswer.Size = New Size(400, 18)
-        lblAnswer.Location = New Point(12, 76)
+        lblAnswer.Size = New Size(408, 18)
+        lblAnswer.Location = New Point(12, 96)
 
         ' ?? txtAnswer ?????????????????????????????????????????????
         txtAnswer.Font = New Font("Segoe UI", 10)
         txtAnswer.Size = New Size(408, 28)
-        txtAnswer.Location = New Point(12, 96)
+        txtAnswer.Location = New Point(12, 116)
         txtAnswer.BorderStyle = BorderStyle.FixedSingle
         txtAnswer.BackColor = Color.FromArgb(245, 248, 252)
 
@@ -168,7 +172,7 @@ Public Class ForgotPasswordForm
         grpNewPassword.Font = New Font("Segoe UI", 9, FontStyle.Bold)
         grpNewPassword.ForeColor = Color.FromArgb(21, 67, 106)
         grpNewPassword.Size = New Size(440, 170)
-        grpNewPassword.Location = New Point(20, 244)
+        grpNewPassword.Location = New Point(20, 266)
         grpNewPassword.Controls.Add(txtConfirmPassword)
         grpNewPassword.Controls.Add(lblConfirmPassword)
         grpNewPassword.Controls.Add(txtNewPassword)
@@ -179,7 +183,7 @@ Public Class ForgotPasswordForm
         lblNewPassword.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblNewPassword.ForeColor = Color.FromArgb(100, 100, 100)
         lblNewPassword.AutoSize = False
-        lblNewPassword.Size = New Size(400, 18)
+        lblNewPassword.Size = New Size(408, 18)
         lblNewPassword.Location = New Point(12, 26)
 
         ' ?? txtNewPassword ????????????????????????????????????????
@@ -195,7 +199,7 @@ Public Class ForgotPasswordForm
         lblConfirmPassword.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblConfirmPassword.ForeColor = Color.FromArgb(100, 100, 100)
         lblConfirmPassword.AutoSize = False
-        lblConfirmPassword.Size = New Size(400, 18)
+        lblConfirmPassword.Size = New Size(408, 18)
         lblConfirmPassword.Location = New Point(12, 96)
 
         ' ?? txtConfirmPassword ????????????????????????????????????
@@ -209,7 +213,7 @@ Public Class ForgotPasswordForm
         ' ?? pnlButtons ????????????????????????????????????????????
         pnlButtons.BackColor = Color.Transparent
         pnlButtons.Size = New Size(440, 44)
-        pnlButtons.Location = New Point(20, 426)
+        pnlButtons.Location = New Point(20, 452)
         pnlButtons.Controls.Add(btnBackToLogin)
         pnlButtons.Controls.Add(btnSubmit)
 
@@ -255,11 +259,21 @@ Public Class ForgotPasswordForm
         Me.BackColor = Color.FromArgb(21, 67, 106)
         Me.Controls.Add(pnlBackground)
 
+        ' ?? Wire Events ???????????????????????????????????????????
+        AddHandler Me.Load, AddressOf OnFormLoad
+        AddHandler btnSubmit.Click, AddressOf OnSubmitClick
+        AddHandler btnBackToLogin.Click, AddressOf OnBackToLoginClick
+        AddHandler btnSubmit.MouseEnter, AddressOf OnSubmitMouseEnter
+        AddHandler btnSubmit.MouseLeave, AddressOf OnSubmitMouseLeave
+        AddHandler btnBackToLogin.MouseEnter, AddressOf OnBackMouseEnter
+        AddHandler btnBackToLogin.MouseLeave, AddressOf OnBackMouseLeave
+
         ResumeLayout(False)
     End Sub
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub OnFormLoad(sender As Object, e As EventArgs)
+        cmbSecurityQuestion.SelectedIndex = 0
         txtAnswer.Text = ""
         txtNewPassword.Text = ""
         txtConfirmPassword.Text = ""
