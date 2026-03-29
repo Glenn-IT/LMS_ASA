@@ -41,6 +41,9 @@
     <Compile Update="BorrowerListForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="NewBorrowerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="PaymentListForm.vb">
       <SubType>Form</SubType>
     </Compile>
