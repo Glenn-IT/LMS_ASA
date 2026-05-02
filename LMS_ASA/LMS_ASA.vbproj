@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <StartupObject>Sub Main</StartupObject>
+    <UseWindowsForms>true</UseWindowsForms>
+    <MyType>WindowsForms</MyType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="My Project\Application.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Update="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Update="ForgotPasswordForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdminDashboardForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="LoanListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="NewLoanForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="BorrowerListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="NewBorrowerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PaymentListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="BorrowerAccountsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="BorrowerDashboardForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="LoanApplicationForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="TrackLoanForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewLoanApplicationForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MyAccountForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

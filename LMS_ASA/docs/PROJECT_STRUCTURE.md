@@ -1,0 +1,203 @@
+# ?? Project Structure – Loan Management System (LMS)
+
+> **Technology:** VB.NET WinForms · Visual Studio 2022 · .NET 8.0
+> **Database:** SQL Server (SSMS)
+> **Repository:** https://github.com/Glenn-IT/LMS_ASA · Branch: `master`
+
+---
+
+## ??? Current State: UI Prototype
+
+The project currently contains **14 WinForms** covering the full UI prototype.
+Backend, database, and business logic are planned — see [`docs/BACKEND_ROADMAP.md`](docs/BACKEND_ROADMAP.md).
+
+---
+
+## ?? Full Project Directory Tree
+
+```
+LMS_ASA/                                      ? Solution root
+?
+??? LMS_ASA.sln                               ? Solution file
+?
+??? LMS_ASA/                                  ? Main project folder
+    ?
+    ??? LMS_ASA.vbproj                        ? Project file (.NET 8.0 WinForms)
+    ??? ApplicationEvents.vb                  ? App startup / entry point
+    ??? App.config                            ? [PLANNED] Connection string config
+    ?
+    ??? docs/                                 ? Project documentation
+    ?   ??? DEVELOPMENT_GUIDE.md              ? UI prototype development guide
+    ?   ??? PROJECT_STRUCTURE.md              ? This file
+    ?   ??? BACKEND_ROADMAP.md                ? Backend & database implementation roadmap
+    ?
+    ??? My Project/                           ? VB.NET project settings (auto-generated)
+    ?   ??? Application.Designer.vb
+    ?
+    ??? Forms/                                ? All WinForms UI files
+    ?   ?
+    ?   ??? Auth/                             ?? ?? Authentication Forms
+    ?   ?   ??? Form1.vb                      ? Login Form
+    ?   ?   ??? Form1.Designer.vb             ? Login Form (Designer)
+    ?   ?   ??? ForgotPasswordForm.vb         ? Forgot Password Form
+    ?   ?
+    ?   ??? Admin/                            ?? ??? Admin Module Forms
+    ?   ?   ??? AdminDashboardForm.vb         ? Admin Dashboard (Sidebar + Content Panel)
+    ?   ?   ??? LoanListForm.vb               ? Loan List (DataGridView)
+    ?   ?   ??? NewLoanForm.vb                ? New / Edit Loan Entry
+    ?   ?   ??? BorrowerListForm.vb           ? Borrower List (DataGridView)
+    ?   ?   ??? NewBorrowerForm.vb            ? New / Edit Borrower Entry
+    ?   ?   ??? PaymentListForm.vb            ? Payment List (DataGridView)
+    ?   ?   ??? BorrowerAccountsForm.vb       ? Borrower Account Credentials
+    ?   ?
+    ?   ??? Borrower/                         ?? ?? Borrower Module Forms
+    ?       ??? BorrowerDashboardForm.vb      ? Borrower Dashboard (Menu)
+    ?       ??? LoanApplicationForm.vb        ? File a Loan Application
+    ?       ??? TrackLoanForm.vb              ? Track Submitted Loan Applications
+    ?       ??? ViewLoanApplicationForm.vb    ? View Loan Application Details (Read-Only)
+    ?       ??? MyAccountForm.vb              ? Update Account Credentials
+    ?
+    ??? Models/                               ? [PLANNED] Data model classes
+    ?   ??? UserModel.vb                      ? Maps to tbl_Users
+    ?   ??? BorrowerModel.vb                  ? Maps to tbl_Borrowers
+    ?   ??? LoanModel.vb                      ? Maps to tbl_Loans
+    ?   ??? PaymentModel.vb                   ? Maps to tbl_Payments
+    ?   ??? LoanApplicationModel.vb           ? Maps to tbl_LoanApplications
+    ?
+    ??? Data/                                 ? [PLANNED] Data Access Layer (DAL)
+    ?   ??? DatabaseHelper.vb                 ? SQL connection factory
+    ?   ??? UserRepository.vb                 ? CRUD operations for tbl_Users
+    ?   ??? BorrowerRepository.vb             ? CRUD operations for tbl_Borrowers
+    ?   ??? LoanRepository.vb                 ? CRUD operations for tbl_Loans
+    ?   ??? PaymentRepository.vb              ? CRUD operations for tbl_Payments
+    ?   ??? LoanApplicationRepository.vb      ? CRUD operations for tbl_LoanApplications
+    ?
+    ??? Helpers/                              ? [PLANNED] Utility / helper classes
+    ?   ??? SessionManager.vb                 ? Stores logged-in user info globally
+    ?   ??? PasswordHelper.vb                 ? BCrypt password hash/verify utilities
+    ?   ??? ValidationHelper.vb              ? Common input validation methods
+    ?
+    ??? obj/                                  ? Build output (auto-generated, do not edit)
+        ??? Debug/
+            ??? net8.0-windows/
+                ??? LMS_ASA.AssemblyInfo.vb
+                ??? .NETCoreApp,Version=v8.0.AssemblyAttributes.vb
+```
+
+---
+
+## ??? Database Schema Overview
+
+> Database Name: `LMS_DB` · Engine: SQL Server
+
+| Table                  | Description                                    |
+|------------------------|------------------------------------------------|
+| `tbl_Users`            | Admin and Borrower login credentials           |
+| `tbl_Borrowers`        | Borrower personal information                  |
+| `tbl_Loans`            | All approved loans                             |
+| `tbl_Payments`         | Payment records per loan                       |
+| `tbl_LoanApplications` | Borrower-submitted loan applications           |
+
+### Entity Relationships
+
+```
+tbl_Users
+    ??? (1:1) tbl_Borrowers
+                ??? (1:N) tbl_Loans
+                ?               ??? (1:N) tbl_Payments
+                ??? (1:N) tbl_LoanApplications
+```
+
+---
+
+## ?? Form Index
+
+### ?? Auth Forms
+
+| Step | File | Form Name | Status |
+|------|------|-----------|--------|
+| 1 | `Form1.vb` | `LoginForm` | ? UI Done |
+| 2 | `ForgotPasswordForm.vb` | `ForgotPasswordForm` | ? UI Done |
+
+### ??? Admin Forms
+
+| Step | File | Form Name | Status |
+|------|------|-----------|--------|
+| 3  | `AdminDashboardForm.vb`   | `AdminDashboardForm`   | ? UI Done |
+| 4  | `LoanListForm.vb`         | `LoanListForm`         | ? UI Done |
+| 5  | `NewLoanForm.vb`          | `NewLoanForm`          | ? UI Done |
+| 6  | `BorrowerListForm.vb`     | `BorrowerListForm`     | ? UI Done |
+| 7  | `NewBorrowerForm.vb`      | `NewBorrowerForm`      | ? UI Done |
+| 8  | `PaymentListForm.vb`      | `PaymentListForm`      | ? UI Done |
+| 9  | `BorrowerAccountsForm.vb` | `BorrowerAccountsForm` | ? UI Done |
+
+### ?? Borrower Forms
+
+| Step | File | Form Name | Status |
+|------|------|-----------|--------|
+| 10 | `BorrowerDashboardForm.vb`   | `BorrowerDashboardForm`   | ? UI Done |
+| 11 | `LoanApplicationForm.vb`     | `LoanApplicationForm`     | ? UI Done |
+| 12 | `TrackLoanForm.vb`           | `TrackLoanForm`           | ? UI Done |
+| 13 | `ViewLoanApplicationForm.vb` | `ViewLoanApplicationForm` | ? UI Done |
+| 14 | `MyAccountForm.vb`           | `MyAccountForm`           | ? UI Done |
+
+---
+
+## ?? Full Navigation Flow
+
+```
+LoginForm (Form1.vb)
+  ??? [Login as Admin] ??????????????? AdminDashboardForm
+  ?                                       ??? [Loan List] ??????????? LoanListForm
+  ?                                       ?                               ??? [Add/Update] ?? NewLoanForm
+  ?                                       ??? [Borrower List] ??????? BorrowerListForm
+  ?                                       ?                               ??? [Add/Update] ?? NewBorrowerForm
+  ?                                       ??? [Payment List] ???????? PaymentListForm
+  ?                                       ??? [Borrower Accounts] ??? BorrowerAccountsForm
+  ?                                       ?                               ??? [Login as Borrower] ?? BorrowerDashboardForm
+  ?                                       ??? [Logout] ?????????????? LoginForm
+  ?
+  ??? [Forgot Password] ??????????????? ForgotPasswordForm
+                                            ??? [Back to Login] ??????? LoginForm
+
+
+BorrowerDashboardForm
+  ??? [File Loan Application] ????????? LoanApplicationForm
+  ?                                       ??? [Cancel] ?????????????? BorrowerDashboardForm
+  ??? [Track Loan Application] ???????? TrackLoanForm
+  ?                                       ??? [View] ???????????????? ViewLoanApplicationForm
+  ?                                       ?                               ??? [Back] ????????? TrackLoanForm
+  ?                                       ??? [Back] ???????????????? BorrowerDashboardForm
+  ??? [My Account] ???????????????????? MyAccountForm
+  ?                                       ??? [Cancel] ?????????????? BorrowerDashboardForm
+  ??? [Logout] ???????????????????????? LoginForm
+```
+
+---
+
+## ?? Technology Stack
+
+| Item | Detail |
+|------|--------|
+| Language | VB.NET |
+| Framework | .NET 8.0 (Windows) |
+| UI Framework | Windows Forms (WinForms) |
+| IDE | Visual Studio 2022 |
+| Database | SQL Server / SQL Server Express |
+| DB Management | SQL Server Management Studio (SSMS) |
+| Data Access | ADO.NET with `Microsoft.Data.SqlClient` |
+| Password Hashing | BCrypt (`BCrypt.Net-Next`) |
+
+---
+
+## ?? Documentation Index
+
+| File | Description |
+|------|-------------|
+| [`docs/DEVELOPMENT_GUIDE.md`](DEVELOPMENT_GUIDE.md) | Full UI prototype spec, form controls, and design guidelines |
+| [`docs/PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md) | This file — directory layout, form index, navigation flow |
+| [`docs/BACKEND_ROADMAP.md`](BACKEND_ROADMAP.md) | Phase-by-phase backend & database implementation checklist |
+
+---
+
+*Last Updated: 2025 | LMS – VB.NET WinForms · .NET 8.0 · SQL Server*
