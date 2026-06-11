@@ -30,11 +30,8 @@ Partial Class LoginForm
         lblPassword = New Label()
         txtPassword = New TextBox()
         btnLogin = New Button()
-        pnlDivider = New Panel()
-        lblRolePrompt = New Label()
-        btnAdmin = New Button()
-        btnUser = New Button()
         lnkForgotPassword = New LinkLabel()
+        chkShowPassword = New CheckBox()
         lblFooter = New Label()
         pnlBackground.SuspendLayout()
         pnlCard.SuspendLayout()
@@ -50,7 +47,7 @@ Partial Class LoginForm
         pnlBackground.Dock = DockStyle.Fill
         pnlBackground.Location = New Point(0, 0)
         pnlBackground.Name = "pnlBackground"
-        pnlBackground.Size = New Size(800, 782)
+        pnlBackground.Size = New Size(800, 620)
         pnlBackground.TabIndex = 0
         ' 
         ' lblTitle
@@ -85,15 +82,12 @@ Partial Class LoginForm
         pnlCard.Controls.Add(txtUsername)
         pnlCard.Controls.Add(lblPassword)
         pnlCard.Controls.Add(txtPassword)
+        pnlCard.Controls.Add(chkShowPassword)
         pnlCard.Controls.Add(btnLogin)
-        pnlCard.Controls.Add(pnlDivider)
-        pnlCard.Controls.Add(lblRolePrompt)
-        pnlCard.Controls.Add(btnAdmin)
-        pnlCard.Controls.Add(btnUser)
         pnlCard.Controls.Add(lnkForgotPassword)
         pnlCard.Location = New Point(200, 152)
         pnlCard.Name = "pnlCard"
-        pnlCard.Size = New Size(400, 567)
+        pnlCard.Size = New Size(400, 400)
         pnlCard.TabIndex = 2
         ' 
         ' pnlAccent
@@ -164,80 +158,42 @@ Partial Class LoginForm
         txtPassword.PasswordChar = "●"c
         txtPassword.Size = New Size(360, 27)
         txtPassword.TabIndex = 6
-        ' 
+        '
+        ' chkShowPassword
+        '
+        chkShowPassword.Font = New Font("Segoe UI", 9F)
+        chkShowPassword.ForeColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        chkShowPassword.Location = New Point(20, 243)
+        chkShowPassword.Name = "chkShowPassword"
+        chkShowPassword.Size = New Size(180, 20)
+        chkShowPassword.TabIndex = 7
+        chkShowPassword.Text = "Show Password"
+        chkShowPassword.UseVisualStyleBackColor = True
+        '
         ' btnLogin
-        ' 
+        '
         btnLogin.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
         btnLogin.Cursor = Cursors.Hand
         btnLogin.FlatAppearance.BorderSize = 0
         btnLogin.FlatStyle = FlatStyle.Flat
         btnLogin.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         btnLogin.ForeColor = Color.White
-        btnLogin.Location = New Point(20, 265)
+        btnLogin.Location = New Point(20, 270)
         btnLogin.Name = "btnLogin"
         btnLogin.Size = New Size(360, 50)
-        btnLogin.TabIndex = 7
+        btnLogin.TabIndex = 8
         btnLogin.Text = "LOGIN"
         btnLogin.UseVisualStyleBackColor = False
-        ' 
-        ' pnlDivider
-        ' 
-        pnlDivider.BackColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        pnlDivider.Location = New Point(20, 335)
-        pnlDivider.Name = "pnlDivider"
-        pnlDivider.Size = New Size(360, 1)
-        pnlDivider.TabIndex = 8
-        ' 
-        ' lblRolePrompt
-        ' 
-        lblRolePrompt.Font = New Font("Segoe UI", 8F, FontStyle.Bold)
-        lblRolePrompt.ForeColor = Color.FromArgb(CByte(160), CByte(160), CByte(160))
-        lblRolePrompt.Location = New Point(20, 349)
-        lblRolePrompt.Name = "lblRolePrompt"
-        lblRolePrompt.Size = New Size(360, 23)
-        lblRolePrompt.TabIndex = 9
-        lblRolePrompt.Text = "OR CONTINUE AS"
-        lblRolePrompt.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' btnAdmin
-        ' 
-        btnAdmin.BackColor = Color.FromArgb(CByte(52), CByte(120), CByte(180))
-        btnAdmin.Cursor = Cursors.Hand
-        btnAdmin.FlatAppearance.BorderSize = 0
-        btnAdmin.FlatStyle = FlatStyle.Flat
-        btnAdmin.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        btnAdmin.ForeColor = Color.White
-        btnAdmin.Location = New Point(20, 379)
-        btnAdmin.Name = "btnAdmin"
-        btnAdmin.Size = New Size(174, 50)
-        btnAdmin.TabIndex = 10
-        btnAdmin.Text = "Admin"
-        btnAdmin.UseVisualStyleBackColor = False
-        ' 
-        ' btnUser
-        ' 
-        btnUser.BackColor = Color.FromArgb(CByte(39), CByte(174), CByte(96))
-        btnUser.Cursor = Cursors.Hand
-        btnUser.FlatAppearance.BorderSize = 0
-        btnUser.FlatStyle = FlatStyle.Flat
-        btnUser.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        btnUser.ForeColor = Color.White
-        btnUser.Location = New Point(206, 379)
-        btnUser.Name = "btnUser"
-        btnUser.Size = New Size(174, 50)
-        btnUser.TabIndex = 11
-        btnUser.Text = "Borrower / User"
-        btnUser.UseVisualStyleBackColor = False
-        ' 
+        '
         ' lnkForgotPassword
-        ' 
+        '
         lnkForgotPassword.ActiveLinkColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
         lnkForgotPassword.Font = New Font("Segoe UI", 9F)
         lnkForgotPassword.LinkColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
-        lnkForgotPassword.Location = New Point(20, 449)
+        lnkForgotPassword.Location = New Point(20, 330)
         lnkForgotPassword.Name = "lnkForgotPassword"
         lnkForgotPassword.Size = New Size(360, 27)
-        lnkForgotPassword.TabIndex = 12
+        lnkForgotPassword.TabIndex = 9
         lnkForgotPassword.TabStop = True
         lnkForgotPassword.Text = "Forgot Password?"
         lnkForgotPassword.TextAlign = ContentAlignment.MiddleCenter
@@ -259,7 +215,7 @@ Partial Class LoginForm
         AutoScaleDimensions = New SizeF(7F, 17F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
-        ClientSize = New Size(800, 782)
+        ClientSize = New Size(800, 620)
         Controls.Add(pnlBackground)
         FormBorderStyle = FormBorderStyle.FixedSingle
         MaximizeBox = False
@@ -284,11 +240,8 @@ Partial Class LoginForm
     Friend WithEvents lblPassword As Label
     Friend WithEvents txtPassword As TextBox
     Friend WithEvents btnLogin As Button
-    Friend WithEvents pnlDivider As Panel
-    Friend WithEvents lblRolePrompt As Label
-    Friend WithEvents btnAdmin As Button
-    Friend WithEvents btnUser As Button
     Friend WithEvents lnkForgotPassword As LinkLabel
+    Friend WithEvents chkShowPassword As CheckBox
     Friend WithEvents lblFooter As Label
 
 End Class
