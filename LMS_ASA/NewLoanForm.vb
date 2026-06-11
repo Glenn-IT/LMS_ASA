@@ -33,6 +33,9 @@ Public Class NewLoanForm
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnCancel As Button
 
+    Public Property LoanID As Integer = 0
+    Private _borrowers As DataTable
+
     Public Sub New()
         InitializeComponent()
     End Sub
@@ -109,7 +112,7 @@ Public Class NewLoanForm
         pnlBody.Controls.Add(grpLoanInfo)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpLoanInfo — Loan ID, Borrower Name, Loan Type
+        ' grpLoanInfo ï¿½ Loan ID, Borrower Name, Loan Type
         ' ??????????????????????????????????????????????????????????
         grpLoanInfo.Text = "Loan Information"
         grpLoanInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -138,7 +141,7 @@ Public Class NewLoanForm
         txtLoanID.BorderStyle = BorderStyle.FixedSingle
         txtLoanID.BackColor = Color.FromArgb(235, 240, 245)
         txtLoanID.ReadOnly = True
-        txtLoanID.Text = "LN-0006"
+        txtLoanID.Text = ""
 
         ' ?? Borrower Name ?????????????????????????????????????????
         lblBorrowerName.Text = "BORROWER NAME"
@@ -154,13 +157,7 @@ Public Class NewLoanForm
         cmbBorrowerName.DropDownStyle = ComboBoxStyle.DropDownList
         cmbBorrowerName.BackColor = Color.FromArgb(245, 248, 252)
         cmbBorrowerName.FlatStyle = FlatStyle.Flat
-        cmbBorrowerName.Items.AddRange(New Object() {
-            "Juan dela Cruz",
-            "Maria Santos",
-            "Pedro Reyes",
-            "Ana Bautista",
-            "Carlos Mendoza"
-        })
+        ' Borrower list populated from DB in Form Load
 
         ' ?? Loan Type ?????????????????????????????????????????????
         lblLoanType.Text = "LOAN TYPE"
@@ -185,7 +182,7 @@ Public Class NewLoanForm
         })
 
         ' ??????????????????????????????????????????????????????????
-        ' grpLoanDetails — Amounts, Rate, Term
+        ' grpLoanDetails ï¿½ Amounts, Rate, Term
         ' ??????????????????????????????????????????????????????????
         grpLoanDetails.Text = "Loan Details"
         grpLoanDetails.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -242,7 +239,8 @@ Public Class NewLoanForm
         txtTotalPayable.Size = New Size(200, 28)
         txtTotalPayable.Location = New Point(432, 48)
         txtTotalPayable.BorderStyle = BorderStyle.FixedSingle
-        txtTotalPayable.BackColor = Color.FromArgb(245, 248, 252)
+        txtTotalPayable.BackColor = Color.FromArgb(235, 240, 245)
+        txtTotalPayable.ReadOnly = True
 
         ' ?? Term / Duration ???????????????????????????????????????
         lblTerm.Text = "TERM / DURATION (Months)"
@@ -259,7 +257,7 @@ Public Class NewLoanForm
         txtTerm.BackColor = Color.FromArgb(245, 248, 252)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpDates — Release Date, Due Date
+        ' grpDates ï¿½ Release Date, Due Date
         ' ??????????????????????????????????????????????????????????
         grpDates.Text = "Schedule"
         grpDates.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -336,6 +334,7 @@ Public Class NewLoanForm
 
         ' ?? Form ??????????????????????????????????????????????????
         Me.Text = "LMS - New Loan"
+        Me.AcceptButton = btnAdd
         Me.ClientSize = New Size(880, 560)
         Me.StartPosition = FormStartPosition.CenterParent
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
@@ -352,20 +351,181 @@ Public Class NewLoanForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub NewLoanForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        cmbBorrowerName.SelectedIndex = 0
+        LoadBorrowersIntoCombo()
         cmbLoanType.SelectedIndex = 0
         dtpReleaseDate.Value = DateTime.Today
         dtpDueDate.Value = DateTime.Today.AddMonths(12)
+
+        If LoanID = 0 Then
+            Try
+                txtLoanID.Text = LoanRepository.GetNextReferenceID()
+            Catch ex As Exception
+                txtLoanID.Text = "LN-0001"
+            End Try
+            lblTitle.Text = "New Loan"
+            lblSubtitle.Text = "Fill in the form below to create a new loan record"
+            btnAdd.Text = "Add Loan"
+            Me.Text = "LMS - New Loan"
+        Else
+            lblTitle.Text = "Edit Loan"
+            lblSubtitle.Text = "Update the loan record below"
+            btnAdd.Text = "Save Changes"
+            Me.Text = "LMS - Edit Loan"
+            LoadLoanForEdit()
+        End If
     End Sub
 
-    ' ?? Add Loan ??????????????????????????????????????????????????
+    Private Sub LoadBorrowersIntoCombo()
+        Try
+            _borrowers = BorrowerRepository.GetAll()
+            cmbBorrowerName.Items.Clear()
+            For Each row As DataRow In _borrowers.Rows
+                Dim mid As String = If(row("MiddleName") Is DBNull.Value OrElse row("MiddleName").ToString() = "",
+                                       "", " " & row("MiddleName").ToString())
+                cmbBorrowerName.Items.Add($"{row("FirstName")}{mid} {row("LastName")} ({row("BorrowerUID")})")
+            Next
+            If cmbBorrowerName.Items.Count > 0 Then cmbBorrowerName.SelectedIndex = 0
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load borrowers: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub LoadLoanForEdit()
+        Try
+            Dim dt As DataTable = LoanRepository.GetByID(LoanID)
+            If dt.Rows.Count = 0 Then
+                MessageBox.Show("Loan record not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Close()
+                Return
+            End If
+            Dim row As DataRow = dt.Rows(0)
+            txtLoanID.Text = row("LoanReferenceID").ToString()
+
+            ' Select matching borrower in combo
+            Dim borrowerID As Integer = CInt(row("BorrowerID"))
+            For i As Integer = 0 To _borrowers.Rows.Count - 1
+                If CInt(_borrowers.Rows(i)("BorrowerID")) = borrowerID Then
+                    cmbBorrowerName.SelectedIndex = i
+                    Exit For
+                End If
+            Next
+
+            ' Select loan type
+            Dim loanType As String = row("LoanType").ToString()
+            Dim typeIdx As Integer = cmbLoanType.Items.IndexOf(loanType)
+            If typeIdx >= 0 Then cmbLoanType.SelectedIndex = typeIdx
+
+            txtPrincipalAmount.Text = row("PrincipalAmount").ToString()
+            txtInterestRate.Text = row("InterestRate").ToString()
+            txtTotalPayable.Text = row("TotalPayable").ToString()
+            txtTerm.Text = row("Term").ToString()
+            If row("ReleaseDate") IsNot DBNull.Value Then dtpReleaseDate.Value = CDate(row("ReleaseDate"))
+            If row("DueDate") IsNot DBNull.Value Then dtpDueDate.Value = CDate(row("DueDate"))
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load loan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' ?? Auto-calculate TotalPayable ???????????????????????????
+    Private Sub txtPrincipalAmount_TextChanged(sender As Object, e As EventArgs) Handles txtPrincipalAmount.TextChanged
+        CalculateTotalPayable()
+    End Sub
+
+    Private Sub txtInterestRate_TextChanged(sender As Object, e As EventArgs) Handles txtInterestRate.TextChanged
+        CalculateTotalPayable()
+    End Sub
+
+    Private Sub CalculateTotalPayable()
+        Dim principal As Decimal
+        Dim rate As Decimal
+        If Decimal.TryParse(txtPrincipalAmount.Text.Trim(), principal) AndAlso
+           Decimal.TryParse(txtInterestRate.Text.Trim(), rate) Then
+            Dim total As Decimal = principal * (1 + rate / 100)
+            txtTotalPayable.Text = total.ToString("F2")
+        Else
+            txtTotalPayable.Text = ""
+        End If
+    End Sub
+
+    ' ?? Add / Save Button ?????????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        MessageBox.Show(
-            "Loan record has been added successfully.",
-            "Loan Added",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+        If Not ValidateFields() Then Return
+        Try
+            If LoanID = 0 Then
+                InsertNewLoan()
+            Else
+                UpdateExistingLoan()
+            End If
+        Catch ex As Exception
+            MessageBox.Show($"Save failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Function ValidateFields() As Boolean
+        If cmbBorrowerName.SelectedIndex < 0 Then
+            MessageBox.Show("Please select a borrower.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cmbBorrowerName.Focus() : Return False
+        End If
+        If cmbLoanType.SelectedIndex < 0 Then
+            MessageBox.Show("Please select a loan type.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cmbLoanType.Focus() : Return False
+        End If
+        If txtPrincipalAmount.Text.Trim() = "" Then
+            MessageBox.Show("Principal Amount is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtPrincipalAmount.Focus() : Return False
+        End If
+        Dim principal As Decimal
+        If Not Decimal.TryParse(txtPrincipalAmount.Text.Trim(), principal) OrElse principal <= 0 Then
+            MessageBox.Show("Principal Amount must be a valid positive number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtPrincipalAmount.Focus() : Return False
+        End If
+        Dim rate As Decimal
+        If Not Decimal.TryParse(txtInterestRate.Text.Trim(), rate) OrElse rate < 0 Then
+            MessageBox.Show("Interest Rate must be a valid non-negative number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtInterestRate.Focus() : Return False
+        End If
+        Dim term As Integer
+        If Not Integer.TryParse(txtTerm.Text.Trim(), term) OrElse term <= 0 Then
+            MessageBox.Show("Term must be a valid positive number of months.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtTerm.Focus() : Return False
+        End If
+        If dtpDueDate.Value.Date <= dtpReleaseDate.Value.Date Then
+            MessageBox.Show("Due Date must be after Release Date.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
+        End If
+        Return True
+    End Function
+
+    Private Sub InsertNewLoan()
+        Dim borrowerRow As DataRow = _borrowers.Rows(cmbBorrowerName.SelectedIndex)
+        Dim borrowerID As Integer = CInt(borrowerRow("BorrowerID"))
+        Dim refID As String = txtLoanID.Text.Trim()
+        Dim loanType As String = cmbLoanType.SelectedItem.ToString()
+        Dim principal As Decimal = Decimal.Parse(txtPrincipalAmount.Text.Trim())
+        Dim rate As Decimal = Decimal.Parse(txtInterestRate.Text.Trim())
+        Dim total As Decimal = Decimal.Parse(txtTotalPayable.Text.Trim())
+        Dim term As Integer = Integer.Parse(txtTerm.Text.Trim())
+
+        LoanRepository.Insert(borrowerID, refID, loanType, principal, rate, total,
+                              term, dtpReleaseDate.Value, dtpDueDate.Value, "Pending")
+        ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
+            $"Added new loan {refID} for borrower ID {borrowerID}")
+        MessageBox.Show($"Loan {refID} added successfully.", "Loan Added", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Close()
+    End Sub
+
+    Private Sub UpdateExistingLoan()
+        Dim loanType As String = cmbLoanType.SelectedItem.ToString()
+        Dim principal As Decimal = Decimal.Parse(txtPrincipalAmount.Text.Trim())
+        Dim rate As Decimal = Decimal.Parse(txtInterestRate.Text.Trim())
+        Dim total As Decimal = Decimal.Parse(txtTotalPayable.Text.Trim())
+        Dim term As Integer = Integer.Parse(txtTerm.Text.Trim())
+
+        LoanRepository.Update(LoanID, loanType, principal, rate, total,
+                              term, dtpReleaseDate.Value, dtpDueDate.Value, "Pending")
+        ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
+            $"Updated loan ID {LoanID}: {txtLoanID.Text.Trim()}")
+        MessageBox.Show("Loan record updated successfully.", "Loan Updated", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
     End Sub
 
