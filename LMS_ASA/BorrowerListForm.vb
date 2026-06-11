@@ -1,4 +1,4 @@
-Public Class BorrowerListForm
+ï»¿Public Class BorrowerListForm
     Inherits Form
 
     ' ?? Controls ??????????????????????????????????????????????????
@@ -10,11 +10,13 @@ Public Class BorrowerListForm
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
     Private lblSearch As Label
-    Private txtSearch As TextBox
+    Private WithEvents txtSearch As TextBox
     Private pnlGrid As Panel
     Friend WithEvents dgvBorrowers As DataGridView
     Private pnlFooter As Panel
     Private lblRecordCount As Label
+
+    Private _fullData As DataTable
 
     Public Sub New()
         InitializeComponent()
@@ -102,7 +104,7 @@ Public Class BorrowerListForm
         btnDelete.Size = New Size(90, 34)
         btnDelete.Location = New Point(208, 11)
         btnDelete.Cursor = Cursors.Hand
-        btnDelete.Visible = False
+        btnDelete.Visible = True
 
         ' ?? lblSearch ?????????????????????????????????????????????
         lblSearch.Text = "Search:"
@@ -153,34 +155,6 @@ Public Class BorrowerListForm
         dgvBorrowers.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 240)
         dgvBorrowers.DefaultCellStyle.SelectionForeColor = Color.FromArgb(21, 67, 106)
 
-        ' ?? Columns ???????????????????????????????????????????????
-        Dim colUID As New DataGridViewTextBoxColumn()
-        colUID.Name = "BorrowerUID"
-        colUID.HeaderText = "Borrower UID"
-        colUID.FillWeight = 15
-
-        Dim colName As New DataGridViewTextBoxColumn()
-        colName.Name = "BorrowerName"
-        colName.HeaderText = "Borrower Name"
-        colName.FillWeight = 22
-
-        Dim colLoan As New DataGridViewTextBoxColumn()
-        colLoan.Name = "CurrentLoan"
-        colLoan.HeaderText = "Current Loan"
-        colLoan.FillWeight = 25
-
-        Dim colNextPayment As New DataGridViewTextBoxColumn()
-        colNextPayment.Name = "NextPaymentSchedule"
-        colNextPayment.HeaderText = "Next Payment Schedule"
-        colNextPayment.FillWeight = 25
-
-        Dim colStatus As New DataGridViewTextBoxColumn()
-        colStatus.Name = "Status"
-        colStatus.HeaderText = "Status"
-        colStatus.FillWeight = 13
-
-        dgvBorrowers.Columns.AddRange(colUID, colName, colLoan, colNextPayment, colStatus)
-
         ' ?? pnlFooter ?????????????????????????????????????????????
         pnlFooter.BackColor = Color.FromArgb(245, 247, 250)
         pnlFooter.Dock = DockStyle.Bottom
@@ -188,7 +162,7 @@ Public Class BorrowerListForm
         pnlFooter.Controls.Add(lblRecordCount)
 
         ' ?? lblRecordCount ????????????????????????????????????????
-        lblRecordCount.Text = "Showing 5 records"
+        lblRecordCount.Text = "Loading..."
         lblRecordCount.Font = New Font("Segoe UI", 8, FontStyle.Regular)
         lblRecordCount.ForeColor = Color.Gray
         lblRecordCount.AutoSize = True
@@ -208,24 +182,83 @@ Public Class BorrowerListForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub BorrowerListForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadSampleData()
+        LoadBorrowers()
     End Sub
 
-    ' ?? Load Sample Data ??????????????????????????????????????????
-    Private Sub LoadSampleData()
-        dgvBorrowers.Rows.Clear()
-        dgvBorrowers.Rows.Add("BR-0001", "Juan dela Cruz",  "Personal Loan – PHP 50,000",   "PHP 4,583.33 – Jul 15, 2025", "Active")
-        dgvBorrowers.Rows.Add("BR-0002", "Maria Santos",    "Business Loan – PHP 100,000",  "PHP 4,666.67 – Jul 20, 2025", "Active")
-        dgvBorrowers.Rows.Add("BR-0003", "Pedro Reyes",     "Salary Loan – PHP 25,000",     "PHP 4,333.33 – Jul 10, 2025", "Active")
-        dgvBorrowers.Rows.Add("BR-0004", "Ana Bautista",    "Emergency Loan – PHP 15,000",  "PHP 5,150.00 – Aug 01, 2025", "Pending")
-        dgvBorrowers.Rows.Add("BR-0005", "Carlos Mendoza",  "—",                            "—",                           "Inactive")
-        lblRecordCount.Text = $"Showing {dgvBorrowers.Rows.Count} records"
+    ' ?? Load Borrowers from DB ????????????????????????????????????
+    Private Sub LoadBorrowers()
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            _fullData = BuildDisplayTable(BorrowerRepository.GetAll())
+            dgvBorrowers.DataSource = _fullData
+            If dgvBorrowers.Columns.Contains("BorrowerID") Then
+                dgvBorrowers.Columns("BorrowerID").Visible = False
+            End If
+            ConfigureColumns()
+            lblRecordCount.Text = $"Showing {_fullData.Rows.Count} record(s)"
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load borrowers: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+    End Sub
+
+    Private Function BuildDisplayTable(raw As DataTable) As DataTable
+        Dim dt As New DataTable()
+        dt.Columns.Add("BorrowerID", GetType(Integer))
+        dt.Columns.Add("BorrowerUID", GetType(String))
+        dt.Columns.Add("Full Name", GetType(String))
+        dt.Columns.Add("Age", GetType(Integer))
+        dt.Columns.Add("Contact", GetType(String))
+        dt.Columns.Add("Email", GetType(String))
+        For Each row As DataRow In raw.Rows
+            Dim mid As String = If(row("MiddleName") Is DBNull.Value OrElse row("MiddleName").ToString() = "",
+                                   "", row("MiddleName").ToString() & " ")
+            dt.Rows.Add(
+                row("BorrowerID"),
+                row("BorrowerUID"),
+                row("FirstName").ToString() & " " & mid & row("LastName").ToString(),
+                row("Age"),
+                row("Contact"),
+                row("Email"))
+        Next
+        Return dt
+    End Function
+
+    Private Sub ConfigureColumns()
+        With dgvBorrowers
+            If .Columns.Contains("BorrowerUID") Then
+                .Columns("BorrowerUID").HeaderText = "Borrower UID"
+                .Columns("BorrowerUID").FillWeight = 15
+            End If
+            If .Columns.Contains("Full Name") Then .Columns("Full Name").FillWeight = 30
+            If .Columns.Contains("Age") Then .Columns("Age").FillWeight = 8
+            If .Columns.Contains("Contact") Then
+                .Columns("Contact").HeaderText = "Contact No."
+                .Columns("Contact").FillWeight = 20
+            End If
+            If .Columns.Contains("Email") Then .Columns("Email").FillWeight = 27
+        End With
+    End Sub
+
+    ' ?? Search ????????????????????????????????????????????????
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        If _fullData Is Nothing Then Return
+        Dim keyword As String = txtSearch.Text.Trim().Replace("'", "''") 
+        If keyword = "" Then
+            _fullData.DefaultView.RowFilter = ""
+        Else
+            _fullData.DefaultView.RowFilter =
+                $"[BorrowerUID] LIKE '%{keyword}%' OR [Full Name] LIKE '%{keyword}%' OR [Contact] LIKE '%{keyword}%'"
+        End If
+        lblRecordCount.Text = $"Showing {_fullData.DefaultView.Count} record(s)"
     End Sub
 
     ' ?? Add Button ????????????????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Dim frm As New NewBorrowerForm()
         frm.ShowDialog()
+        LoadBorrowers()
     End Sub
 
     ' ?? Update Button ?????????????????????????????????????????????
@@ -234,8 +267,11 @@ Public Class BorrowerListForm
             MessageBox.Show("Please select a borrower record to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
+        Dim selectedID As Integer = CInt(dgvBorrowers.SelectedRows(0).Cells("BorrowerID").Value)
         Dim frm As New NewBorrowerForm()
+        frm.BorrowerID = selectedID
         frm.ShowDialog()
+        LoadBorrowers()
     End Sub
 
     ' ?? Delete Button ?????????????????????????????????????????????
@@ -244,15 +280,21 @@ Public Class BorrowerListForm
             MessageBox.Show("Please select a borrower record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        Dim result As DialogResult = MessageBox.Show(
-            "Are you sure you want to delete this borrower record?",
+        Dim selectedName As String = dgvBorrowers.SelectedRows(0).Cells("Full Name").Value?.ToString()
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Delete borrower ""{selectedName}""? This action cannot be undone.",
             "Confirm Delete",
             MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question
-        )
-        If result = DialogResult.Yes Then
-            dgvBorrowers.Rows.Remove(dgvBorrowers.SelectedRows(0))
-            lblRecordCount.Text = $"Showing {dgvBorrowers.Rows.Count} records"
+            MessageBoxIcon.Warning)
+        If confirm = DialogResult.Yes Then
+            Try
+                Dim selectedID As Integer = CInt(dgvBorrowers.SelectedRows(0).Cells("BorrowerID").Value)
+                BorrowerRepository.Delete(selectedID)
+                ActivityLogger.Log(SessionManager.CurrentUsername, "Success", $"Deleted borrower ID {selectedID}: {selectedName}")
+                LoadBorrowers()
+            Catch ex As Exception
+                MessageBox.Show($"Delete failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
     End Sub
 
