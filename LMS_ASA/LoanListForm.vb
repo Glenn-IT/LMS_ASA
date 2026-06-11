@@ -9,12 +9,14 @@ Public Class LoanListForm
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
-    Private txtSearch As TextBox
+    Private WithEvents txtSearch As TextBox
     Private lblSearch As Label
     Private pnlGrid As Panel
     Friend WithEvents dgvLoans As DataGridView
     Private pnlFooter As Panel
     Private lblRecordCount As Label
+
+    Private _fullData As DataTable
 
     Public Sub New()
         InitializeComponent()
@@ -104,7 +106,7 @@ Public Class LoanListForm
         btnDelete.Size = New Size(90, 34)
         btnDelete.Location = New Point(208, 11)
         btnDelete.Cursor = Cursors.Hand
-        btnDelete.Visible = False
+        btnDelete.Visible = True
 
         ' ?? lblSearch ?????????????????????????????????????????????
         lblSearch.Text = "Search:"
@@ -155,34 +157,6 @@ Public Class LoanListForm
         dgvLoans.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 240)
         dgvLoans.DefaultCellStyle.SelectionForeColor = Color.FromArgb(21, 67, 106)
 
-        ' ?? Columns ???????????????????????????????????????????????
-        Dim colLoanID As New DataGridViewTextBoxColumn()
-        colLoanID.Name = "LoanID"
-        colLoanID.HeaderText = "Loan ID"
-        colLoanID.FillWeight = 10
-
-        Dim colBorrowerName As New DataGridViewTextBoxColumn()
-        colBorrowerName.Name = "BorrowerName"
-        colBorrowerName.HeaderText = "Borrower Name"
-        colBorrowerName.FillWeight = 20
-
-        Dim colLoanDetails As New DataGridViewTextBoxColumn()
-        colLoanDetails.Name = "LoanDetails"
-        colLoanDetails.HeaderText = "Loan Details"
-        colLoanDetails.FillWeight = 25
-
-        Dim colNextPayment As New DataGridViewTextBoxColumn()
-        colNextPayment.Name = "NextPaymentDetails"
-        colNextPayment.HeaderText = "Next Payment Details"
-        colNextPayment.FillWeight = 25
-
-        Dim colStatus As New DataGridViewTextBoxColumn()
-        colStatus.Name = "Status"
-        colStatus.HeaderText = "Status"
-        colStatus.FillWeight = 20
-
-        dgvLoans.Columns.AddRange(colLoanID, colBorrowerName, colLoanDetails, colNextPayment, colStatus)
-
         ' ?? pnlFooter ?????????????????????????????????????????????
         pnlFooter.BackColor = Color.FromArgb(245, 247, 250)
         pnlFooter.Dock = DockStyle.Bottom
@@ -190,7 +164,7 @@ Public Class LoanListForm
         pnlFooter.Controls.Add(lblRecordCount)
 
         ' ?? lblRecordCount ????????????????????????????????????????
-        lblRecordCount.Text = "Showing 5 records"
+        lblRecordCount.Text = "Loading..."
         lblRecordCount.Font = New Font("Segoe UI", 8, FontStyle.Regular)
         lblRecordCount.ForeColor = Color.Gray
         lblRecordCount.AutoSize = True
@@ -210,24 +184,94 @@ Public Class LoanListForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub LoanListForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadSampleData()
+        LoadLoans()
     End Sub
 
-    ' ?? Load Sample Data ??????????????????????????????????????????
-    Private Sub LoadSampleData()
-        dgvLoans.Rows.Clear()
-        dgvLoans.Rows.Add("LN-0001", "Juan dela Cruz",    "Personal Loan | PHP 50,000 | 12 mos @ 5%",  "PHP 4,583.33 – Jul 15, 2025", "Active")
-        dgvLoans.Rows.Add("LN-0002", "Maria Santos",      "Business Loan | PHP 100,000 | 24 mos @ 6%", "PHP 4,666.67 – Jul 20, 2025", "Active")
-        dgvLoans.Rows.Add("LN-0003", "Pedro Reyes",       "Salary Loan | PHP 25,000 | 6 mos @ 4%",    "PHP 4,333.33 – Jul 10, 2025", "Active")
-        dgvLoans.Rows.Add("LN-0004", "Ana Bautista",      "Emergency Loan | PHP 15,000 | 3 mos @ 3%", "PHP 5,150.00 – Aug 01, 2025", "Pending")
-        dgvLoans.Rows.Add("LN-0005", "Carlos Mendoza",    "Personal Loan | PHP 30,000 | 12 mos @ 5%", "—",                           "Closed")
-        lblRecordCount.Text = $"Showing {dgvLoans.Rows.Count} records"
+    ' ?? Load Loans from DB ????????????????????????????????????????
+    Private Sub LoadLoans()
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            _fullData = BuildDisplayTable(LoanRepository.GetAll())
+            dgvLoans.DataSource = _fullData
+            If dgvLoans.Columns.Contains("LoanID") Then
+                dgvLoans.Columns("LoanID").Visible = False
+            End If
+            ConfigureColumns()
+            lblRecordCount.Text = $"Showing {_fullData.Rows.Count} record(s)"
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load loans: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+    End Sub
+
+    Private Function BuildDisplayTable(raw As DataTable) As DataTable
+        Dim dt As New DataTable()
+        dt.Columns.Add("LoanID", GetType(Integer))
+        dt.Columns.Add("Reference ID", GetType(String))
+        dt.Columns.Add("Borrower", GetType(String))
+        dt.Columns.Add("Loan Type", GetType(String))
+        dt.Columns.Add("Principal (PHP)", GetType(Decimal))
+        dt.Columns.Add("Rate (%)", GetType(Decimal))
+        dt.Columns.Add("Total Payable", GetType(Decimal))
+        dt.Columns.Add("Term (mos)", GetType(Integer))
+        dt.Columns.Add("Status", GetType(String))
+        For Each row As DataRow In raw.Rows
+            dt.Rows.Add(
+                row("LoanID"),
+                row("LoanReferenceID"),
+                row("BorrowerName").ToString(),
+                row("LoanType").ToString(),
+                row("PrincipalAmount"),
+                row("InterestRate"),
+                row("TotalPayable"),
+                row("Term"),
+                row("Status").ToString())
+        Next
+        Return dt
+    End Function
+
+    Private Sub ConfigureColumns()
+        With dgvLoans
+            If .Columns.Contains("Reference ID") Then .Columns("Reference ID").FillWeight = 12
+            If .Columns.Contains("Borrower") Then .Columns("Borrower").FillWeight = 20
+            If .Columns.Contains("Loan Type") Then .Columns("Loan Type").FillWeight = 15
+            If .Columns.Contains("Principal (PHP)") Then
+                .Columns("Principal (PHP)").DefaultCellStyle.Format = "N2"
+                .Columns("Principal (PHP)").FillWeight = 14
+            End If
+            If .Columns.Contains("Rate (%)") Then
+                .Columns("Rate (%)").DefaultCellStyle.Format = "N2"
+                .Columns("Rate (%)").FillWeight = 8
+            End If
+            If .Columns.Contains("Total Payable") Then
+                .Columns("Total Payable").DefaultCellStyle.Format = "N2"
+                .Columns("Total Payable").FillWeight = 14
+            End If
+            If .Columns.Contains("Term (mos)") Then .Columns("Term (mos)").FillWeight = 9
+            If .Columns.Contains("Status") Then .Columns("Status").FillWeight = 8
+        End With
+    End Sub
+
+    ' ?? Search ????????????????????????????????????????????????
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        If _fullData Is Nothing Then Return
+        Dim keyword As String = txtSearch.Text.Trim().Replace("'", "''")
+        If keyword = "" Then
+            _fullData.DefaultView.RowFilter = ""
+        Else
+            _fullData.DefaultView.RowFilter =
+                $"[Reference ID] LIKE '%{keyword}%' OR [Borrower] LIKE '%{keyword}%' OR " &
+                $"[Loan Type] LIKE '%{keyword}%' OR [Status] LIKE '%{keyword}%'"
+        End If
+        lblRecordCount.Text = $"Showing {_fullData.DefaultView.Count} record(s)"
     End Sub
 
     ' ?? Add Button ????????????????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Dim frm As New NewLoanForm()
         frm.ShowDialog()
+        LoadLoans()
     End Sub
 
     ' ?? Update Button ?????????????????????????????????????????????
@@ -236,8 +280,11 @@ Public Class LoanListForm
             MessageBox.Show("Please select a loan record to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
+        Dim selectedID As Integer = CInt(dgvLoans.SelectedRows(0).Cells("LoanID").Value)
         Dim frm As New NewLoanForm()
+        frm.LoanID = selectedID
         frm.ShowDialog()
+        LoadLoans()
     End Sub
 
     ' ?? Delete Button ?????????????????????????????????????????????
@@ -246,15 +293,21 @@ Public Class LoanListForm
             MessageBox.Show("Please select a loan record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        Dim result As DialogResult = MessageBox.Show(
-            "Are you sure you want to delete this loan record?",
+        Dim selectedRef As String = dgvLoans.SelectedRows(0).Cells("Reference ID").Value?.ToString()
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Delete loan ""{selectedRef}""? This action cannot be undone.",
             "Confirm Delete",
             MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question
-        )
-        If result = DialogResult.Yes Then
-            dgvLoans.Rows.Remove(dgvLoans.SelectedRows(0))
-            lblRecordCount.Text = $"Showing {dgvLoans.Rows.Count} records"
+            MessageBoxIcon.Warning)
+        If confirm = DialogResult.Yes Then
+            Try
+                Dim selectedID As Integer = CInt(dgvLoans.SelectedRows(0).Cells("LoanID").Value)
+                LoanRepository.Delete(selectedID)
+                ActivityLogger.Log(SessionManager.CurrentUsername, "Success", $"Deleted loan ID {selectedID}: {selectedRef}")
+                LoadLoans()
+            Catch ex As Exception
+                MessageBox.Show($"Delete failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
     End Sub
 
@@ -270,6 +323,34 @@ Public Class LoanListForm
     End Sub
     Private Sub btnUpdate_MouseLeave(sender As Object, e As EventArgs) Handles btnUpdate.MouseLeave
         btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
+    End Sub
+    Private Sub btnDelete_MouseEnter(sender As Object, e As EventArgs) Handles btnDelete.MouseEnter
+        btnDelete.BackColor = Color.FromArgb(160, 40, 30)
+    End Sub
+    Private Sub btnDelete_MouseLeave(sender As Object, e As EventArgs) Handles btnDelete.MouseLeave
+        btnDelete.BackColor = Color.FromArgb(192, 57, 43)
+    End Sub
+
+    ' ?? Status Color Coding ???????????????????????????????????????????
+    Private Sub dgvLoans_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvLoans.CellFormatting
+        If e.RowIndex < 0 OrElse e.Value Is Nothing Then Return
+        If dgvLoans.Columns(e.ColumnIndex).Name <> "Status" Then Return
+        Select Case e.Value.ToString()
+            Case "Active", "Approved"
+                e.CellStyle.BackColor = Color.FromArgb(212, 237, 218)
+                e.CellStyle.ForeColor = Color.FromArgb(21, 87, 36)
+            Case "Pending"
+                e.CellStyle.BackColor = Color.FromArgb(255, 243, 205)
+                e.CellStyle.ForeColor = Color.FromArgb(133, 100, 4)
+            Case "Overdue", "Rejected"
+                e.CellStyle.BackColor = Color.FromArgb(248, 215, 218)
+                e.CellStyle.ForeColor = Color.FromArgb(114, 28, 36)
+            Case "Closed"
+                e.CellStyle.BackColor = Color.FromArgb(226, 227, 229)
+                e.CellStyle.ForeColor = Color.FromArgb(56, 61, 65)
+        End Select
+        e.CellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        e.FormattingApplied = True
     End Sub
 
 End Class
