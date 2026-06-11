@@ -10,11 +10,13 @@ Public Class BorrowerAccountsForm
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
     Private lblSearch As Label
-    Private txtSearch As TextBox
+    Private WithEvents txtSearch As TextBox
     Private pnlGrid As Panel
     Friend WithEvents dgvAccounts As DataGridView
     Private pnlFooter As Panel
     Private lblRecordCount As Label
+
+    Private _fullData As DataTable
 
     Public Sub New()
         InitializeComponent()
@@ -102,7 +104,7 @@ Public Class BorrowerAccountsForm
         btnDelete.Size = New Size(90, 34)
         btnDelete.Location = New Point(208, 11)
         btnDelete.Cursor = Cursors.Hand
-        btnDelete.Visible = False
+        btnDelete.Visible = True
 
         ' ?? lblSearch ?????????????????????????????????????????????
         lblSearch.Text = "Search:"
@@ -153,29 +155,6 @@ Public Class BorrowerAccountsForm
         dgvAccounts.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 240)
         dgvAccounts.DefaultCellStyle.SelectionForeColor = Color.FromArgb(21, 67, 106)
 
-        ' ?? Columns ???????????????????????????????????????????????
-        Dim colBorrowerName As New DataGridViewTextBoxColumn()
-        colBorrowerName.Name = "BorrowerName"
-        colBorrowerName.HeaderText = "Borrower Name"
-        colBorrowerName.FillWeight = 30
-
-        Dim colUsername As New DataGridViewTextBoxColumn()
-        colUsername.Name = "Username"
-        colUsername.HeaderText = "Username"
-        colUsername.FillWeight = 25
-
-        Dim colPassword As New DataGridViewTextBoxColumn()
-        colPassword.Name = "Password"
-        colPassword.HeaderText = "Password"
-        colPassword.FillWeight = 25
-
-        Dim colStatus As New DataGridViewTextBoxColumn()
-        colStatus.Name = "Status"
-        colStatus.HeaderText = "Status"
-        colStatus.FillWeight = 20
-
-        dgvAccounts.Columns.AddRange(colBorrowerName, colUsername, colPassword, colStatus)
-
         ' ?? pnlFooter ?????????????????????????????????????????????
         pnlFooter.BackColor = Color.FromArgb(245, 247, 250)
         pnlFooter.Dock = DockStyle.Bottom
@@ -183,7 +162,7 @@ Public Class BorrowerAccountsForm
         pnlFooter.Controls.Add(lblRecordCount)
 
         ' ?? lblRecordCount ????????????????????????????????????????
-        lblRecordCount.Text = "Showing 5 records"
+        lblRecordCount.Text = "Loading..."
         lblRecordCount.Font = New Font("Segoe UI", 8, FontStyle.Regular)
         lblRecordCount.ForeColor = Color.Gray
         lblRecordCount.AutoSize = True
@@ -203,28 +182,74 @@ Public Class BorrowerAccountsForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub BorrowerAccountsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadSampleData()
+        LoadAccounts()
     End Sub
 
-    ' ?? Load Sample Data ??????????????????????????????????????????
-    Private Sub LoadSampleData()
-        dgvAccounts.Rows.Clear()
-        dgvAccounts.Rows.Add("Juan dela Cruz",  "juan.delacruz",  "••••••••", "Active")
-        dgvAccounts.Rows.Add("Maria Santos",    "maria.santos",   "••••••••", "Active")
-        dgvAccounts.Rows.Add("Pedro Reyes",     "pedro.reyes",    "••••••••", "Active")
-        dgvAccounts.Rows.Add("Ana Bautista",    "ana.bautista",   "••••••••", "Inactive")
-        dgvAccounts.Rows.Add("Carlos Mendoza",  "carlos.mendoza", "••••••••", "Inactive")
-        lblRecordCount.Text = $"Showing {dgvAccounts.Rows.Count} records"
+    ' ?? Load Accounts from DB ?????????????????????????????????????
+    Private Sub LoadAccounts()
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            _fullData = BuildDisplayTable(UserRepository.GetAll())
+            dgvAccounts.DataSource = _fullData
+            If dgvAccounts.Columns.Contains("UserID") Then
+                dgvAccounts.Columns("UserID").Visible = False
+            End If
+            ConfigureColumns()
+            lblRecordCount.Text = $"Showing {_fullData.Rows.Count} record(s)"
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load accounts: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+    End Sub
+
+    Private Function BuildDisplayTable(raw As DataTable) As DataTable
+        Dim dt As New DataTable()
+        dt.Columns.Add("UserID", GetType(Integer))
+        dt.Columns.Add("Username", GetType(String))
+        dt.Columns.Add("Status", GetType(String))
+        dt.Columns.Add("Created At", GetType(String))
+        For Each row As DataRow In raw.Rows
+            If row("Role").ToString() <> "Borrower" Then Continue For
+            Dim isActive As Boolean = CBool(row("IsActive"))
+            dt.Rows.Add(
+                row("UserID"),
+                row("Username").ToString(),
+                If(isActive, "Active", "Inactive"),
+                CDate(row("CreatedAt")).ToString("MMM dd, yyyy"))
+        Next
+        Return dt
+    End Function
+
+    Private Sub ConfigureColumns()
+        With dgvAccounts
+            If .Columns.Contains("Username") Then .Columns("Username").FillWeight = 40
+            If .Columns.Contains("Status") Then .Columns("Status").FillWeight = 20
+            If .Columns.Contains("Created At") Then .Columns("Created At").FillWeight = 40
+        End With
+    End Sub
+
+    ' ?? Search ????????????????????????????????????????????????
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        If _fullData Is Nothing Then Return
+        Dim keyword As String = txtSearch.Text.Trim().Replace("'", "''")
+        If keyword = "" Then
+            _fullData.DefaultView.RowFilter = ""
+        Else
+            _fullData.DefaultView.RowFilter =
+                $"[Username] LIKE '%{keyword}%' OR [Status] LIKE '%{keyword}%'"
+        End If
+        lblRecordCount.Text = $"Showing {_fullData.DefaultView.Count} record(s)"
     End Sub
 
     ' ?? Add Button ????????????????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         MessageBox.Show(
-            "Add Borrower Account feature will be available here.",
-            "Add Account",
+            "Borrower accounts are created automatically when adding a new borrower." &
+            Environment.NewLine & "Use the Borrower List to add a new borrower.",
+            "Information",
             MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+            MessageBoxIcon.Information)
     End Sub
 
     ' ?? Update Button ?????????????????????????????????????????????
@@ -233,29 +258,35 @@ Public Class BorrowerAccountsForm
             MessageBox.Show("Please select an account to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        MessageBox.Show(
-            "Update Borrower Account feature will be available here.",
-            "Update Account",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+        Dim selectedID As Integer = CInt(dgvAccounts.SelectedRows(0).Cells("UserID").Value)
+        Dim frm As New EditAccountForm()
+        frm.UserID = selectedID
+        frm.ShowDialog()
+        LoadAccounts()
     End Sub
 
-    ' ?? Delete Button ?????????????????????????????????????????????
+    ' ?? Delete (Deactivate) Button ??????????????????????????
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         If dgvAccounts.SelectedRows.Count = 0 Then
-            MessageBox.Show("Please select an account to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Please select an account to deactivate.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        Dim result As DialogResult = MessageBox.Show(
-            "Are you sure you want to delete this borrower account?",
-            "Confirm Delete",
+        Dim selectedUsername As String = dgvAccounts.SelectedRows(0).Cells("Username").Value?.ToString()
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Deactivate account ""{selectedUsername}""? The borrower will no longer be able to log in.",
+            "Confirm Deactivate",
             MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question
-        )
-        If result = DialogResult.Yes Then
-            dgvAccounts.Rows.Remove(dgvAccounts.SelectedRows(0))
-            lblRecordCount.Text = $"Showing {dgvAccounts.Rows.Count} records"
+            MessageBoxIcon.Warning)
+        If confirm = DialogResult.Yes Then
+            Try
+                Dim selectedID As Integer = CInt(dgvAccounts.SelectedRows(0).Cells("UserID").Value)
+                UserRepository.Deactivate(selectedID)
+                ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
+                    $"Deactivated account for user ID {selectedID}: {selectedUsername}")
+                LoadAccounts()
+            Catch ex As Exception
+                MessageBox.Show($"Deactivate failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
     End Sub
 
@@ -277,6 +308,22 @@ Public Class BorrowerAccountsForm
     End Sub
     Private Sub btnDelete_MouseLeave(sender As Object, e As EventArgs) Handles btnDelete.MouseLeave
         btnDelete.BackColor = Color.FromArgb(192, 57, 43)
+    End Sub
+
+    ' ?? Status Color Coding ???????????????????????????????????????????
+    Private Sub dgvAccounts_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvAccounts.CellFormatting
+        If e.RowIndex < 0 OrElse e.Value Is Nothing Then Return
+        If dgvAccounts.Columns(e.ColumnIndex).Name <> "Status" Then Return
+        Select Case e.Value.ToString()
+            Case "Active"
+                e.CellStyle.BackColor = Color.FromArgb(212, 237, 218)
+                e.CellStyle.ForeColor = Color.FromArgb(21, 87, 36)
+            Case "Inactive"
+                e.CellStyle.BackColor = Color.FromArgb(226, 227, 229)
+                e.CellStyle.ForeColor = Color.FromArgb(56, 61, 65)
+        End Select
+        e.CellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        e.FormattingApplied = True
     End Sub
 
 End Class
