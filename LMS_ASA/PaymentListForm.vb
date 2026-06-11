@@ -10,11 +10,13 @@ Public Class PaymentListForm
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
     Private lblSearch As Label
-    Private txtSearch As TextBox
+    Private WithEvents txtSearch As TextBox
     Private pnlGrid As Panel
     Friend WithEvents dgvPayments As DataGridView
     Private pnlFooter As Panel
     Private lblRecordCount As Label
+
+    Private _fullData As DataTable
 
     Public Sub New()
         InitializeComponent()
@@ -102,7 +104,7 @@ Public Class PaymentListForm
         btnDelete.Size = New Size(90, 34)
         btnDelete.Location = New Point(208, 11)
         btnDelete.Cursor = Cursors.Hand
-        btnDelete.Visible = False
+        btnDelete.Visible = True
 
         ' ?? lblSearch ?????????????????????????????????????????????
         lblSearch.Text = "Search:"
@@ -153,34 +155,6 @@ Public Class PaymentListForm
         dgvPayments.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 240)
         dgvPayments.DefaultCellStyle.SelectionForeColor = Color.FromArgb(21, 67, 106)
 
-        ' ?? Columns ???????????????????????????????????????????????
-        Dim colRefID As New DataGridViewTextBoxColumn()
-        colRefID.Name = "LoanReferenceID"
-        colRefID.HeaderText = "Loan Reference ID"
-        colRefID.FillWeight = 20
-
-        Dim colPayee As New DataGridViewTextBoxColumn()
-        colPayee.Name = "Payee"
-        colPayee.HeaderText = "Payee"
-        colPayee.FillWeight = 22
-
-        Dim colAmount As New DataGridViewTextBoxColumn()
-        colAmount.Name = "Amount"
-        colAmount.HeaderText = "Amount"
-        colAmount.FillWeight = 20
-
-        Dim colPenalty As New DataGridViewTextBoxColumn()
-        colPenalty.Name = "Penalty"
-        colPenalty.HeaderText = "Penalty"
-        colPenalty.FillWeight = 20
-
-        Dim colStatus As New DataGridViewTextBoxColumn()
-        colStatus.Name = "Status"
-        colStatus.HeaderText = "Status"
-        colStatus.FillWeight = 18
-
-        dgvPayments.Columns.AddRange(colRefID, colPayee, colAmount, colPenalty, colStatus)
-
         ' ?? pnlFooter ?????????????????????????????????????????????
         pnlFooter.BackColor = Color.FromArgb(245, 247, 250)
         pnlFooter.Dock = DockStyle.Bottom
@@ -188,7 +162,7 @@ Public Class PaymentListForm
         pnlFooter.Controls.Add(lblRecordCount)
 
         ' ?? lblRecordCount ????????????????????????????????????????
-        lblRecordCount.Text = "Showing 5 records"
+        lblRecordCount.Text = "Loading..."
         lblRecordCount.Font = New Font("Segoe UI", 8, FontStyle.Regular)
         lblRecordCount.ForeColor = Color.Gray
         lblRecordCount.AutoSize = True
@@ -208,28 +182,91 @@ Public Class PaymentListForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub PaymentListForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadSampleData()
+        LoadPayments()
     End Sub
 
-    ' ?? Load Sample Data ??????????????????????????????????????????
-    Private Sub LoadSampleData()
-        dgvPayments.Rows.Clear()
-        dgvPayments.Rows.Add("LN-0001", "Juan dela Cruz",  "PHP 4,583.33", "PHP 0.00",   "Paid")
-        dgvPayments.Rows.Add("LN-0002", "Maria Santos",    "PHP 4,666.67", "PHP 0.00",   "Paid")
-        dgvPayments.Rows.Add("LN-0003", "Pedro Reyes",     "PHP 4,333.33", "PHP 150.00", "Overdue")
-        dgvPayments.Rows.Add("LN-0001", "Juan dela Cruz",  "PHP 4,583.33", "PHP 0.00",   "Pending")
-        dgvPayments.Rows.Add("LN-0004", "Ana Bautista",    "PHP 5,150.00", "PHP 200.00", "Overdue")
-        lblRecordCount.Text = $"Showing {dgvPayments.Rows.Count} records"
+    ' ?? Load Payments from DB ?????????????????????????????????????
+    Private Sub LoadPayments()
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            _fullData = BuildDisplayTable(PaymentRepository.GetAll())
+            dgvPayments.DataSource = _fullData
+            If dgvPayments.Columns.Contains("PaymentID") Then
+                dgvPayments.Columns("PaymentID").Visible = False
+            End If
+            ConfigureColumns()
+            lblRecordCount.Text = $"Showing {_fullData.Rows.Count} record(s)"
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load payments: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+    End Sub
+
+    Private Function BuildDisplayTable(raw As DataTable) As DataTable
+        Dim dt As New DataTable()
+        dt.Columns.Add("PaymentID", GetType(Integer))
+        dt.Columns.Add("Loan Ref", GetType(String))
+        dt.Columns.Add("Borrower", GetType(String))
+        dt.Columns.Add("Payee", GetType(String))
+        dt.Columns.Add("Amount (PHP)", GetType(Decimal))
+        dt.Columns.Add("Penalty (PHP)", GetType(Decimal))
+        dt.Columns.Add("Payment Date", GetType(DateTime))
+        dt.Columns.Add("Status", GetType(String))
+        For Each row As DataRow In raw.Rows
+            dt.Rows.Add(
+                row("PaymentID"),
+                row("LoanReferenceID").ToString(),
+                row("BorrowerName").ToString(),
+                row("Payee").ToString(),
+                row("Amount"),
+                row("Penalty"),
+                row("PaymentDate"),
+                row("Status").ToString())
+        Next
+        Return dt
+    End Function
+
+    Private Sub ConfigureColumns()
+        With dgvPayments
+            If .Columns.Contains("Loan Ref") Then .Columns("Loan Ref").FillWeight = 12
+            If .Columns.Contains("Borrower") Then .Columns("Borrower").FillWeight = 20
+            If .Columns.Contains("Payee") Then .Columns("Payee").FillWeight = 18
+            If .Columns.Contains("Amount (PHP)") Then
+                .Columns("Amount (PHP)").DefaultCellStyle.Format = "N2"
+                .Columns("Amount (PHP)").FillWeight = 14
+            End If
+            If .Columns.Contains("Penalty (PHP)") Then
+                .Columns("Penalty (PHP)").DefaultCellStyle.Format = "N2"
+                .Columns("Penalty (PHP)").FillWeight = 13
+            End If
+            If .Columns.Contains("Payment Date") Then
+                .Columns("Payment Date").DefaultCellStyle.Format = "MMM dd, yyyy"
+                .Columns("Payment Date").FillWeight = 15
+            End If
+            If .Columns.Contains("Status") Then .Columns("Status").FillWeight = 8
+        End With
+    End Sub
+
+    ' ?? Search ????????????????????????????????????????????????
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        If _fullData Is Nothing Then Return
+        Dim keyword As String = txtSearch.Text.Trim().Replace("'", "''")
+        If keyword = "" Then
+            _fullData.DefaultView.RowFilter = ""
+        Else
+            _fullData.DefaultView.RowFilter =
+                $"[Loan Ref] LIKE '%{keyword}%' OR [Borrower] LIKE '%{keyword}%' OR " &
+                $"[Payee] LIKE '%{keyword}%' OR [Status] LIKE '%{keyword}%'"
+        End If
+        lblRecordCount.Text = $"Showing {_fullData.DefaultView.Count} record(s)"
     End Sub
 
     ' ?? Add Button ????????????????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        MessageBox.Show(
-            "Add Payment feature will be available here.",
-            "Add Payment",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+        Dim frm As New NewPaymentForm()
+        frm.ShowDialog()
+        LoadPayments()
     End Sub
 
     ' ?? Update Button ?????????????????????????????????????????????
@@ -238,12 +275,11 @@ Public Class PaymentListForm
             MessageBox.Show("Please select a payment record to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        MessageBox.Show(
-            "Update Payment feature will be available here.",
-            "Update Payment",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+        Dim selectedID As Integer = CInt(dgvPayments.SelectedRows(0).Cells("PaymentID").Value)
+        Dim frm As New NewPaymentForm()
+        frm.PaymentID = selectedID
+        frm.ShowDialog()
+        LoadPayments()
     End Sub
 
     ' ?? Delete Button ?????????????????????????????????????????????
@@ -252,15 +288,23 @@ Public Class PaymentListForm
             MessageBox.Show("Please select a payment record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        Dim result As DialogResult = MessageBox.Show(
-            "Are you sure you want to delete this payment record?",
+        Dim selectedRef As String = dgvPayments.SelectedRows(0).Cells("Loan Ref").Value?.ToString()
+        Dim selectedPayee As String = dgvPayments.SelectedRows(0).Cells("Payee").Value?.ToString()
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Delete payment for loan ""{selectedRef}"" by ""{selectedPayee}""? This action cannot be undone.",
             "Confirm Delete",
             MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question
-        )
-        If result = DialogResult.Yes Then
-            dgvPayments.Rows.Remove(dgvPayments.SelectedRows(0))
-            lblRecordCount.Text = $"Showing {dgvPayments.Rows.Count} records"
+            MessageBoxIcon.Warning)
+        If confirm = DialogResult.Yes Then
+            Try
+                Dim selectedID As Integer = CInt(dgvPayments.SelectedRows(0).Cells("PaymentID").Value)
+                PaymentRepository.Delete(selectedID)
+                ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
+                    $"Deleted payment ID {selectedID}: {selectedRef} / {selectedPayee}")
+                LoadPayments()
+            Catch ex As Exception
+                MessageBox.Show($"Delete failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
     End Sub
 
@@ -282,6 +326,25 @@ Public Class PaymentListForm
     End Sub
     Private Sub btnDelete_MouseLeave(sender As Object, e As EventArgs) Handles btnDelete.MouseLeave
         btnDelete.BackColor = Color.FromArgb(192, 57, 43)
+    End Sub
+
+    ' ?? Status Color Coding ???????????????????????????????????????????
+    Private Sub dgvPayments_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvPayments.CellFormatting
+        If e.RowIndex < 0 OrElse e.Value Is Nothing Then Return
+        If dgvPayments.Columns(e.ColumnIndex).Name <> "Status" Then Return
+        Select Case e.Value.ToString()
+            Case "Paid"
+                e.CellStyle.BackColor = Color.FromArgb(212, 237, 218)
+                e.CellStyle.ForeColor = Color.FromArgb(21, 87, 36)
+            Case "Pending"
+                e.CellStyle.BackColor = Color.FromArgb(255, 243, 205)
+                e.CellStyle.ForeColor = Color.FromArgb(133, 100, 4)
+            Case "Overdue"
+                e.CellStyle.BackColor = Color.FromArgb(248, 215, 218)
+                e.CellStyle.ForeColor = Color.FromArgb(114, 28, 36)
+        End Select
+        e.CellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        e.FormattingApplied = True
     End Sub
 
 End Class
