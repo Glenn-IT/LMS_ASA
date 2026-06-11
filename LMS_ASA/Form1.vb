@@ -1,4 +1,8 @@
-﻿Public Class LoginForm
+Public Class LoginForm
+
+    Private _failedAttempts As Integer = 0
+    Private _countdown As Integer = 0
+    Private WithEvents _lockoutTimer As New Timer() With {.Interval = 1000}
 
     ' ── Form Load ────────────────────────────────────────────────
     Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -7,25 +11,105 @@
         txtUsername.Focus()
     End Sub
 
-    ' ── LOGIN button — opens Admin Dashboard ──────────────────────
+    ' ── LOGIN button ─────────────────────────────────────────────
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        Dim dashboard As New AdminDashboardForm()
-        dashboard.Show()
-        Me.Hide()
+        Dim username As String = txtUsername.Text.Trim()
+        Dim password As String = txtPassword.Text
+
+        If String.IsNullOrEmpty(username) OrElse String.IsNullOrEmpty(password) Then
+            MessageBox.Show("Please enter your username and password.",
+                            "Required Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Try
+            Dim dt As DataTable = UserRepository.GetByUsername(username)
+
+            If dt.Rows.Count = 0 Then
+                HandleFailedLogin(username, "Login failed — username not found.")
+                Return
+            End If
+
+            Dim row As DataRow = dt.Rows(0)
+
+            If Not PasswordHelper.VerifyPassword(password, row("PasswordHash").ToString()) Then
+                HandleFailedLogin(username, "Login failed — incorrect password.")
+                Return
+            End If
+
+            ' ── Successful login ──────────────────────────────────
+            _failedAttempts = 0
+
+            Dim userID     As Integer = CInt(row("UserID"))
+            Dim role       As String  = row("Role").ToString()
+            Dim borrowerID As Integer = 0
+
+            If role = "Borrower" Then
+                Dim bDt As DataTable = BorrowerRepository.GetByUserID(userID)
+                If bDt.Rows.Count > 0 Then borrowerID = CInt(bDt.Rows(0)("BorrowerID"))
+            End If
+
+            SessionManager.SetSession(userID, username, role, borrowerID)
+            ActivityLogger.Log(username, "Success", "User logged in.")
+
+            MessageBox.Show($"Login successful! Welcome, {username}.",
+                            "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            If role = "Admin" Then
+                Dim dashboard As New AdminDashboardForm()
+                dashboard.Show()
+            Else
+                Dim dashboard As New BorrowerDashboardForm()
+                dashboard.Show()
+            End If
+            Me.Hide()
+
+        Catch ex As Exception
+            MessageBox.Show("A database error occurred:" & Environment.NewLine & ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
-    ' ── Admin role button ─────────────────────────────────────────
-    Private Sub btnAdmin_Click(sender As Object, e As EventArgs) Handles btnAdmin.Click
-        Dim dashboard As New AdminDashboardForm()
-        dashboard.Show()
-        Me.Hide()
+    ' ── Brute-force lockout helpers ───────────────────────────────
+    Private Sub HandleFailedLogin(username As String, logMsg As String)
+        ActivityLogger.Log(username, "Failed", logMsg)
+        txtPassword.Clear()
+        _failedAttempts += 1
+
+        If _failedAttempts >= 3 Then
+            StartLockout()
+        Else
+            Dim attemptsLeft As Integer = 3 - _failedAttempts
+            MessageBox.Show($"Invalid username or password. {attemptsLeft} attempt(s) remaining before lockout.",
+                            "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtPassword.Focus()
+        End If
     End Sub
 
-    ' ── Borrower / User role button ───────────────────────────────
-    Private Sub btnUser_Click(sender As Object, e As EventArgs) Handles btnUser.Click
-        Dim dashboard As New BorrowerDashboardForm()
-        dashboard.Show()
-        Me.Hide()
+    Private Sub StartLockout()
+        _countdown = 30
+        btnLogin.Enabled = False
+        btnLogin.Text = $"Locked ({_countdown}s)"
+        _lockoutTimer.Start()
+        MessageBox.Show("Too many failed attempts. Login is locked for 30 seconds.",
+                        "Account Locked", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    End Sub
+
+    Private Sub _lockoutTimer_Tick(sender As Object, e As EventArgs) Handles _lockoutTimer.Tick
+        _countdown -= 1
+        btnLogin.Text = $"Locked ({_countdown}s)"
+        If _countdown <= 0 Then
+            _lockoutTimer.Stop()
+            _failedAttempts = 0
+            btnLogin.Enabled = True
+            btnLogin.Text = "Login"
+            txtUsername.Focus()
+        End If
+    End Sub
+
+    ' ── Show Password Toggle ──────────────────────────────────────
+    Private Sub chkShowPassword_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPassword.CheckedChanged
+        txtPassword.PasswordChar = If(chkShowPassword.Checked, Chr(0), "●"c)
     End Sub
 
     ' ── Forgot Password Link ──────────────────────────────────────
@@ -44,24 +128,10 @@
 
     ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnLogin_MouseEnter(sender As Object, e As EventArgs) Handles btnLogin.MouseEnter
-        btnLogin.BackColor = Color.FromArgb(30, 95, 150)
+        If btnLogin.Enabled Then btnLogin.BackColor = Color.FromArgb(30, 95, 150)
     End Sub
     Private Sub btnLogin_MouseLeave(sender As Object, e As EventArgs) Handles btnLogin.MouseLeave
-        btnLogin.BackColor = Color.FromArgb(21, 67, 106)
-    End Sub
-
-    Private Sub btnAdmin_MouseEnter(sender As Object, e As EventArgs) Handles btnAdmin.MouseEnter
-        btnAdmin.BackColor = Color.FromArgb(40, 100, 160)
-    End Sub
-    Private Sub btnAdmin_MouseLeave(sender As Object, e As EventArgs) Handles btnAdmin.MouseLeave
-        btnAdmin.BackColor = Color.FromArgb(52, 120, 180)
-    End Sub
-
-    Private Sub btnUser_MouseEnter(sender As Object, e As EventArgs) Handles btnUser.MouseEnter
-        btnUser.BackColor = Color.FromArgb(30, 140, 75)
-    End Sub
-    Private Sub btnUser_MouseLeave(sender As Object, e As EventArgs) Handles btnUser.MouseLeave
-        btnUser.BackColor = Color.FromArgb(39, 174, 96)
+        If btnLogin.Enabled Then btnLogin.BackColor = Color.FromArgb(21, 67, 106)
     End Sub
 
 End Class
