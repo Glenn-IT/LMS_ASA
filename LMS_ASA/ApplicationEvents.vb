@@ -25,5 +25,17 @@ Namespace My
 
     Partial Friend Class MyApplication
 
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            If Not DatabaseHelper.TestConnection() Then
+                MessageBox.Show(
+                    "Cannot connect to the database." & vbCrLf &
+                    "Please ensure SQL Server is running and LMS_DB exists.",
+                    "Database Connection Failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error)
+                e.Cancel = True
+            End If
+        End Sub
+
     End Class
 End Namespace
