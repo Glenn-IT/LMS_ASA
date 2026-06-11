@@ -34,6 +34,9 @@ Public Class NewBorrowerForm
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnCancel As Button
 
+    Public Property BorrowerID As Integer = 0
+    Private _idImagePath As String = ""
+
     Public Sub New()
         InitializeComponent()
     End Sub
@@ -111,7 +114,7 @@ Public Class NewBorrowerForm
         pnlBody.Controls.Add(grpPersonalInfo)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpPersonalInfo � UID, First, Middle, Last Name
+        ' grpPersonalInfo � UID, First, Middle, Last Name
         ' ??????????????????????????????????????????????????????????
         grpPersonalInfo.Text = "Personal Information"
         grpPersonalInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -187,7 +190,7 @@ Public Class NewBorrowerForm
         txtLastName.BackColor = Color.FromArgb(245, 248, 252)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpDetails � Age, DOB, Contact, Email
+        ' grpDetails � Age, DOB, Contact, Email
         ' ??????????????????????????????????????????????????????????
         grpDetails.Text = "Contact Details"
         grpDetails.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -216,7 +219,8 @@ Public Class NewBorrowerForm
         txtAge.Size = New Size(100, 28)
         txtAge.Location = New Point(16, 48)
         txtAge.BorderStyle = BorderStyle.FixedSingle
-        txtAge.BackColor = Color.FromArgb(245, 248, 252)
+        txtAge.BackColor = Color.FromArgb(235, 240, 245)
+        txtAge.ReadOnly = True
 
         ' ?? Date of Birth ?????????????????????????????????????????
         lblDateOfBirth.Text = "DATE OF BIRTH"
@@ -245,6 +249,7 @@ Public Class NewBorrowerForm
         txtContact.Location = New Point(412, 48)
         txtContact.BorderStyle = BorderStyle.FixedSingle
         txtContact.BackColor = Color.FromArgb(245, 248, 252)
+        txtContact.MaxLength = 11
 
         ' ?? Email ?????????????????????????????????????????????????
         lblEmail.Text = "EMAIL ADDRESS"
@@ -261,7 +266,7 @@ Public Class NewBorrowerForm
         txtEmail.BackColor = Color.FromArgb(245, 248, 252)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpID � Upload ID
+        ' grpID � Upload ID
         ' ??????????????????????????????????????????????????????????
         grpID.Text = "Valid ID"
         grpID.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -339,6 +344,7 @@ Public Class NewBorrowerForm
 
         ' ?? Form ??????????????????????????????????????????????????
         Me.Text = "LMS - New Borrower"
+        Me.AcceptButton = btnAdd
         Me.ClientSize = New Size(880, 530)
         Me.StartPosition = FormStartPosition.CenterParent
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
@@ -355,7 +361,55 @@ Public Class NewBorrowerForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub NewBorrowerForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        dtpDateOfBirth.Value = New DateTime(1995, 1, 1)
+        If BorrowerID = 0 Then
+            Try
+                txtBorrowerUID.Text = BorrowerRepository.GetNextUID()
+            Catch ex As Exception
+                txtBorrowerUID.Text = "BRW-0001"
+            End Try
+            dtpDateOfBirth.Value = New DateTime(1995, 1, 1)
+            ComputeAge()
+            lblTitle.Text = "New Borrower"
+            lblSubtitle.Text = "Fill in the form below to register a new borrower"
+            btnAdd.Text = "Add Borrower"
+            Me.Text = "LMS - New Borrower"
+        Else
+            lblTitle.Text = "Edit Borrower"
+            lblSubtitle.Text = "Update the borrower's information below"
+            btnAdd.Text = "Save Changes"
+            Me.Text = "LMS - Edit Borrower"
+            LoadBorrowerForEdit()
+        End If
+    End Sub
+
+    Private Sub LoadBorrowerForEdit()
+        Try
+            Dim dt As DataTable = BorrowerRepository.GetByID(BorrowerID)
+            If dt.Rows.Count = 0 Then
+                MessageBox.Show("Borrower record not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Close()
+                Return
+            End If
+            Dim row As DataRow = dt.Rows(0)
+            txtBorrowerUID.Text = row("BorrowerUID").ToString()
+            txtFirstName.Text = row("FirstName").ToString()
+            txtMiddleName.Text = If(row("MiddleName") Is DBNull.Value, "", row("MiddleName").ToString())
+            txtLastName.Text = row("LastName").ToString()
+            txtAge.Text = row("Age").ToString()
+            If row("DateOfBirth") IsNot DBNull.Value Then
+                dtpDateOfBirth.Value = CDate(row("DateOfBirth"))
+            End If
+            ComputeAge()
+            txtContact.Text = row("Contact").ToString()
+            txtEmail.Text = row("Email").ToString()
+            If row("IDImagePath") IsNot DBNull.Value AndAlso row("IDImagePath").ToString() <> "" Then
+                _idImagePath = row("IDImagePath").ToString()
+                lblIDFileName.Text = IO.Path.GetFileName(_idImagePath)
+                lblIDFileName.ForeColor = Color.FromArgb(21, 67, 106)
+            End If
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load borrower: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' ?? Upload ID ?????????????????????????????????????????????????
@@ -365,21 +419,140 @@ Public Class NewBorrowerForm
             dlg.Filter = "Image & PDF Files|*.jpg;*.jpeg;*.png;*.pdf"
             dlg.Multiselect = False
             If dlg.ShowDialog() = DialogResult.OK Then
+                _idImagePath = dlg.FileName
                 lblIDFileName.Text = IO.Path.GetFileName(dlg.FileName)
                 lblIDFileName.ForeColor = Color.FromArgb(21, 67, 106)
             End If
         End Using
     End Sub
 
-    ' ?? Add Borrower ??????????????????????????????????????????????
+    ' ?? Add / Save Borrower ???????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        MessageBox.Show(
-            "Borrower record has been added successfully.",
-            "Borrower Added",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+        If Not ValidateFields() Then Return
+
+        Dim ageVal As Integer
+        If Not Integer.TryParse(txtAge.Text.Trim(), ageVal) OrElse ageVal <= 0 Then
+            MessageBox.Show("Age must be a valid positive number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtAge.Focus()
+            Return
+        End If
+        If ageVal < 18 OrElse ageVal > 120 Then
+            MessageBox.Show("Age must be between 18 and 120.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtAge.Focus()
+            Return
+        End If
+
+        Try
+            If BorrowerID = 0 Then
+                InsertNewBorrower(ageVal)
+            Else
+                UpdateExistingBorrower(ageVal)
+            End If
+        Catch ex As Exception
+            MessageBox.Show($"Save failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Function ValidateFields() As Boolean
+        If txtFirstName.Text.Trim() = "" Then
+            MessageBox.Show("First Name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtFirstName.Focus()
+            Return False
+        End If
+        If txtLastName.Text.Trim() = "" Then
+            MessageBox.Show("Last Name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtLastName.Focus()
+            Return False
+        End If
+        If txtAge.Text.Trim() = "" Then
+            MessageBox.Show("Age is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtAge.Focus()
+            Return False
+        End If
+        If txtContact.Text.Trim() = "" Then
+            MessageBox.Show("Contact Number is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtContact.Focus()
+            Return False
+        End If
+        If txtContact.Text.Trim().Length <> 11 Then
+            MessageBox.Show("Contact Number must be exactly 11 digits.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtContact.Focus()
+            Return False
+        End If
+        If txtEmail.Text.Trim() <> "" Then
+            Dim email As String = txtEmail.Text.Trim().ToLower()
+            If Not System.Text.RegularExpressions.Regex.IsMatch(email, "^[^@\s]+@gmail\.com$") Then
+                MessageBox.Show("Email address must be a valid @gmail.com address (e.g. name@gmail.com).",
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                txtEmail.Focus()
+                Return False
+            End If
+        End If
+        Return True
+    End Function
+
+    Private Sub InsertNewBorrower(ageVal As Integer)
+        Dim uid As String = txtBorrowerUID.Text.Trim()
+        Dim defaultUsername As String = uid.Replace("-", "").ToLower()
+        Dim defaultHash As String = PasswordHelper.HashPassword("Password@1")
+
+        Dim newUserID As Integer = UserRepository.InsertAndGetID(
+            defaultUsername, defaultHash, "Borrower",
+            "What is your mother's maiden name?", "default")
+
+        BorrowerRepository.Insert(
+            newUserID, uid,
+            txtFirstName.Text.Trim(),
+            txtMiddleName.Text.Trim(),
+            txtLastName.Text.Trim(),
+            ageVal, dtpDateOfBirth.Value,
+            txtContact.Text.Trim(),
+            txtEmail.Text.Trim(),
+            _idImagePath)
+
+        ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
+            $"Added new borrower: {txtFirstName.Text.Trim()} {txtLastName.Text.Trim()} ({uid})")
+        MessageBox.Show($"Borrower ""{txtFirstName.Text.Trim()} {txtLastName.Text.Trim()}"" added successfully." &
+                        $"{Environment.NewLine}Default login: {defaultUsername} / Password@1",
+                        "Borrower Added", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
+    End Sub
+
+    Private Sub UpdateExistingBorrower(ageVal As Integer)
+        BorrowerRepository.Update(
+            BorrowerID,
+            txtFirstName.Text.Trim(),
+            txtMiddleName.Text.Trim(),
+            txtLastName.Text.Trim(),
+            ageVal, dtpDateOfBirth.Value,
+            txtContact.Text.Trim(),
+            txtEmail.Text.Trim(),
+            _idImagePath)
+
+        ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
+            $"Updated borrower ID {BorrowerID}: {txtFirstName.Text.Trim()} {txtLastName.Text.Trim()}")
+        MessageBox.Show("Borrower record updated successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Close()
+    End Sub
+
+    ' ── Auto-compute age from DOB ─────────────────────────────────────
+    Private Sub ComputeAge()
+        Dim dob As Date = dtpDateOfBirth.Value.Date
+        Dim today As Date = Date.Today
+        Dim age As Integer = today.Year - dob.Year
+        If dob > today.AddYears(-age) Then age -= 1
+        txtAge.Text = If(age >= 0, age.ToString(), "")
+    End Sub
+
+    Private Sub dtpDateOfBirth_ValueChanged(sender As Object, e As EventArgs) Handles dtpDateOfBirth.ValueChanged
+        ComputeAge()
+    End Sub
+
+    ' ── Contact: digits only ──────────────────────────────────────────
+    Private Sub txtContact_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtContact.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ControlChars.Back Then
+            e.Handled = True
+        End If
     End Sub
 
     ' ?? Cancel ????????????????????????????????????????????????????
