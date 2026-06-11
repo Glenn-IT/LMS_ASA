@@ -2,11 +2,8 @@ Imports Microsoft.Data.SqlClient
 
 Public Class DatabaseHelper
 
-    Private Shared ReadOnly ConnectionString As String =
-        "Server=.\SQLEXPRESS;Database=LMS_DB;Trusted_Connection=True;TrustServerCertificate=True;"
-
     Public Shared Function GetConnection() As SqlConnection
-        Return New SqlConnection(ConnectionString)
+        Return New SqlConnection(dbconstring.Connection)
     End Function
 
     Public Shared Function TestConnection() As Boolean
