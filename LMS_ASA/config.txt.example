@@ -1,0 +1,1 @@
+Data Source=SERVER\INSTANCE;Initial Catalog=DATABASE_NAME;Integrated Security=True;TrustServerCertificate=True;Encrypt=False;
