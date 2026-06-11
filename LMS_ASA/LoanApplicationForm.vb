@@ -114,7 +114,7 @@ Public Class LoanApplicationForm
         pnlBody.Controls.Add(grpApplicantInfo)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpApplicantInfo — Loan ID, Borrower Name, Loan Type
+        ' grpApplicantInfo ï¿½ Loan ID, Borrower Name, Loan Type
         ' ??????????????????????????????????????????????????????????
         grpApplicantInfo.Text = "Applicant Information"
         grpApplicantInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -143,7 +143,7 @@ Public Class LoanApplicationForm
         txtLoanID.BorderStyle = BorderStyle.FixedSingle
         txtLoanID.BackColor = Color.FromArgb(235, 240, 245)
         txtLoanID.ReadOnly = True
-        txtLoanID.Text = "APP-0001"
+        txtLoanID.Text = ""
 
         ' ?? Borrower Name ?????????????????????????????????????????
         lblBorrowerName.Text = "BORROWER NAME"
@@ -157,8 +157,9 @@ Public Class LoanApplicationForm
         txtBorrowerName.Size = New Size(270, 28)
         txtBorrowerName.Location = New Point(274, 48)
         txtBorrowerName.BorderStyle = BorderStyle.FixedSingle
-        txtBorrowerName.BackColor = Color.FromArgb(245, 248, 252)
-        txtBorrowerName.Text = "Juan dela Cruz"
+        txtBorrowerName.BackColor = Color.FromArgb(235, 240, 245)
+        txtBorrowerName.ReadOnly = True
+        txtBorrowerName.Text = ""
 
         ' ?? Loan Type ?????????????????????????????????????????????
         lblLoanType.Text = "LOAN TYPE"
@@ -183,7 +184,7 @@ Public Class LoanApplicationForm
         })
 
         ' ??????????????????????????????????????????????????????????
-        ' grpLoanDetails — Principal, Rate, Total, Term
+        ' grpLoanDetails ï¿½ Principal, Rate, Total, Term
         ' ??????????????????????????????????????????????????????????
         grpLoanDetails.Text = "Loan Details"
         grpLoanDetails.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -240,7 +241,8 @@ Public Class LoanApplicationForm
         txtTotalPayable.Size = New Size(210, 28)
         txtTotalPayable.Location = New Point(432, 48)
         txtTotalPayable.BorderStyle = BorderStyle.FixedSingle
-        txtTotalPayable.BackColor = Color.FromArgb(245, 248, 252)
+        txtTotalPayable.BackColor = Color.FromArgb(235, 240, 245)
+        txtTotalPayable.ReadOnly = True
 
         ' ?? Term ??????????????????????????????????????????????????
         lblTerm.Text = "TERM (Months)"
@@ -257,7 +259,7 @@ Public Class LoanApplicationForm
         txtTerm.BackColor = Color.FromArgb(245, 248, 252)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpSchedule — Release Date, Due Date
+        ' grpSchedule ï¿½ Release Date, Due Date
         ' ??????????????????????????????????????????????????????????
         grpSchedule.Text = "Schedule"
         grpSchedule.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -297,7 +299,7 @@ Public Class LoanApplicationForm
         dtpDueDate.Format = DateTimePickerFormat.Long
 
         ' ??????????????????????????????????????????????????????????
-        ' grpDeclaration — Borrower declaration notice
+        ' grpDeclaration ï¿½ Borrower declaration notice
         ' ??????????????????????????????????????????????????????????
         grpDeclaration.Text = "Declaration"
         grpDeclaration.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -354,6 +356,7 @@ Public Class LoanApplicationForm
 
         ' ?? Form ??????????????????????????????????????????????????
         Me.Text = "LMS - Loan Application"
+        Me.AcceptButton = btnSubmit
         Me.ClientSize = New Size(880, 640)
         Me.StartPosition = FormStartPosition.CenterParent
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
@@ -373,18 +376,87 @@ Public Class LoanApplicationForm
         cmbLoanType.SelectedIndex = 0
         dtpReleaseDate.Value = DateTime.Today
         dtpDueDate.Value = DateTime.Today.AddMonths(12)
+        Try
+            txtLoanID.Text = LoanApplicationRepository.GetNextApplicationID()
+            Dim borrowerDt As DataTable = BorrowerRepository.GetByID(SessionManager.CurrentBorrowerID)
+            If borrowerDt.Rows.Count > 0 Then
+                Dim bRow As DataRow = borrowerDt.Rows(0)
+                Dim mid As String = If(bRow.IsNull("MiddleName"), "", bRow("MiddleName").ToString().Trim())
+                txtBorrowerName.Text = bRow("FirstName").ToString() &
+                    If(mid <> "", " " & mid & " ", " ") &
+                    bRow("LastName").ToString()
+            End If
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load application form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' ?? Total Payable Auto-Calculation ????????????????????????????????????
+    Private Sub txtPrincipalAmount_TextChanged(sender As Object, e As EventArgs) Handles txtPrincipalAmount.TextChanged
+        CalculateTotalPayable()
+    End Sub
+
+    Private Sub txtInterestRate_TextChanged(sender As Object, e As EventArgs) Handles txtInterestRate.TextChanged
+        CalculateTotalPayable()
+    End Sub
+
+    Private Sub CalculateTotalPayable()
+        Dim principal As Decimal
+        Dim rate As Decimal
+        If Decimal.TryParse(txtPrincipalAmount.Text, principal) AndAlso
+           Decimal.TryParse(txtInterestRate.Text, rate) Then
+            txtTotalPayable.Text = (principal * (1 + rate / 100)).ToString("F2")
+        Else
+            txtTotalPayable.Text = ""
+        End If
     End Sub
 
     ' ?? Submit Application ????????????????????????????????????????
     Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        MessageBox.Show(
-            "Your loan application has been submitted successfully." & Environment.NewLine &
-            "Application ID: APP-0001" & Environment.NewLine &
-            "Status: Pending Review",
-            "Application Submitted",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+        If cmbLoanType.SelectedIndex < 0 Then
+            MessageBox.Show("Please select a Loan Type.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cmbLoanType.Focus() : Return
+        End If
+        Dim principal As Decimal
+        If Not Decimal.TryParse(txtPrincipalAmount.Text, principal) OrElse principal <= 0 Then
+            MessageBox.Show("Please enter a valid Principal Amount.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtPrincipalAmount.Focus() : Return
+        End If
+        Dim rate As Decimal
+        If Not Decimal.TryParse(txtInterestRate.Text, rate) OrElse rate < 0 Then
+            MessageBox.Show("Please enter a valid Interest Rate.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtInterestRate.Focus() : Return
+        End If
+        Dim term As Integer
+        If Not Integer.TryParse(txtTerm.Text, term) OrElse term <= 0 Then
+            MessageBox.Show("Please enter a valid Term (months).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtTerm.Focus() : Return
+        End If
+        If dtpDueDate.Value <= dtpReleaseDate.Value Then
+            MessageBox.Show("Due Date must be after Release Date.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Try
+            Dim totalPayable As Decimal = principal * (1 + rate / 100)
+            LoanApplicationRepository.Insert(
+                SessionManager.CurrentBorrowerID,
+                cmbLoanType.SelectedItem.ToString(),
+                principal, rate, totalPayable, term,
+                dtpReleaseDate.Value, dtpDueDate.Value)
+            ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
+                $"Submitted loan application: {cmbLoanType.SelectedItem} for PHP {principal:N2}")
+            MessageBox.Show(
+                "Your loan application has been submitted successfully." & Environment.NewLine &
+                $"Application ID: {txtLoanID.Text}" & Environment.NewLine &
+                "Status: Pending Review",
+                "Application Submitted",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information)
+            Me.Close()
+        Catch ex As Exception
+            MessageBox.Show($"Submission failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' ?? Cancel ????????????????????????????????????????????????????
