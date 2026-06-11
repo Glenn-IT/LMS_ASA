@@ -88,7 +88,7 @@ Public Class MyAccountForm
         pnlBody.Controls.Add(grpCredentials)
 
         ' ??????????????????????????????????????????????????????????
-        ' grpCredentials — Username, Password, Confirm Password
+        ' grpCredentials ï¿½ Username, Password, Confirm Password
         ' ??????????????????????????????????????????????????????????
         grpCredentials.Text = "Login Credentials"
         grpCredentials.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -116,7 +116,8 @@ Public Class MyAccountForm
         txtUsername.Location = New Point(16, 48)
         txtUsername.BorderStyle = BorderStyle.FixedSingle
         txtUsername.BackColor = Color.FromArgb(245, 248, 252)
-        txtUsername.Text = "juan.delacruz"
+        txtUsername.ReadOnly = True
+        txtUsername.BackColor = Color.FromArgb(235, 240, 245)
 
         ' Password
         lblPassword.Text = "NEW PASSWORD"
@@ -149,7 +150,7 @@ Public Class MyAccountForm
         txtConfirmPassword.PasswordChar = "*"c
 
         ' ??????????????????????????????????????????????????????????
-        ' grpSecurity — Security Question, Security Answer
+        ' grpSecurity ï¿½ Security Question, Security Answer
         ' ??????????????????????????????????????????????????????????
         grpSecurity.Text = "Security Settings"
         grpSecurity.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -235,6 +236,7 @@ Public Class MyAccountForm
 
         ' ?? Form ??????????????????????????????????????????????????
         Me.Text = "LMS - My Account"
+        Me.AcceptButton = btnUpdate
         Me.ClientSize = New Size(880, 420)
         Me.StartPosition = FormStartPosition.CenterParent
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
@@ -249,19 +251,67 @@ Public Class MyAccountForm
         ResumeLayout(False)
     End Sub
 
+    Private _currentHash As String = ""
+
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub MyAccountForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        cmbSecurityQuestion.SelectedIndex = 0
+        Try
+            Dim dt As DataTable = UserRepository.GetByID(SessionManager.CurrentUserID)
+            If dt.Rows.Count = 0 Then
+                MessageBox.Show("Your account record could not be loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Close()
+                Return
+            End If
+            Dim row As DataRow = dt.Rows(0)
+            txtUsername.Text = row("Username").ToString()
+            _currentHash = row("PasswordHash").ToString()
+
+            Dim question As String = row("SecurityQuestion").ToString()
+            Dim questionIdx As Integer = cmbSecurityQuestion.Items.IndexOf(question)
+            cmbSecurityQuestion.SelectedIndex = If(questionIdx >= 0, questionIdx, 0)
+
+            txtSecurityAnswer.Text = row("SecurityAnswer").ToString()
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load account: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' ?? Update Button ?????????????????????????????????????????????
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
-        MessageBox.Show(
-            "Your account information has been updated successfully.",
-            "Account Updated",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        )
+        Dim newPassword As String = txtPassword.Text
+        Dim confirmPassword As String = txtConfirmPassword.Text
+        Dim securityAnswer As String = txtSecurityAnswer.Text.Trim()
+
+        If securityAnswer = "" Then
+            MessageBox.Show("Security Answer is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtSecurityAnswer.Focus() : Return
+        End If
+
+        If newPassword <> "" Then
+            If newPassword <> confirmPassword Then
+                MessageBox.Show("Passwords do not match.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                txtConfirmPassword.Focus() : Return
+            End If
+            If newPassword.Length < 6 Then
+                MessageBox.Show("New password must be at least 6 characters.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                txtPassword.Focus() : Return
+            End If
+        End If
+
+        Try
+            Dim hashToSave As String = If(newPassword = "", _currentHash, PasswordHelper.HashPassword(newPassword))
+            Dim securityQuestion As String = cmbSecurityQuestion.SelectedItem.ToString()
+
+            UserRepository.UpdateMyAccount(SessionManager.CurrentUserID, hashToSave, securityQuestion, securityAnswer)
+            _currentHash = hashToSave
+            txtPassword.Clear()
+            txtConfirmPassword.Clear()
+
+            ActivityLogger.Log(SessionManager.CurrentUsername, "Success", "Updated own account credentials")
+            MessageBox.Show("Your account has been updated successfully.", "Account Updated", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Catch ex As Exception
+            MessageBox.Show($"Update failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' ?? Cancel Button ?????????????????????????????????????????????
