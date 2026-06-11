@@ -35,9 +35,9 @@ Public Class ViewLoanApplicationForm
     Private pnlDividerBottom As Panel
     Friend WithEvents btnBack As Button
 
-    Public Sub New(loanRefID As String, amount As String, status As String)
+    Public Sub New(applicationID As Integer)
         InitializeComponent()
-        PopulateFields(loanRefID, amount, status)
+        LoadApplication(applicationID)
     End Sub
 
     Private Sub InitializeComponent()
@@ -157,7 +157,7 @@ Public Class ViewLoanApplicationForm
         txtBorrowerName.BorderStyle = BorderStyle.FixedSingle
         txtBorrowerName.BackColor = Color.FromArgb(235, 240, 245)
         txtBorrowerName.ReadOnly = True
-        txtBorrowerName.Text = "Juan dela Cruz"
+        txtBorrowerName.Text = ""
 
         ' Loan Type
         lblLoanType.Text = "LOAN TYPE"
@@ -173,7 +173,7 @@ Public Class ViewLoanApplicationForm
         txtLoanType.BorderStyle = BorderStyle.FixedSingle
         txtLoanType.BackColor = Color.FromArgb(235, 240, 245)
         txtLoanType.ReadOnly = True
-        txtLoanType.Text = "Personal Loan"
+        txtLoanType.Text = ""
 
         ' ??????????????????????????????????????????????????????????
         ' grpLoanDetails
@@ -222,7 +222,7 @@ Public Class ViewLoanApplicationForm
         txtInterestRate.BorderStyle = BorderStyle.FixedSingle
         txtInterestRate.BackColor = Color.FromArgb(235, 240, 245)
         txtInterestRate.ReadOnly = True
-        txtInterestRate.Text = "5%"
+        txtInterestRate.Text = ""
 
         ' Total Payable
         lblTotalPayable.Text = "TOTAL PAYABLE AMOUNT (PHP)"
@@ -253,7 +253,7 @@ Public Class ViewLoanApplicationForm
         txtTerm.BorderStyle = BorderStyle.FixedSingle
         txtTerm.BackColor = Color.FromArgb(235, 240, 245)
         txtTerm.ReadOnly = True
-        txtTerm.Text = "12"
+        txtTerm.Text = ""
 
         ' ??????????????????????????????????????????????????????????
         ' grpSchedule
@@ -294,7 +294,6 @@ Public Class ViewLoanApplicationForm
         dtpDueDate.Location = New Point(424, 48)
         dtpDueDate.Format = DateTimePickerFormat.Long
         dtpDueDate.Enabled = False
-        dtpDueDate.Value = DateTime.Today.AddMonths(12)
 
         ' ??????????????????????????????????????????????????????????
         ' grpStatusInfo
@@ -357,23 +356,41 @@ Public Class ViewLoanApplicationForm
         ResumeLayout(False)
     End Sub
 
-    ' ?? Populate Fields from selected row ?????????????????????????
-    Private Sub PopulateFields(loanRefID As String, amount As String, status As String)
-        txtLoanID.Text = loanRefID
-        txtPrincipalAmount.Text = amount
-        txtTotalPayable.Text = amount
+    ' ?? Load Application from DB ??????????????????????????????????????????
+    Private Sub LoadApplication(applicationID As Integer)
+        Try
+            Dim dt As DataTable = LoanApplicationRepository.GetByID(applicationID)
+            If dt.Rows.Count = 0 Then
+                MessageBox.Show("Application record not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Close()
+                Return
+            End If
+            Dim row As DataRow = dt.Rows(0)
+            txtLoanID.Text = $"APP-{CInt(row("ApplicationID")):D4}"
+            txtBorrowerName.Text = row("BorrowerName").ToString()
+            txtLoanType.Text = row("LoanType").ToString()
+            txtPrincipalAmount.Text = CDec(row("PrincipalAmount")).ToString("N2")
+            txtInterestRate.Text = CDec(row("InterestRate")).ToString("N2")
+            txtTotalPayable.Text = CDec(row("TotalPayable")).ToString("N2")
+            txtTerm.Text = row("Term").ToString()
+            dtpReleaseDate.Value = CDate(row("ReleaseDate"))
+            dtpDueDate.Value = CDate(row("DueDate"))
 
-        lblStatusValue.Text = status
-        Select Case status
-            Case "Approved"
-                lblStatusValue.ForeColor = Color.FromArgb(39, 174, 96)
-            Case "Pending"
-                lblStatusValue.ForeColor = Color.FromArgb(211, 84, 0)
-            Case "Rejected"
-                lblStatusValue.ForeColor = Color.FromArgb(192, 57, 43)
-            Case Else
-                lblStatusValue.ForeColor = Color.FromArgb(21, 67, 106)
-        End Select
+            Dim status As String = row("Status").ToString()
+            lblStatusValue.Text = status
+            Select Case status
+                Case "Approved"
+                    lblStatusValue.ForeColor = Color.FromArgb(39, 174, 96)
+                Case "Pending"
+                    lblStatusValue.ForeColor = Color.FromArgb(211, 84, 0)
+                Case "Rejected"
+                    lblStatusValue.ForeColor = Color.FromArgb(192, 57, 43)
+                Case Else
+                    lblStatusValue.ForeColor = Color.FromArgb(21, 67, 106)
+            End Select
+        Catch ex As Exception
+            MessageBox.Show($"Failed to load application: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' ?? Back Button ???????????????????????????????????????????????
