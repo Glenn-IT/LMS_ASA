@@ -222,9 +222,6 @@ Public Class BorrowerDashboardForm
     Private Sub btnTrackLoan_Click(sender As Object, e As EventArgs) Handles btnTrackLoan.Click
         SetActiveButton(btnTrackLoan)
         lblPageTitle.Text = "Track Loan Application"
-        ' GATE — remove this block when unlocking for v1.10
-        LoadGated() : Return
-        ' END GATE
         Dim frm As New TrackLoanForm()
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
