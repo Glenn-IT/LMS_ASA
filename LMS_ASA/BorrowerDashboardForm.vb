@@ -235,9 +235,6 @@ Public Class BorrowerDashboardForm
     Private Sub btnMyAccount_Click(sender As Object, e As EventArgs) Handles btnMyAccount.Click
         SetActiveButton(btnMyAccount)
         lblPageTitle.Text = "My Account"
-        ' GATE — remove this block when unlocking for v1.11
-        LoadGated() : Return
-        ' END GATE
         Dim frm As New MyAccountForm()
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
