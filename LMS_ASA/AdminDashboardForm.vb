@@ -398,9 +398,6 @@ Public Class AdminDashboardForm
     Private Sub btnBorrowerAccounts_Click(sender As Object, e As EventArgs) Handles btnBorrowerAccounts.Click
         SetActiveButton(btnBorrowerAccounts)
         lblPageTitle.Text = "Borrower Accounts"
-        ' GATE — remove this block when unlocking for v1.03
-        LoadGated() : Return
-        ' END GATE
         LoadContent(New BorrowerAccountsForm())
     End Sub
 
