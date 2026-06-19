@@ -355,12 +355,6 @@ Public Class AdminDashboardForm
 
     ' ── Form Load ─────────────────────────────────────────────────
     Private Sub AdminDashboardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' GATE — remove this block when unlocking for v1.01
-        Dim gate As New UnderConstructionForm()
-        gate.ShowDialog()
-        Me.Close()
-        Return
-        ' END GATE
         lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
         UpdateClock()
         _clockTimer.Start()
