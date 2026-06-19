@@ -199,12 +199,6 @@ Public Class BorrowerDashboardForm
 
     ' ── Form Load ─────────────────────────────────────────────────
     Private Sub BorrowerDashboardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' GATE — remove this block when unlocking for v1.08
-        Dim gate As New UnderConstructionForm()
-        gate.ShowDialog()
-        Me.Close()
-        Return
-        ' END GATE
         lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
         lblSidebarSub.Text = SessionManager.CurrentUsername
         SetActiveButton(btnFileLoan)
