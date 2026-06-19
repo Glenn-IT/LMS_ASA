@@ -199,6 +199,12 @@ Public Class BorrowerDashboardForm
 
     ' ── Form Load ─────────────────────────────────────────────────
     Private Sub BorrowerDashboardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' GATE — remove this block when unlocking for v1.08
+        Dim gate As New UnderConstructionForm()
+        gate.ShowDialog()
+        Me.Close()
+        Return
+        ' END GATE
         lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
         lblSidebarSub.Text = SessionManager.CurrentUsername
         SetActiveButton(btnFileLoan)
@@ -209,6 +215,9 @@ Public Class BorrowerDashboardForm
     Private Sub btnFileLoan_Click(sender As Object, e As EventArgs) Handles btnFileLoan.Click
         SetActiveButton(btnFileLoan)
         lblPageTitle.Text = "File Loan Application"
+        ' GATE — remove this block when unlocking for v1.09
+        LoadGated() : Return
+        ' END GATE
         Dim frm As New LoanApplicationForm()
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
@@ -222,6 +231,9 @@ Public Class BorrowerDashboardForm
     Private Sub btnTrackLoan_Click(sender As Object, e As EventArgs) Handles btnTrackLoan.Click
         SetActiveButton(btnTrackLoan)
         lblPageTitle.Text = "Track Loan Application"
+        ' GATE — remove this block when unlocking for v1.10
+        LoadGated() : Return
+        ' END GATE
         Dim frm As New TrackLoanForm()
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
@@ -235,6 +247,9 @@ Public Class BorrowerDashboardForm
     Private Sub btnMyAccount_Click(sender As Object, e As EventArgs) Handles btnMyAccount.Click
         SetActiveButton(btnMyAccount)
         lblPageTitle.Text = "My Account"
+        ' GATE — remove this block when unlocking for v1.11
+        LoadGated() : Return
+        ' END GATE
         Dim frm As New MyAccountForm()
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
@@ -260,6 +275,16 @@ Public Class BorrowerDashboardForm
     End Sub
 
     ' ?? Helpers ???????????????????????????????????????????????????
+    Private Sub LoadGated()
+        Dim frm As New UnderConstructionForm()
+        frm.TopLevel = False
+        frm.FormBorderStyle = FormBorderStyle.None
+        frm.Dock = DockStyle.Fill
+        pnlContent.Controls.Clear()
+        pnlContent.Controls.Add(frm)
+        frm.Show()
+    End Sub
+
     Private Sub ShowWelcomePanel()
         ShowPlaceholder("Select a menu item from the sidebar to get started.")
     End Sub

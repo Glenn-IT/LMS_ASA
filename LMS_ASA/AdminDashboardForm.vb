@@ -355,6 +355,12 @@ Public Class AdminDashboardForm
 
     ' ── Form Load ─────────────────────────────────────────────────
     Private Sub AdminDashboardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' GATE — remove this block when unlocking for v1.01
+        Dim gate As New UnderConstructionForm()
+        gate.ShowDialog()
+        Me.Close()
+        Return
+        ' END GATE
         lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
         UpdateClock()
         _clockTimer.Start()
@@ -374,30 +380,45 @@ Public Class AdminDashboardForm
     Private Sub btnLoanList_Click(sender As Object, e As EventArgs) Handles btnLoanList.Click
         SetActiveButton(btnLoanList)
         lblPageTitle.Text = "Loan List"
+        ' GATE — remove this block when unlocking for v1.05
+        LoadGated() : Return
+        ' END GATE
         LoadContent(New LoanListForm())
     End Sub
 
     Private Sub btnBorrowerList_Click(sender As Object, e As EventArgs) Handles btnBorrowerList.Click
         SetActiveButton(btnBorrowerList)
         lblPageTitle.Text = "Borrower List"
+        ' GATE — remove this block when unlocking for v1.02
+        LoadGated() : Return
+        ' END GATE
         LoadContent(New BorrowerListForm())
     End Sub
 
     Private Sub btnPaymentList_Click(sender As Object, e As EventArgs) Handles btnPaymentList.Click
         SetActiveButton(btnPaymentList)
         lblPageTitle.Text = "Payment List"
+        ' GATE — remove this block when unlocking for v1.06
+        LoadGated() : Return
+        ' END GATE
         LoadContent(New PaymentListForm())
     End Sub
 
     Private Sub btnBorrowerAccounts_Click(sender As Object, e As EventArgs) Handles btnBorrowerAccounts.Click
         SetActiveButton(btnBorrowerAccounts)
         lblPageTitle.Text = "Borrower Accounts"
+        ' GATE — remove this block when unlocking for v1.03
+        LoadGated() : Return
+        ' END GATE
         LoadContent(New BorrowerAccountsForm())
     End Sub
 
     Private Sub btnAccountSettings_Click(sender As Object, e As EventArgs) Handles btnAccountSettings.Click
         SetActiveButton(btnAccountSettings)
         lblPageTitle.Text = "Account Settings"
+        ' GATE — remove this block when unlocking for v1.07
+        LoadGated() : Return
+        ' END GATE
         LoadContent(New AdminAccountSettingsForm())
     End Sub
 
@@ -422,6 +443,16 @@ Public Class AdminDashboardForm
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
         frm.Dock = DockStyle.Fill
+        pnlContent.Controls.Add(frm)
+        frm.Show()
+    End Sub
+
+    Private Sub LoadGated()
+        Dim frm As New UnderConstructionForm()
+        frm.TopLevel = False
+        frm.FormBorderStyle = FormBorderStyle.None
+        frm.Dock = DockStyle.Fill
+        pnlContent.Controls.Clear()
         pnlContent.Controls.Add(frm)
         frm.Show()
     End Sub
