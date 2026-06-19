@@ -255,12 +255,6 @@ Public Class MyAccountForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub MyAccountForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' GATE — remove this block when unlocking for v1.11
-        Dim gate As New UnderConstructionForm()
-        gate.ShowDialog()
-        Me.Close()
-        Return
-        ' END GATE
         Try
             Dim dt As DataTable = UserRepository.GetByID(SessionManager.CurrentUserID)
             If dt.Rows.Count = 0 Then
