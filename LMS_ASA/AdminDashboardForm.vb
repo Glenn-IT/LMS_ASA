@@ -374,9 +374,6 @@ Public Class AdminDashboardForm
     Private Sub btnLoanList_Click(sender As Object, e As EventArgs) Handles btnLoanList.Click
         SetActiveButton(btnLoanList)
         lblPageTitle.Text = "Loan List"
-        ' GATE — remove this block when unlocking for v1.05
-        LoadGated() : Return
-        ' END GATE
         LoadContent(New LoanListForm())
     End Sub
 
