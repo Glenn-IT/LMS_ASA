@@ -386,9 +386,6 @@ Public Class AdminDashboardForm
     Private Sub btnPaymentList_Click(sender As Object, e As EventArgs) Handles btnPaymentList.Click
         SetActiveButton(btnPaymentList)
         lblPageTitle.Text = "Payment List"
-        ' GATE — remove this block when unlocking for v1.06
-        LoadGated() : Return
-        ' END GATE
         LoadContent(New PaymentListForm())
     End Sub
 
