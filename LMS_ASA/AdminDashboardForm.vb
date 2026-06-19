@@ -398,9 +398,6 @@ Public Class AdminDashboardForm
     Private Sub btnAccountSettings_Click(sender As Object, e As EventArgs) Handles btnAccountSettings.Click
         SetActiveButton(btnAccountSettings)
         lblPageTitle.Text = "Account Settings"
-        ' GATE — remove this block when unlocking for v1.07
-        LoadGated() : Return
-        ' END GATE
         LoadContent(New AdminAccountSettingsForm())
     End Sub
 
