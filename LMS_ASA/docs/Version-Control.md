@@ -85,18 +85,18 @@ git checkout master
 
 | Version | Tag Name | Commit Hash |
 |---------|----------|-------------|
-| v1.00 | v1.00 | d9232f5a74000ba6a6c0d9cbaf88d1347fc9a67a |
-| v1.01 | v1.01 | c8af096ef75cae4a216d6331371ed9f60f26126e |
-| v1.02 | v1.02 | ed3b166a266e490b97be22fcd885ca23917a8e23 |
-| v1.03 | v1.03 | 0bb49ad0b1ca4a2f757fbc7a24b3f0e76f19212e |
-| v1.04 | v1.04 | 1e7d535010d3be2fe1515e185fbd4e33e1ede84a |
-| v1.05 | v1.05 | 68465ac0b42aa117ff9ce77374534c492b1b1ad3 |
-| v1.06 | v1.06 | 4008704efc15c0506f4ad4cadf1c66eede30cee1 |
-| v1.07 | v1.07 | cadf2801c0ff8e39755ac3f642e67af8994ae753 |
-| v1.08 | v1.08 | 3fe258df9f47ec913dfa89852cc24d620dfe6e6e |
-| v1.09 | v1.09 | 94498c5578c90d979b3d350c08198028ae8ce5e8 |
-| v1.10 | v1.10 | e3d4999d7212ec2c134e41f7d83cda9ec312a4c5 |
-| v1.11 | v1.11 | 69387f793054084efdaa1c243f648fc992d068f1 |
+| v1.00 | v1.00 | 2eeb2aa4dfc1c6ad27f6c1579583d22f49bc1c06 |
+| v1.01 | v1.01 | da90717ca19f3281298a6e10c27f5d611cc55e20 |
+| v1.02 | v1.02 | 5c28aa05da4790d1c60eafdab07def1944ad12cf |
+| v1.03 | v1.03 | 197ec894eeb4468a9c1469c3f0adbcc21820f618 |
+| v1.04 | v1.04 | 84ba0a3d9f91131201c754e966eb171fafbf5283 |
+| v1.05 | v1.05 | 46afd607260530a20e084de77cd90185be70e565 |
+| v1.06 | v1.06 | 5fc9e3caa147171a5f19ad815538746247c27589 |
+| v1.07 | v1.07 | 3bd65c691dd0d8d788e83e4e88fb34087f6fe18c |
+| v1.08 | v1.08 | aac01a5b68bcc93b5eed26ade635f1ce531416aa |
+| v1.09 | v1.09 | 1222edb86de9f48716804adf5c14b50a08964eb1 |
+| v1.10 | v1.10 | ee0b6fc37c3dc6c217709aba144fe7eab1632bf6 |
+| v1.11 | v1.11 | cc7da0dce774777f2a13efc8f6e7e2096646bc57 |
 
 To fill in commit hashes after all versions are done:
 
