@@ -361,12 +361,6 @@ Public Class NewBorrowerForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub NewBorrowerForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' GATE — remove this block when unlocking for v1.02
-        Dim gate As New UnderConstructionForm()
-        gate.ShowDialog()
-        Me.Close()
-        Return
-        ' END GATE
         If BorrowerID = 0 Then
             Try
                 txtBorrowerUID.Text = BorrowerRepository.GetNextUID()
