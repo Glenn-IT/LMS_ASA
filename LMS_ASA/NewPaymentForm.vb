@@ -282,6 +282,12 @@ Public Class NewPaymentForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub NewPaymentForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' GATE — remove this block when unlocking for v1.06
+        Dim gate As New UnderConstructionForm()
+        gate.ShowDialog()
+        Me.Close()
+        Return
+        ' END GATE
         LoadLoansIntoCombo()
         cmbStatus.SelectedIndex = 0
         dtpPaymentDate.Value = DateTime.Today

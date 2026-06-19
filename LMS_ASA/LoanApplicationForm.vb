@@ -373,6 +373,12 @@ Public Class LoanApplicationForm
 
     ' ?? Form Load ?????????????????????????????????????????????????
     Private Sub LoanApplicationForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' GATE — remove this block when unlocking for v1.09
+        Dim gate As New UnderConstructionForm()
+        gate.ShowDialog()
+        Me.Close()
+        Return
+        ' END GATE
         cmbLoanType.SelectedIndex = 0
         dtpReleaseDate.Value = DateTime.Today
         dtpDueDate.Value = DateTime.Today.AddMonths(12)
