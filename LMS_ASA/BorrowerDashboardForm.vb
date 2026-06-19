@@ -209,9 +209,6 @@ Public Class BorrowerDashboardForm
     Private Sub btnFileLoan_Click(sender As Object, e As EventArgs) Handles btnFileLoan.Click
         SetActiveButton(btnFileLoan)
         lblPageTitle.Text = "File Loan Application"
-        ' GATE — remove this block when unlocking for v1.09
-        LoadGated() : Return
-        ' END GATE
         Dim frm As New LoanApplicationForm()
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None

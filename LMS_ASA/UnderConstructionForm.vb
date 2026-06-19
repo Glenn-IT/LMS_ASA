@@ -1,7 +1,7 @@
 Public Class UnderConstructionForm
     Inherits Form
 
-    Public Const CURRENT_VERSION As String = "v1.08"
+    Public Const CURRENT_VERSION As String = "v1.09"
 
     Public Sub New()
         InitializeComponent()
