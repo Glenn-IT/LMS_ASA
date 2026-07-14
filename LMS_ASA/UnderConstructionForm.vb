@@ -8,72 +8,104 @@ Public Class UnderConstructionForm
     End Sub
 
     Private Sub InitializeComponent()
-        Dim lblEmoji As New Label()
-        Dim lblVersion As New Label()
-        Dim lblTitle As New Label()
-        Dim lblDesc As New Label()
-        Dim btnBack As New Button()
-
+        lblEmoji = New Label()
+        lblVersion = New Label()
+        lblTitle = New Label()
+        lblDesc = New Label()
+        btnBack = New Button()
         SuspendLayout()
-
-        Me.BackColor = Color.FromArgb(26, 35, 126)
-        Me.ClientSize = New Size(480, 320)
-        Me.StartPosition = FormStartPosition.CenterParent
-        Me.FormBorderStyle = FormBorderStyle.FixedDialog
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
-        Me.Text = "Under Construction"
-
-        lblEmoji.Text = "🚧"
-        lblEmoji.Font = New Font("Segoe UI Emoji", 36.0F)
+        ' 
+        ' lblEmoji
+        ' 
+        lblEmoji.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        lblEmoji.Font = New Font("Segoe UI Emoji", 36F)
         lblEmoji.ForeColor = Color.White
-        lblEmoji.AutoSize = False
-        lblEmoji.Size = New Size(480, 60)
         lblEmoji.Location = New Point(0, 20)
+        lblEmoji.Name = "lblEmoji"
+        lblEmoji.Size = New Size(480, 60)
+        lblEmoji.TabIndex = 0
+        lblEmoji.Text = "🚧"
         lblEmoji.TextAlign = ContentAlignment.MiddleCenter
-
-        lblVersion.Text = "Current Version: " & CURRENT_VERSION
-        lblVersion.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        ' 
+        ' lblVersion
+        ' 
+        lblVersion.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        lblVersion.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         lblVersion.ForeColor = Color.Orange
-        lblVersion.AutoSize = False
-        lblVersion.Size = New Size(480, 28)
         lblVersion.Location = New Point(0, 95)
+        lblVersion.Name = "lblVersion"
+        lblVersion.Size = New Size(480, 28)
+        lblVersion.TabIndex = 1
+        lblVersion.Text = "Current Version: v2.00"
         lblVersion.TextAlign = ContentAlignment.MiddleCenter
-
-        lblTitle.Text = "Under Construction"
-        lblTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        lblTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
-        lblTitle.AutoSize = False
-        lblTitle.Size = New Size(480, 40)
         lblTitle.Location = New Point(0, 133)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(480, 40)
+        lblTitle.TabIndex = 2
+        lblTitle.Text = "Under Construction"
         lblTitle.TextAlign = ContentAlignment.MiddleCenter
-
-        lblDesc.Text = "This feature is not yet available in the current presentation version."
+        ' 
+        ' lblDesc
+        ' 
+        lblDesc.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         lblDesc.Font = New Font("Segoe UI", 9.5F)
-        lblDesc.ForeColor = Color.FromArgb(200, 200, 255)
-        lblDesc.AutoSize = False
-        lblDesc.Size = New Size(440, 36)
+        lblDesc.ForeColor = Color.FromArgb(CByte(200), CByte(200), CByte(255))
         lblDesc.Location = New Point(20, 183)
+        lblDesc.Name = "lblDesc"
+        lblDesc.Size = New Size(440, 36)
+        lblDesc.TabIndex = 3
+        lblDesc.Text = "This feature is not yet available in the current presentation version."
         lblDesc.TextAlign = ContentAlignment.MiddleCenter
-
-        btnBack.Text = "← Go Back"
-        btnBack.Font = New Font("Segoe UI", 10.0F)
-        btnBack.BackColor = Color.FromArgb(48, 63, 159)
-        btnBack.ForeColor = Color.White
-        btnBack.FlatStyle = FlatStyle.Flat
-        btnBack.FlatAppearance.BorderColor = Color.FromArgb(92, 107, 192)
-        btnBack.Size = New Size(130, 38)
-        btnBack.Location = New Point(175, 248)
+        ' 
+        ' btnBack
+        ' 
+        btnBack.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        btnBack.BackColor = Color.FromArgb(CByte(48), CByte(63), CByte(159))
         btnBack.Cursor = Cursors.Hand
-        AddHandler btnBack.Click, AddressOf btnBack_Click
-
-        Me.Controls.AddRange({lblEmoji, lblVersion, lblTitle, lblDesc, btnBack})
-
+        btnBack.FlatAppearance.BorderColor = Color.FromArgb(CByte(92), CByte(107), CByte(192))
+        btnBack.FlatStyle = FlatStyle.Flat
+        btnBack.Font = New Font("Segoe UI", 10F)
+        btnBack.ForeColor = Color.White
+        btnBack.Location = New Point(175, 248)
+        btnBack.Name = "btnBack"
+        btnBack.Size = New Size(130, 38)
+        btnBack.TabIndex = 4
+        btnBack.Text = "← Go Back"
+        btnBack.UseVisualStyleBackColor = False
+        ' 
+        ' UnderConstructionForm
+        ' 
+        BackColor = Color.FromArgb(CByte(26), CByte(35), CByte(126))
+        ClientSize = New Size(480, 320)
+        Controls.Add(lblEmoji)
+        Controls.Add(lblVersion)
+        Controls.Add(lblTitle)
+        Controls.Add(lblDesc)
+        Controls.Add(btnBack)
+        FormBorderStyle = FormBorderStyle.FixedDialog
+        MaximizeBox = False
+        MinimizeBox = False
+        Name = "UnderConstructionForm"
+        StartPosition = FormStartPosition.CenterParent
+        Text = "Under Construction"
+        WindowState = FormWindowState.Maximized
         ResumeLayout(False)
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As EventArgs)
         Me.Close()
     End Sub
+
+    Friend WithEvents lblEmoji As Label
+    Friend WithEvents lblVersion As Label
+    Friend WithEvents lblTitle As Label
+    Friend WithEvents lblDesc As Label
+    Friend WithEvents btnBack As Button
 
 End Class
