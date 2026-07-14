@@ -98,7 +98,7 @@ git checkout master
 | v1.09 | v1.09 | 1222edb86de9f48716804adf5c14b50a08964eb1 |
 | v1.10 | v1.10 | ee0b6fc37c3dc6c217709aba144fe7eab1632bf6 |
 | v1.11 | v1.11 | cc7da0dce774777f2a13efc8f6e7e2096646bc57 |
-| v2.00 | v2.00 | (filled in after tagging) |
+| v2.00 | v2.00 | e37eb1867bd620b2ec73164f3bca62bb4268e0a3 |
 
 To fill in commit hashes after all versions are done:
 
