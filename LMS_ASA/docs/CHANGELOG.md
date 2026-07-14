@@ -115,6 +115,7 @@ Format: `[Date] | Type | File(s) | Description`
 | 2026-07-15 | BorrowerDashboardForm.vb | Re-gated File Loan Application, Track Loan, My Account tabs (`LoadGated()`) |
 | 2026-07-15 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v2.00" |
 | 2026-07-15 | docs/Version-Control.md | Added v2.00 rollout row: Login + Admin Dashboard + Borrower List/Add New Borrower unlocked, all other forms gated |
+| 2026-07-15 | UnderConstructionForm.vb | Cherry-picked onto the `v2.00` tag per docs/Cherry-Pick-Guide.md — designer-style field declarations, anchored controls, `WindowState=Maximized`; tag re-pointed to `09fba67077b58c66e9907d7c8a469e72e3f58340` |
 
 ---
 
