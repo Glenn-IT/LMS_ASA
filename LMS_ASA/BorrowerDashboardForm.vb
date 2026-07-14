@@ -209,39 +209,27 @@ Public Class BorrowerDashboardForm
     Private Sub btnFileLoan_Click(sender As Object, e As EventArgs) Handles btnFileLoan.Click
         SetActiveButton(btnFileLoan)
         lblPageTitle.Text = "File Loan Application"
-        Dim frm As New LoanApplicationForm()
-        frm.TopLevel = False
-        frm.FormBorderStyle = FormBorderStyle.None
-        frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Clear()
-        pnlContent.Controls.Add(frm)
-        frm.Show()
+        ' GATE — remove when unlocking File Loan Application for vX.XX
+        LoadGated()
+        ' END GATE
     End Sub
 
     ' ?? Track Loan Application ????????????????????????????????????
     Private Sub btnTrackLoan_Click(sender As Object, e As EventArgs) Handles btnTrackLoan.Click
         SetActiveButton(btnTrackLoan)
         lblPageTitle.Text = "Track Loan Application"
-        Dim frm As New TrackLoanForm()
-        frm.TopLevel = False
-        frm.FormBorderStyle = FormBorderStyle.None
-        frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Clear()
-        pnlContent.Controls.Add(frm)
-        frm.Show()
+        ' GATE — remove when unlocking Track Loan for vX.XX
+        LoadGated()
+        ' END GATE
     End Sub
 
     ' ?? My Account ????????????????????????????????????????????????
     Private Sub btnMyAccount_Click(sender As Object, e As EventArgs) Handles btnMyAccount.Click
         SetActiveButton(btnMyAccount)
         lblPageTitle.Text = "My Account"
-        Dim frm As New MyAccountForm()
-        frm.TopLevel = False
-        frm.FormBorderStyle = FormBorderStyle.None
-        frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Clear()
-        pnlContent.Controls.Add(frm)
-        frm.Show()
+        ' GATE — remove when unlocking My Account for vX.XX
+        LoadGated()
+        ' END GATE
     End Sub
 
     ' ── Logout ────────────────────────────────────────────────────

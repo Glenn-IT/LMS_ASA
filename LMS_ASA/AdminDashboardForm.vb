@@ -358,7 +358,7 @@ Public Class AdminDashboardForm
         lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
         UpdateClock()
         _clockTimer.Start()
-        SetActiveButton(btnLoanList)
+        SetActiveButton(btnBorrowerList)
     End Sub
 
     Private Sub UpdateClock()
@@ -374,7 +374,9 @@ Public Class AdminDashboardForm
     Private Sub btnLoanList_Click(sender As Object, e As EventArgs) Handles btnLoanList.Click
         SetActiveButton(btnLoanList)
         lblPageTitle.Text = "Loan List"
-        LoadContent(New LoanListForm())
+        ' GATE — remove when unlocking Loan List for vX.XX
+        LoadGated()
+        ' END GATE
     End Sub
 
     Private Sub btnBorrowerList_Click(sender As Object, e As EventArgs) Handles btnBorrowerList.Click
@@ -386,19 +388,25 @@ Public Class AdminDashboardForm
     Private Sub btnPaymentList_Click(sender As Object, e As EventArgs) Handles btnPaymentList.Click
         SetActiveButton(btnPaymentList)
         lblPageTitle.Text = "Payment List"
-        LoadContent(New PaymentListForm())
+        ' GATE — remove when unlocking Payment List for vX.XX
+        LoadGated()
+        ' END GATE
     End Sub
 
     Private Sub btnBorrowerAccounts_Click(sender As Object, e As EventArgs) Handles btnBorrowerAccounts.Click
         SetActiveButton(btnBorrowerAccounts)
         lblPageTitle.Text = "Borrower Accounts"
-        LoadContent(New BorrowerAccountsForm())
+        ' GATE — remove when unlocking Borrower Accounts for vX.XX
+        LoadGated()
+        ' END GATE
     End Sub
 
     Private Sub btnAccountSettings_Click(sender As Object, e As EventArgs) Handles btnAccountSettings.Click
         SetActiveButton(btnAccountSettings)
         lblPageTitle.Text = "Account Settings"
-        LoadContent(New AdminAccountSettingsForm())
+        ' GATE — remove when unlocking Account Settings for vX.XX
+        LoadGated()
+        ' END GATE
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click

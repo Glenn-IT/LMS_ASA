@@ -106,6 +106,15 @@ Format: `[Date] | Type | File(s) | Description`
 | 2026-06-12 | NewBorrowerForm.vb | Contact Number — digits-only `KeyPress` guard + `MaxLength = 11`; validation requires exactly 11 digits |
 | 2026-06-12 | NewBorrowerForm.vb | Email validation — must match `^[^@\s]+@gmail\.com$`; rejects non-gmail and malformed addresses |
 | 2026-06-12 | Form1.vb, Form1.Designer.vb (LoginForm) | Show Password checkbox — toggles `txtPassword.PasswordChar` between masked (●) and plain text |
+| 2026-07-15 | NewBorrowerForm.vb | First/Middle/Last Name — letters, spaces, hyphens, and apostrophes only via shared `KeyPress` guard |
+
+### Phase 11 — v2.00 Presentation Reset
+| Date | File(s) | Description |
+|------|---------|-------------|
+| 2026-07-15 | AdminDashboardForm.vb | Re-gated Loan List, Payment List, Borrower Accounts, Account Settings tabs (`LoadGated()`); Borrower List remains unlocked; default active tab changed to Borrower List |
+| 2026-07-15 | BorrowerDashboardForm.vb | Re-gated File Loan Application, Track Loan, My Account tabs (`LoadGated()`) |
+| 2026-07-15 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v2.00" |
+| 2026-07-15 | docs/Version-Control.md | Added v2.00 rollout row: Login + Admin Dashboard + Borrower List/Add New Borrower unlocked, all other forms gated |
 
 ---
 

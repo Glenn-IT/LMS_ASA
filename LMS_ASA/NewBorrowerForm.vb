@@ -555,6 +555,14 @@ Public Class NewBorrowerForm
         End If
     End Sub
 
+    ' ── Name fields: letters, spaces, hyphens, apostrophes only ───────
+    Private Sub NameField_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtFirstName.KeyPress, txtMiddleName.KeyPress, txtLastName.KeyPress
+        If Not Char.IsLetter(e.KeyChar) AndAlso e.KeyChar <> ControlChars.Back AndAlso
+           e.KeyChar <> " "c AndAlso e.KeyChar <> "-"c AndAlso e.KeyChar <> "'"c Then
+            e.Handled = True
+        End If
+    End Sub
+
     ' ?? Cancel ????????????????????????????????????????????????????
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.Close()

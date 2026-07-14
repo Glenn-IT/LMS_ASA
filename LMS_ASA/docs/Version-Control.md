@@ -16,6 +16,7 @@
 | v1.09 | Borrower: File a Loan Application | LoanApplicationForm | v1.10–v1.11 forms |
 | v1.10 | Borrower: Track Loan | TrackLoanForm | v1.11 forms |
 | v1.11 | Borrower: My Account (Full System) | MyAccountForm | None |
+| v2.00 | Presentation reset: Login + Admin Dashboard + Borrower List/Add New Borrower | Form1 (LoginForm), ForgotPasswordForm, AdminDashboardForm, BorrowerListForm, NewBorrowerForm | Loan List, Payment List, Borrower Accounts, Account Settings, Borrower Dashboard, File Loan Application, Track Loan, My Account |
 
 ---
 
@@ -97,6 +98,7 @@ git checkout master
 | v1.09 | v1.09 | 1222edb86de9f48716804adf5c14b50a08964eb1 |
 | v1.10 | v1.10 | ee0b6fc37c3dc6c217709aba144fe7eab1632bf6 |
 | v1.11 | v1.11 | cc7da0dce774777f2a13efc8f6e7e2096646bc57 |
+| v2.00 | v2.00 | (filled in after tagging) |
 
 To fill in commit hashes after all versions are done:
 
