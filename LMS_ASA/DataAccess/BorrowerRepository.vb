@@ -118,10 +118,27 @@ Public Module BorrowerRepository
     Public Sub Delete(borrowerID As Integer)
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
-            Using cmd As New SqlCommand(
-                "DELETE FROM tbl_Borrowers WHERE BorrowerID = @id", con)
-                cmd.Parameters.AddWithValue("@id", borrowerID)
-                cmd.ExecuteNonQuery()
+            Using tx = con.BeginTransaction()
+                Dim userID As Integer
+                Using cmd As New SqlCommand(
+                    "SELECT UserID FROM tbl_Borrowers WHERE BorrowerID = @id", con, tx)
+                    cmd.Parameters.AddWithValue("@id", borrowerID)
+                    userID = CInt(cmd.ExecuteScalar())
+                End Using
+
+                Using cmd As New SqlCommand(
+                    "DELETE FROM tbl_Borrowers WHERE BorrowerID = @id", con, tx)
+                    cmd.Parameters.AddWithValue("@id", borrowerID)
+                    cmd.ExecuteNonQuery()
+                End Using
+
+                Using cmd As New SqlCommand(
+                    "DELETE FROM tbl_Users WHERE UserID = @userID", con, tx)
+                    cmd.Parameters.AddWithValue("@userID", userID)
+                    cmd.ExecuteNonQuery()
+                End Using
+
+                tx.Commit()
             End Using
         End Using
     End Sub
