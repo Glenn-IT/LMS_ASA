@@ -281,6 +281,15 @@
             Return
         End If
         Dim selectedName As String = dgvBorrowers.SelectedRows(0).Cells("Full Name").Value?.ToString()
+        Dim selectedIDCheck As Integer = CInt(dgvBorrowers.SelectedRows(0).Cells("BorrowerID").Value)
+        If BorrowerRepository.HasLoans(selectedIDCheck) Then
+            MessageBox.Show(
+                $"""{selectedName}"" cannot be deleted because they have existing loan records. Remove or reassign those loans first.",
+                "Cannot Delete",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning)
+            Return
+        End If
         Dim confirm As DialogResult = MessageBox.Show(
             $"Delete borrower ""{selectedName}""? This action cannot be undone.",
             "Confirm Delete",

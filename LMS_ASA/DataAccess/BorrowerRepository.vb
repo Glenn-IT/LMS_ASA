@@ -105,6 +105,16 @@ Public Module BorrowerRepository
         End Using
     End Sub
 
+    Public Function HasLoans(borrowerID As Integer) As Boolean
+        Using con As New SqlConnection(dbconstring.Connection)
+            con.Open()
+            Dim cmd As New SqlCommand(
+                "SELECT COUNT(1) FROM tbl_Loans WHERE BorrowerID = @id", con)
+            cmd.Parameters.AddWithValue("@id", borrowerID)
+            Return CInt(cmd.ExecuteScalar()) > 0
+        End Using
+    End Function
+
     Public Sub Delete(borrowerID As Integer)
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
