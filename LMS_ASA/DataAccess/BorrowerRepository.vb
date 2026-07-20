@@ -80,6 +80,56 @@ Public Module BorrowerRepository
         End Using
     End Sub
 
+    ''' <summary>
+    ''' Creates the tbl_Users login and the tbl_Borrowers record in a single
+    ''' transaction, so a failure partway through cannot leave an orphaned
+    ''' login behind (see docs/cleanup_orphaned_users.sql for the symptom
+    ''' this caused before this fix).
+    ''' </summary>
+    Public Sub InsertWithUser(username As String, passwordHash As String, role As String,
+                              securityQuestion As String, securityAnswer As String,
+                              borrowerUID As String,
+                              firstName As String, middleName As String, lastName As String,
+                              age As Integer, dateOfBirth As DateTime,
+                              contact As String, email As String, idImagePath As String)
+        Using con As New SqlConnection(dbconstring.Connection)
+            con.Open()
+            Using tx = con.BeginTransaction()
+                Dim newUserID As Integer
+                Using cmd As New SqlCommand(
+                    "INSERT INTO tbl_Users (Username, PasswordHash, Role, SecurityQuestion, SecurityAnswer, IsActive, CreatedAt) " &
+                    "VALUES (@username, @hash, @role, @question, @answer, 1, GETDATE()); " &
+                    "SELECT CAST(SCOPE_IDENTITY() AS INT)", con, tx)
+                    cmd.Parameters.AddWithValue("@username", username)
+                    cmd.Parameters.AddWithValue("@hash", passwordHash)
+                    cmd.Parameters.AddWithValue("@role", role)
+                    cmd.Parameters.AddWithValue("@question", securityQuestion)
+                    cmd.Parameters.AddWithValue("@answer", securityAnswer)
+                    newUserID = CInt(cmd.ExecuteScalar())
+                End Using
+
+                Using cmd As New SqlCommand(
+                    "INSERT INTO tbl_Borrowers " &
+                    "(UserID, BorrowerUID, FirstName, MiddleName, LastName, Age, DateOfBirth, Contact, Email, IDImagePath, CreatedAt) " &
+                    "VALUES (@userID, @uid, @first, @middle, @last, @age, @dob, @contact, @email, @idPath, GETDATE())", con, tx)
+                    cmd.Parameters.AddWithValue("@userID", newUserID)
+                    cmd.Parameters.AddWithValue("@uid", borrowerUID)
+                    cmd.Parameters.AddWithValue("@first", firstName)
+                    cmd.Parameters.AddWithValue("@middle", If(String.IsNullOrEmpty(middleName), DBNull.Value, middleName))
+                    cmd.Parameters.AddWithValue("@last", lastName)
+                    cmd.Parameters.AddWithValue("@age", age)
+                    cmd.Parameters.AddWithValue("@dob", dateOfBirth)
+                    cmd.Parameters.AddWithValue("@contact", contact)
+                    cmd.Parameters.AddWithValue("@email", email)
+                    cmd.Parameters.AddWithValue("@idPath", If(String.IsNullOrEmpty(idImagePath), DBNull.Value, idImagePath))
+                    cmd.ExecuteNonQuery()
+                End Using
+
+                tx.Commit()
+            End Using
+        End Using
+    End Sub
+
     Public Sub Update(borrowerID As Integer,
                       firstName As String, middleName As String, lastName As String,
                       age As Integer, dateOfBirth As DateTime,

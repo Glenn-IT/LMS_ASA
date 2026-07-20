@@ -496,12 +496,10 @@ Public Class NewBorrowerForm
         Dim defaultUsername As String = uid.Replace("-", "").ToLower()
         Dim defaultHash As String = PasswordHelper.HashPassword("Password@1")
 
-        Dim newUserID As Integer = UserRepository.InsertAndGetID(
+        BorrowerRepository.InsertWithUser(
             defaultUsername, defaultHash, "Borrower",
-            "What is your mother's maiden name?", "default")
-
-        BorrowerRepository.Insert(
-            newUserID, uid,
+            "What is your mother's maiden name?", "default",
+            uid,
             txtFirstName.Text.Trim(),
             txtMiddleName.Text.Trim(),
             txtLastName.Text.Trim(),
