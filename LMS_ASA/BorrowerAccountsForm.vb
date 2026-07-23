@@ -23,160 +23,230 @@ Public Class BorrowerAccountsForm
     End Sub
 
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
         pnlHeader = New Panel()
-        lblTitle = New Label()
         lblSubtitle = New Label()
+        lblTitle = New Label()
         pnlToolbar = New Panel()
-        btnAdd = New Button()
-        btnUpdate = New Button()
-        btnDelete = New Button()
         lblSearch = New Label()
         txtSearch = New TextBox()
+        btnDelete = New Button()
+        btnUpdate = New Button()
+        btnAdd = New Button()
         pnlGrid = New Panel()
         dgvAccounts = New DataGridView()
         pnlFooter = New Panel()
         lblRecordCount = New Label()
-
+        pnlHeader.SuspendLayout()
+        pnlToolbar.SuspendLayout()
+        pnlGrid.SuspendLayout()
+        CType(dgvAccounts, ComponentModel.ISupportInitialize).BeginInit()
+        pnlFooter.SuspendLayout()
         SuspendLayout()
-
-        ' ?? pnlHeader ?????????????????????????????????????????????
+        ' 
+        ' pnlHeader
+        ' 
         pnlHeader.BackColor = Color.White
-        pnlHeader.Dock = DockStyle.Top
-        pnlHeader.Height = 64
         pnlHeader.Controls.Add(lblSubtitle)
         pnlHeader.Controls.Add(lblTitle)
-
-        ' ?? lblTitle ??????????????????????????????????????????????
-        lblTitle.Text = "Borrower Accounts"
-        lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
-        lblTitle.AutoSize = False
-        lblTitle.Size = New Size(400, 30)
-        lblTitle.Location = New Point(16, 10)
-
-        ' ?? lblSubtitle ???????????????????????????????????????????
-        lblSubtitle.Text = "Manage borrower login credentials"
-        lblSubtitle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
+        pnlHeader.Dock = DockStyle.Top
+        pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Size = New Size(900, 64)
+        pnlHeader.TabIndex = 3
+        ' 
+        ' lblSubtitle
+        ' 
+        lblSubtitle.Font = New Font("Segoe UI", 9F)
         lblSubtitle.ForeColor = Color.Gray
-        lblSubtitle.AutoSize = False
-        lblSubtitle.Size = New Size(400, 18)
         lblSubtitle.Location = New Point(16, 40)
-
-        ' ?? pnlToolbar ????????????????????????????????????????????
-        pnlToolbar.BackColor = Color.FromArgb(245, 247, 250)
-        pnlToolbar.Dock = DockStyle.Top
-        pnlToolbar.Height = 56
+        lblSubtitle.Name = "lblSubtitle"
+        lblSubtitle.Size = New Size(400, 18)
+        lblSubtitle.TabIndex = 0
+        lblSubtitle.Text = "Manage borrower login credentials"
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
+        lblTitle.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lblTitle.Location = New Point(16, 10)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(400, 30)
+        lblTitle.TabIndex = 1
+        lblTitle.Text = "Borrower Accounts"
+        ' 
+        ' pnlToolbar
+        ' 
+        pnlToolbar.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
         pnlToolbar.Controls.Add(lblSearch)
         pnlToolbar.Controls.Add(txtSearch)
         pnlToolbar.Controls.Add(btnDelete)
         pnlToolbar.Controls.Add(btnUpdate)
         pnlToolbar.Controls.Add(btnAdd)
-
-        ' ?? btnAdd ????????????????????????????????????????????????
-        btnAdd.Text = "+ Add"
-        btnAdd.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
-        btnAdd.ForeColor = Color.White
-        btnAdd.FlatStyle = FlatStyle.Flat
-        btnAdd.FlatAppearance.BorderSize = 0
-        btnAdd.Size = New Size(90, 34)
-        btnAdd.Location = New Point(12, 11)
-        btnAdd.Cursor = Cursors.Hand
-
-        ' ?? btnUpdate ?????????????????????????????????????????????
-        btnUpdate.Text = "Update"
-        btnUpdate.Font = New Font("Segoe UI", 9, FontStyle.Regular)
-        btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
-        btnUpdate.ForeColor = Color.White
-        btnUpdate.FlatStyle = FlatStyle.Flat
-        btnUpdate.FlatAppearance.BorderSize = 0
-        btnUpdate.Size = New Size(90, 34)
-        btnUpdate.Location = New Point(110, 11)
-        btnUpdate.Cursor = Cursors.Hand
-
-        ' ?? btnDelete ?????????????????????????????????????????????
-        btnDelete.Text = "Delete"
-        btnDelete.Font = New Font("Segoe UI", 9, FontStyle.Regular)
-        btnDelete.BackColor = Color.FromArgb(192, 57, 43)
-        btnDelete.ForeColor = Color.White
-        btnDelete.FlatStyle = FlatStyle.Flat
-        btnDelete.FlatAppearance.BorderSize = 0
-        btnDelete.Size = New Size(90, 34)
-        btnDelete.Location = New Point(208, 11)
-        btnDelete.Cursor = Cursors.Hand
-        btnDelete.Visible = True
-
-        ' ?? lblSearch ?????????????????????????????????????????????
-        lblSearch.Text = "Search:"
-        lblSearch.Font = New Font("Segoe UI", 9, FontStyle.Regular)
-        lblSearch.ForeColor = Color.Gray
+        pnlToolbar.Dock = DockStyle.Top
+        pnlToolbar.Location = New Point(0, 64)
+        pnlToolbar.Name = "pnlToolbar"
+        pnlToolbar.Size = New Size(900, 56)
+        pnlToolbar.TabIndex = 2
+        ' 
+        ' lblSearch
+        ' 
         lblSearch.AutoSize = True
-        lblSearch.Location = New Point(330, 20)
-
-        ' ?? txtSearch ?????????????????????????????????????????????
-        txtSearch.Font = New Font("Segoe UI", 9)
-        txtSearch.Size = New Size(200, 28)
-        txtSearch.Location = New Point(380, 15)
-        txtSearch.BorderStyle = BorderStyle.FixedSingle
+        lblSearch.Font = New Font("Segoe UI", 9F)
+        lblSearch.ForeColor = Color.Gray
+        lblSearch.Location = New Point(206, 20)
+        lblSearch.Name = "lblSearch"
+        lblSearch.Size = New Size(52, 19)
+        lblSearch.TabIndex = 0
+        lblSearch.Text = "Search:"
+        ' 
+        ' txtSearch
+        ' 
         txtSearch.BackColor = Color.White
-
-        ' ?? pnlGrid ???????????????????????????????????????????????
+        txtSearch.BorderStyle = BorderStyle.FixedSingle
+        txtSearch.Font = New Font("Segoe UI", 9F)
+        txtSearch.Location = New Point(264, 15)
+        txtSearch.Name = "txtSearch"
+        txtSearch.Size = New Size(258, 25)
+        txtSearch.TabIndex = 1
+        ' 
+        ' btnDelete
+        ' 
+        btnDelete.BackColor = Color.FromArgb(CByte(192), CByte(57), CByte(43))
+        btnDelete.Cursor = Cursors.Hand
+        btnDelete.FlatAppearance.BorderSize = 0
+        btnDelete.FlatStyle = FlatStyle.Flat
+        btnDelete.Font = New Font("Segoe UI", 9F)
+        btnDelete.ForeColor = Color.White
+        btnDelete.Location = New Point(798, 8)
+        btnDelete.Name = "btnDelete"
+        btnDelete.Size = New Size(90, 34)
+        btnDelete.TabIndex = 2
+        btnDelete.Text = "Delete"
+        btnDelete.UseVisualStyleBackColor = False
+        btnDelete.Visible = False
+        ' 
+        ' btnUpdate
+        ' 
+        btnUpdate.BackColor = Color.FromArgb(CByte(52), CByte(120), CByte(180))
+        btnUpdate.Cursor = Cursors.Hand
+        btnUpdate.FlatAppearance.BorderSize = 0
+        btnUpdate.FlatStyle = FlatStyle.Flat
+        btnUpdate.Font = New Font("Segoe UI", 9F)
+        btnUpdate.ForeColor = Color.White
+        btnUpdate.Location = New Point(110, 11)
+        btnUpdate.Name = "btnUpdate"
+        btnUpdate.Size = New Size(90, 34)
+        btnUpdate.TabIndex = 3
+        btnUpdate.Text = "Update"
+        btnUpdate.UseVisualStyleBackColor = False
+        ' 
+        ' btnAdd
+        ' 
+        btnAdd.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        btnAdd.Cursor = Cursors.Hand
+        btnAdd.FlatAppearance.BorderSize = 0
+        btnAdd.FlatStyle = FlatStyle.Flat
+        btnAdd.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnAdd.ForeColor = Color.White
+        btnAdd.Location = New Point(12, 11)
+        btnAdd.Name = "btnAdd"
+        btnAdd.Size = New Size(90, 34)
+        btnAdd.TabIndex = 4
+        btnAdd.Text = "+ Add"
+        btnAdd.UseVisualStyleBackColor = False
+        ' 
+        ' pnlGrid
+        ' 
         pnlGrid.BackColor = Color.White
-        pnlGrid.Dock = DockStyle.Fill
-        pnlGrid.Padding = New Padding(12)
         pnlGrid.Controls.Add(dgvAccounts)
-
-        ' ?? dgvAccounts ???????????????????????????????????????????
-        dgvAccounts.Dock = DockStyle.Fill
-        dgvAccounts.BackgroundColor = Color.White
-        dgvAccounts.BorderStyle = BorderStyle.None
-        dgvAccounts.RowHeadersVisible = False
+        pnlGrid.Dock = DockStyle.Fill
+        pnlGrid.Location = New Point(0, 120)
+        pnlGrid.Name = "pnlGrid"
+        pnlGrid.Padding = New Padding(12)
+        pnlGrid.Size = New Size(900, 368)
+        pnlGrid.TabIndex = 0
+        ' 
+        ' dgvAccounts
+        ' 
         dgvAccounts.AllowUserToAddRows = False
         dgvAccounts.AllowUserToDeleteRows = False
-        dgvAccounts.ReadOnly = True
-        dgvAccounts.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvAccounts.MultiSelect = False
+        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(245), CByte(249), CByte(253))
+        dgvAccounts.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         dgvAccounts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        dgvAccounts.Font = New Font("Segoe UI", 9)
+        dgvAccounts.BackgroundColor = Color.White
+        dgvAccounts.BorderStyle = BorderStyle.None
+        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        DataGridViewCellStyle2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle2.ForeColor = Color.White
+        DataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
+        dgvAccounts.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         dgvAccounts.ColumnHeadersHeight = 36
-        dgvAccounts.RowTemplate.Height = 32
-
-        ' Column header style
-        dgvAccounts.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(21, 67, 106)
-        dgvAccounts.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
-        dgvAccounts.ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        dgvAccounts.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = SystemColors.Window
+        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9F)
+        DataGridViewCellStyle3.ForeColor = SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(173), CByte(216), CByte(240))
+        DataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        DataGridViewCellStyle3.WrapMode = DataGridViewTriState.False
+        dgvAccounts.DefaultCellStyle = DataGridViewCellStyle3
+        dgvAccounts.Dock = DockStyle.Fill
         dgvAccounts.EnableHeadersVisualStyles = False
-
-        ' Alternating row style
-        dgvAccounts.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 249, 253)
-
-        ' Selection style
-        dgvAccounts.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 240)
-        dgvAccounts.DefaultCellStyle.SelectionForeColor = Color.FromArgb(21, 67, 106)
-
-        ' ?? pnlFooter ?????????????????????????????????????????????
-        pnlFooter.BackColor = Color.FromArgb(245, 247, 250)
-        pnlFooter.Dock = DockStyle.Bottom
-        pnlFooter.Height = 32
+        dgvAccounts.Font = New Font("Segoe UI", 9F)
+        dgvAccounts.Location = New Point(12, 12)
+        dgvAccounts.MultiSelect = False
+        dgvAccounts.Name = "dgvAccounts"
+        dgvAccounts.ReadOnly = True
+        dgvAccounts.RowHeadersVisible = False
+        dgvAccounts.RowHeadersWidth = 45
+        dgvAccounts.RowTemplate.Height = 32
+        dgvAccounts.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvAccounts.Size = New Size(876, 344)
+        dgvAccounts.TabIndex = 0
+        ' 
+        ' pnlFooter
+        ' 
+        pnlFooter.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
         pnlFooter.Controls.Add(lblRecordCount)
-
-        ' ?? lblRecordCount ????????????????????????????????????????
-        lblRecordCount.Text = "Loading..."
-        lblRecordCount.Font = New Font("Segoe UI", 8, FontStyle.Regular)
-        lblRecordCount.ForeColor = Color.Gray
+        pnlFooter.Dock = DockStyle.Bottom
+        pnlFooter.Location = New Point(0, 488)
+        pnlFooter.Name = "pnlFooter"
+        pnlFooter.Size = New Size(900, 32)
+        pnlFooter.TabIndex = 1
+        ' 
+        ' lblRecordCount
+        ' 
         lblRecordCount.AutoSize = True
+        lblRecordCount.Font = New Font("Segoe UI", 8F)
+        lblRecordCount.ForeColor = Color.Gray
         lblRecordCount.Location = New Point(12, 8)
-
-        ' ?? Form ??????????????????????????????????????????????????
-        Me.Text = "LMS - Borrower Accounts"
-        Me.ClientSize = New Size(900, 520)
-        Me.BackColor = Color.White
-        Me.Controls.Add(pnlGrid)
-        Me.Controls.Add(pnlFooter)
-        Me.Controls.Add(pnlToolbar)
-        Me.Controls.Add(pnlHeader)
-
+        lblRecordCount.Name = "lblRecordCount"
+        lblRecordCount.Size = New Size(59, 15)
+        lblRecordCount.TabIndex = 0
+        lblRecordCount.Text = "Loading..."
+        ' 
+        ' BorrowerAccountsForm
+        ' 
+        BackColor = Color.White
+        ClientSize = New Size(900, 520)
+        Controls.Add(pnlGrid)
+        Controls.Add(pnlFooter)
+        Controls.Add(pnlToolbar)
+        Controls.Add(pnlHeader)
+        Name = "BorrowerAccountsForm"
+        Text = "LMS - Borrower Accounts"
+        pnlHeader.ResumeLayout(False)
+        pnlToolbar.ResumeLayout(False)
+        pnlToolbar.PerformLayout()
+        pnlGrid.ResumeLayout(False)
+        CType(dgvAccounts, ComponentModel.ISupportInitialize).EndInit()
+        pnlFooter.ResumeLayout(False)
+        pnlFooter.PerformLayout()
         ResumeLayout(False)
     End Sub
 
@@ -244,12 +314,9 @@ Public Class BorrowerAccountsForm
 
     ' ?? Add Button ????????????????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        MessageBox.Show(
-            "Borrower accounts are created automatically when adding a new borrower." &
-            Environment.NewLine & "Use the Borrower List to add a new borrower.",
-            "Information",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information)
+        Dim frm As New NewBorrowerForm()
+        frm.ShowDialog()
+        LoadAccounts()
     End Sub
 
     ' ?? Update Button ?????????????????????????????????????????????

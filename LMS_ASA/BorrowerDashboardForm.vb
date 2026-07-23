@@ -227,9 +227,7 @@ Public Class BorrowerDashboardForm
     Private Sub btnMyAccount_Click(sender As Object, e As EventArgs) Handles btnMyAccount.Click
         SetActiveButton(btnMyAccount)
         lblPageTitle.Text = "My Account"
-        ' GATE — remove when unlocking My Account for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New MyAccountForm())
     End Sub
 
     ' ── Logout ────────────────────────────────────────────────────
@@ -248,6 +246,15 @@ Public Class BorrowerDashboardForm
     End Sub
 
     ' ?? Helpers ???????????????????????????????????????????????????
+    Private Sub LoadContent(frm As Form)
+        pnlContent.Controls.Clear()
+        frm.TopLevel = False
+        frm.FormBorderStyle = FormBorderStyle.None
+        frm.Dock = DockStyle.Fill
+        pnlContent.Controls.Add(frm)
+        frm.Show()
+    End Sub
+
     Private Sub LoadGated()
         Dim frm As New UnderConstructionForm()
         frm.TopLevel = False

@@ -396,17 +396,13 @@ Public Class AdminDashboardForm
     Private Sub btnBorrowerAccounts_Click(sender As Object, e As EventArgs) Handles btnBorrowerAccounts.Click
         SetActiveButton(btnBorrowerAccounts)
         lblPageTitle.Text = "Borrower Accounts"
-        ' GATE — remove when unlocking Borrower Accounts for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New BorrowerAccountsForm())
     End Sub
 
     Private Sub btnAccountSettings_Click(sender As Object, e As EventArgs) Handles btnAccountSettings.Click
         SetActiveButton(btnAccountSettings)
         lblPageTitle.Text = "Account Settings"
-        ' GATE — remove when unlocking Account Settings for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New AdminAccountSettingsForm())
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
