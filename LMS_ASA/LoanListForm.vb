@@ -356,22 +356,12 @@ Public Class LoanListForm
 
     ' ?? Add Button ????????????????????????????????????????????????
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        Dim frm As New NewLoanForm()
-        frm.ShowDialog()
-        LoadLoans()
+        ShowNotYetAvailable()
     End Sub
 
     ' ?? Update Button ?????????????????????????????????????????????
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
-        If dgvLoans.SelectedRows.Count = 0 Then
-            MessageBox.Show("Please select a loan record to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-        Dim selectedID As Integer = CInt(dgvLoans.SelectedRows(0).Cells("LoanID").Value)
-        Dim frm As New NewLoanForm()
-        frm.LoanID = selectedID
-        frm.ShowDialog()
-        LoadLoans()
+        ShowNotYetAvailable()
     End Sub
 
     ' ?? View Button ???????????????????????????????????????????????
@@ -387,26 +377,15 @@ Public Class LoanListForm
 
     ' ?? Delete Button ?????????????????????????????????????????????
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        If dgvLoans.SelectedRows.Count = 0 Then
-            MessageBox.Show("Please select a loan record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-        Dim selectedRef As String = dgvLoans.SelectedRows(0).Cells("Reference ID").Value?.ToString()
-        Dim confirm As DialogResult = MessageBox.Show(
-            $"Delete loan ""{selectedRef}""? This action cannot be undone.",
-            "Confirm Delete",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Warning)
-        If confirm = DialogResult.Yes Then
-            Try
-                Dim selectedID As Integer = CInt(dgvLoans.SelectedRows(0).Cells("LoanID").Value)
-                LoanRepository.Delete(selectedID)
-                ActivityLogger.Log(SessionManager.CurrentUsername, "Success", $"Deleted loan ID {selectedID}: {selectedRef}")
-                LoadLoans()
-            Catch ex As Exception
-                MessageBox.Show($"Delete failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End Try
-        End If
+        ShowNotYetAvailable()
+    End Sub
+
+    ' ?? Not-Yet-Available Notice ?????????????????????????????????????
+    Private Sub ShowNotYetAvailable()
+        MessageBox.Show(
+            "This feature is not yet available in the current presentation version." & Environment.NewLine &
+            "Only View is enabled for Loan List in v4.00.",
+            "Not Yet Available", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     ' ?? Button Hover Effects ??????????????????????????????????????
