@@ -8,6 +8,7 @@
     Private pnlToolbar As Panel
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnUpdate As Button
+    Friend WithEvents btnView As Button
     Friend WithEvents btnDelete As Button
     Private lblSearch As Label
     Private WithEvents txtSearch As TextBox
@@ -33,6 +34,7 @@
         lblSearch = New Label()
         txtSearch = New TextBox()
         btnDelete = New Button()
+        btnView = New Button()
         btnUpdate = New Button()
         btnAdd = New Button()
         pnlGrid = New Panel()
@@ -83,6 +85,7 @@
         pnlToolbar.Controls.Add(lblSearch)
         pnlToolbar.Controls.Add(txtSearch)
         pnlToolbar.Controls.Add(btnDelete)
+        pnlToolbar.Controls.Add(btnView)
         pnlToolbar.Controls.Add(btnUpdate)
         pnlToolbar.Controls.Add(btnAdd)
         pnlToolbar.Dock = DockStyle.Top
@@ -96,18 +99,18 @@
         lblSearch.AutoSize = True
         lblSearch.Font = New Font("Segoe UI", 9F)
         lblSearch.ForeColor = Color.Gray
-        lblSearch.Location = New Point(216, 21)
+        lblSearch.Location = New Point(324, 21)
         lblSearch.Name = "lblSearch"
         lblSearch.Size = New Size(52, 19)
         lblSearch.TabIndex = 0
         lblSearch.Text = "Search:"
-        ' 
+        '
         ' txtSearch
-        ' 
+        '
         txtSearch.BackColor = Color.White
         txtSearch.BorderStyle = BorderStyle.FixedSingle
         txtSearch.Font = New Font("Segoe UI", 9F)
-        txtSearch.Location = New Point(274, 19)
+        txtSearch.Location = New Point(382, 19)
         txtSearch.Name = "txtSearch"
         txtSearch.Size = New Size(286, 25)
         txtSearch.TabIndex = 1
@@ -127,7 +130,22 @@
         btnDelete.Text = "Delete"
         btnDelete.UseVisualStyleBackColor = False
         btnDelete.Visible = False
-        ' 
+        '
+        ' btnView
+        '
+        btnView.BackColor = Color.FromArgb(CByte(23), CByte(162), CByte(184))
+        btnView.Cursor = Cursors.Hand
+        btnView.FlatAppearance.BorderSize = 0
+        btnView.FlatStyle = FlatStyle.Flat
+        btnView.Font = New Font("Segoe UI", 9F)
+        btnView.ForeColor = Color.White
+        btnView.Location = New Point(208, 11)
+        btnView.Name = "btnView"
+        btnView.Size = New Size(90, 34)
+        btnView.TabIndex = 5
+        btnView.Text = "View"
+        btnView.UseVisualStyleBackColor = False
+        '
         ' btnUpdate
         ' 
         btnUpdate.BackColor = Color.FromArgb(CByte(52), CByte(120), CByte(180))
@@ -344,6 +362,17 @@
         LoadBorrowers()
     End Sub
 
+    ' ?? View Button ???????????????????????????????????????????????
+    Private Sub btnView_Click(sender As Object, e As EventArgs) Handles btnView.Click
+        If dgvBorrowers.SelectedRows.Count = 0 Then
+            MessageBox.Show("Please select a borrower record to view.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        Dim selectedID As Integer = CInt(dgvBorrowers.SelectedRows(0).Cells("BorrowerID").Value)
+        Dim frm As New ViewBorrowerForm(selectedID)
+        frm.ShowDialog()
+    End Sub
+
     ' ?? Delete Button ?????????????????????????????????????????????
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         If dgvBorrowers.SelectedRows.Count = 0 Then
@@ -389,6 +418,12 @@
     End Sub
     Private Sub btnUpdate_MouseLeave(sender As Object, e As EventArgs) Handles btnUpdate.MouseLeave
         btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
+    End Sub
+    Private Sub btnView_MouseEnter(sender As Object, e As EventArgs) Handles btnView.MouseEnter
+        btnView.BackColor = Color.FromArgb(19, 132, 150)
+    End Sub
+    Private Sub btnView_MouseLeave(sender As Object, e As EventArgs) Handles btnView.MouseLeave
+        btnView.BackColor = Color.FromArgb(23, 162, 184)
     End Sub
     Private Sub btnDelete_MouseEnter(sender As Object, e As EventArgs) Handles btnDelete.MouseEnter
         btnDelete.BackColor = Color.FromArgb(160, 40, 30)

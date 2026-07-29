@@ -374,9 +374,7 @@ Public Class AdminDashboardForm
     Private Sub btnLoanList_Click(sender As Object, e As EventArgs) Handles btnLoanList.Click
         SetActiveButton(btnLoanList)
         lblPageTitle.Text = "Loan List"
-        ' GATE — remove when unlocking Loan List for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New LoanListForm())
     End Sub
 
     Private Sub btnBorrowerList_Click(sender As Object, e As EventArgs) Handles btnBorrowerList.Click
@@ -388,9 +386,7 @@ Public Class AdminDashboardForm
     Private Sub btnPaymentList_Click(sender As Object, e As EventArgs) Handles btnPaymentList.Click
         SetActiveButton(btnPaymentList)
         lblPageTitle.Text = "Payment List"
-        ' GATE — remove when unlocking Payment List for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New PaymentListForm())
     End Sub
 
     Private Sub btnBorrowerAccounts_Click(sender As Object, e As EventArgs) Handles btnBorrowerAccounts.Click
@@ -426,16 +422,6 @@ Public Class AdminDashboardForm
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
         frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Add(frm)
-        frm.Show()
-    End Sub
-
-    Private Sub LoadGated()
-        Dim frm As New UnderConstructionForm()
-        frm.TopLevel = False
-        frm.FormBorderStyle = FormBorderStyle.None
-        frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Clear()
         pnlContent.Controls.Add(frm)
         frm.Show()
     End Sub

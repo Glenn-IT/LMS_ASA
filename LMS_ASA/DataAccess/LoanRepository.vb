@@ -39,7 +39,11 @@ Public Module LoanRepository
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
             Dim cmd As New SqlCommand(
-                "SELECT * FROM tbl_Loans WHERE LoanID = @id", con)
+                "SELECT l.*, " &
+                "b.FirstName + ' ' + ISNULL(b.MiddleName + ' ', '') + b.LastName AS BorrowerName " &
+                "FROM tbl_Loans l " &
+                "INNER JOIN tbl_Borrowers b ON l.BorrowerID = b.BorrowerID " &
+                "WHERE l.LoanID = @id", con)
             cmd.Parameters.AddWithValue("@id", loanID)
             Dim adapter As New SqlDataAdapter(cmd)
             adapter.Fill(dt)

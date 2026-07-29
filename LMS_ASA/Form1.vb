@@ -87,11 +87,11 @@ Public Class LoginForm
     End Sub
 
     Private Sub StartLockout()
-        _countdown = 30
+        _countdown = 15
         btnLogin.Enabled = False
         btnLogin.Text = $"Locked ({_countdown}s)"
         _lockoutTimer.Start()
-        MessageBox.Show("Too many failed attempts. Login is locked for 30 seconds.",
+        MessageBox.Show("Too many failed attempts. Login is locked for 15 seconds.",
                         "Account Locked", MessageBoxButtons.OK, MessageBoxIcon.Error)
     End Sub
 

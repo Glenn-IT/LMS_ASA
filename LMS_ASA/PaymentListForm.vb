@@ -8,6 +8,7 @@ Public Class PaymentListForm
     Private pnlToolbar As Panel
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnUpdate As Button
+    Friend WithEvents btnView As Button
     Friend WithEvents btnDelete As Button
     Private lblSearch As Label
     Private WithEvents txtSearch As TextBox
@@ -29,6 +30,7 @@ Public Class PaymentListForm
         pnlToolbar = New Panel()
         btnAdd = New Button()
         btnUpdate = New Button()
+        btnView = New Button()
         btnDelete = New Button()
         lblSearch = New Label()
         txtSearch = New TextBox()
@@ -69,6 +71,7 @@ Public Class PaymentListForm
         pnlToolbar.Controls.Add(lblSearch)
         pnlToolbar.Controls.Add(txtSearch)
         pnlToolbar.Controls.Add(btnDelete)
+        pnlToolbar.Controls.Add(btnView)
         pnlToolbar.Controls.Add(btnUpdate)
         pnlToolbar.Controls.Add(btnAdd)
 
@@ -94,6 +97,17 @@ Public Class PaymentListForm
         btnUpdate.Location = New Point(110, 11)
         btnUpdate.Cursor = Cursors.Hand
 
+        ' ?? btnView ??????????????????????????????????????????????
+        btnView.Text = "View"
+        btnView.Font = New Font("Segoe UI", 9, FontStyle.Regular)
+        btnView.BackColor = Color.FromArgb(23, 162, 184)
+        btnView.ForeColor = Color.White
+        btnView.FlatStyle = FlatStyle.Flat
+        btnView.FlatAppearance.BorderSize = 0
+        btnView.Size = New Size(90, 34)
+        btnView.Location = New Point(208, 11)
+        btnView.Cursor = Cursors.Hand
+
         ' ?? btnDelete ?????????????????????????????????????????????
         btnDelete.Text = "Delete"
         btnDelete.Font = New Font("Segoe UI", 9, FontStyle.Regular)
@@ -102,7 +116,7 @@ Public Class PaymentListForm
         btnDelete.FlatStyle = FlatStyle.Flat
         btnDelete.FlatAppearance.BorderSize = 0
         btnDelete.Size = New Size(90, 34)
-        btnDelete.Location = New Point(208, 11)
+        btnDelete.Location = New Point(306, 11)
         btnDelete.Cursor = Cursors.Hand
         btnDelete.Visible = True
 
@@ -111,12 +125,12 @@ Public Class PaymentListForm
         lblSearch.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSearch.ForeColor = Color.Gray
         lblSearch.AutoSize = True
-        lblSearch.Location = New Point(330, 20)
+        lblSearch.Location = New Point(428, 20)
 
         ' ?? txtSearch ?????????????????????????????????????????????
         txtSearch.Font = New Font("Segoe UI", 9)
         txtSearch.Size = New Size(200, 28)
-        txtSearch.Location = New Point(380, 15)
+        txtSearch.Location = New Point(478, 15)
         txtSearch.BorderStyle = BorderStyle.FixedSingle
         txtSearch.BackColor = Color.White
 
@@ -282,6 +296,17 @@ Public Class PaymentListForm
         LoadPayments()
     End Sub
 
+    ' ?? View Button ???????????????????????????????????????????????
+    Private Sub btnView_Click(sender As Object, e As EventArgs) Handles btnView.Click
+        If dgvPayments.SelectedRows.Count = 0 Then
+            MessageBox.Show("Please select a payment record to view.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        Dim selectedID As Integer = CInt(dgvPayments.SelectedRows(0).Cells("PaymentID").Value)
+        Dim frm As New ViewPaymentForm(selectedID)
+        frm.ShowDialog()
+    End Sub
+
     ' ?? Delete Button ?????????????????????????????????????????????
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         If dgvPayments.SelectedRows.Count = 0 Then
@@ -320,6 +345,12 @@ Public Class PaymentListForm
     End Sub
     Private Sub btnUpdate_MouseLeave(sender As Object, e As EventArgs) Handles btnUpdate.MouseLeave
         btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
+    End Sub
+    Private Sub btnView_MouseEnter(sender As Object, e As EventArgs) Handles btnView.MouseEnter
+        btnView.BackColor = Color.FromArgb(19, 132, 150)
+    End Sub
+    Private Sub btnView_MouseLeave(sender As Object, e As EventArgs) Handles btnView.MouseLeave
+        btnView.BackColor = Color.FromArgb(23, 162, 184)
     End Sub
     Private Sub btnDelete_MouseEnter(sender As Object, e As EventArgs) Handles btnDelete.MouseEnter
         btnDelete.BackColor = Color.FromArgb(160, 40, 30)

@@ -39,7 +39,12 @@ Public Module PaymentRepository
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
             Dim cmd As New SqlCommand(
-                "SELECT * FROM tbl_Payments WHERE PaymentID = @id", con)
+                "SELECT p.*, l.LoanReferenceID, " &
+                "b.FirstName + ' ' + ISNULL(b.MiddleName + ' ', '') + b.LastName AS BorrowerName " &
+                "FROM tbl_Payments p " &
+                "INNER JOIN tbl_Loans l ON p.LoanID = l.LoanID " &
+                "INNER JOIN tbl_Borrowers b ON l.BorrowerID = b.BorrowerID " &
+                "WHERE p.PaymentID = @id", con)
             cmd.Parameters.AddWithValue("@id", paymentID)
             Dim adapter As New SqlDataAdapter(cmd)
             adapter.Fill(dt)

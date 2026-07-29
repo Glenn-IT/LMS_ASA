@@ -209,18 +209,14 @@ Public Class BorrowerDashboardForm
     Private Sub btnFileLoan_Click(sender As Object, e As EventArgs) Handles btnFileLoan.Click
         SetActiveButton(btnFileLoan)
         lblPageTitle.Text = "File Loan Application"
-        ' GATE — remove when unlocking File Loan Application for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New LoanApplicationForm())
     End Sub
 
     ' ?? Track Loan Application ????????????????????????????????????
     Private Sub btnTrackLoan_Click(sender As Object, e As EventArgs) Handles btnTrackLoan.Click
         SetActiveButton(btnTrackLoan)
         lblPageTitle.Text = "Track Loan Application"
-        ' GATE — remove when unlocking Track Loan for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New TrackLoanForm())
     End Sub
 
     ' ?? My Account ????????????????????????????????????????????????
@@ -251,16 +247,6 @@ Public Class BorrowerDashboardForm
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
         frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Add(frm)
-        frm.Show()
-    End Sub
-
-    Private Sub LoadGated()
-        Dim frm As New UnderConstructionForm()
-        frm.TopLevel = False
-        frm.FormBorderStyle = FormBorderStyle.None
-        frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Clear()
         pnlContent.Controls.Add(frm)
         frm.Show()
     End Sub

@@ -14,6 +14,8 @@ Public Class NewLoanForm
     Friend WithEvents cmbBorrowerName As ComboBox
     Private lblLoanType As Label
     Friend WithEvents cmbLoanType As ComboBox
+    Private lblStatus As Label
+    Friend WithEvents cmbStatus As ComboBox
     Private grpLoanDetails As GroupBox
     Private lblPrincipalAmount As Label
     Friend WithEvents txtPrincipalAmount As TextBox
@@ -53,6 +55,8 @@ Public Class NewLoanForm
         cmbBorrowerName = New ComboBox()
         lblLoanType = New Label()
         cmbLoanType = New ComboBox()
+        lblStatus = New Label()
+        cmbStatus = New ComboBox()
         grpLoanDetails = New GroupBox()
         lblPrincipalAmount = New Label()
         txtPrincipalAmount = New TextBox()
@@ -118,8 +122,10 @@ Public Class NewLoanForm
         grpLoanInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
         grpLoanInfo.ForeColor = Color.FromArgb(21, 67, 106)
         grpLoanInfo.BackColor = Color.White
-        grpLoanInfo.Size = New Size(830, 140)
+        grpLoanInfo.Size = New Size(830, 156)
         grpLoanInfo.Location = New Point(16, 16)
+        grpLoanInfo.Controls.Add(cmbStatus)
+        grpLoanInfo.Controls.Add(lblStatus)
         grpLoanInfo.Controls.Add(cmbLoanType)
         grpLoanInfo.Controls.Add(lblLoanType)
         grpLoanInfo.Controls.Add(cmbBorrowerName)
@@ -181,6 +187,29 @@ Public Class NewLoanForm
             "Agricultural Loan"
         })
 
+        ' ?? Status ????????????????????????????????????????????????
+        lblStatus.Text = "STATUS"
+        lblStatus.Font = New Font("Segoe UI", 8, FontStyle.Bold)
+        lblStatus.ForeColor = Color.FromArgb(100, 100, 100)
+        lblStatus.AutoSize = False
+        lblStatus.Size = New Size(240, 18)
+        lblStatus.Location = New Point(16, 88)
+
+        cmbStatus.Font = New Font("Segoe UI", 10)
+        cmbStatus.Size = New Size(240, 28)
+        cmbStatus.Location = New Point(16, 108)
+        cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbStatus.BackColor = Color.FromArgb(245, 248, 252)
+        cmbStatus.FlatStyle = FlatStyle.Flat
+        cmbStatus.Items.AddRange(New Object() {
+            "Pending",
+            "Approved",
+            "Active",
+            "Overdue",
+            "Rejected",
+            "Closed"
+        })
+
         ' ??????????????????????????????????????????????????????????
         ' grpLoanDetails � Amounts, Rate, Term
         ' ??????????????????????????????????????????????????????????
@@ -189,7 +218,7 @@ Public Class NewLoanForm
         grpLoanDetails.ForeColor = Color.FromArgb(21, 67, 106)
         grpLoanDetails.BackColor = Color.White
         grpLoanDetails.Size = New Size(830, 140)
-        grpLoanDetails.Location = New Point(16, 172)
+        grpLoanDetails.Location = New Point(16, 188)
         grpLoanDetails.Controls.Add(txtTerm)
         grpLoanDetails.Controls.Add(lblTerm)
         grpLoanDetails.Controls.Add(txtTotalPayable)
@@ -264,7 +293,7 @@ Public Class NewLoanForm
         grpDates.ForeColor = Color.FromArgb(21, 67, 106)
         grpDates.BackColor = Color.White
         grpDates.Size = New Size(830, 100)
-        grpDates.Location = New Point(16, 328)
+        grpDates.Location = New Point(16, 344)
         grpDates.Controls.Add(dtpDueDate)
         grpDates.Controls.Add(lblDueDate)
         grpDates.Controls.Add(dtpReleaseDate)
@@ -335,7 +364,7 @@ Public Class NewLoanForm
         ' ?? Form ??????????????????????????????????????????????????
         Me.Text = "LMS - New Loan"
         Me.AcceptButton = btnAdd
-        Me.ClientSize = New Size(880, 560)
+        Me.ClientSize = New Size(880, 576)
         Me.StartPosition = FormStartPosition.CenterParent
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
@@ -362,6 +391,8 @@ Public Class NewLoanForm
             Catch ex As Exception
                 txtLoanID.Text = "LN-0001"
             End Try
+            cmbStatus.SelectedIndex = 0 ' Pending
+            cmbStatus.Enabled = False
             lblTitle.Text = "New Loan"
             lblSubtitle.Text = "Fill in the form below to create a new loan record"
             btnAdd.Text = "Add Loan"
@@ -421,6 +452,10 @@ Public Class NewLoanForm
             txtTerm.Text = row("Term").ToString()
             If row("ReleaseDate") IsNot DBNull.Value Then dtpReleaseDate.Value = CDate(row("ReleaseDate"))
             If row("DueDate") IsNot DBNull.Value Then dtpDueDate.Value = CDate(row("DueDate"))
+
+            Dim statusIdx As Integer = cmbStatus.Items.IndexOf(row("Status").ToString())
+            cmbStatus.SelectedIndex = If(statusIdx >= 0, statusIdx, 0)
+            cmbStatus.Enabled = True
         Catch ex As Exception
             MessageBox.Show($"Failed to load loan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -507,7 +542,7 @@ Public Class NewLoanForm
         Dim term As Integer = Integer.Parse(txtTerm.Text.Trim())
 
         LoanRepository.Insert(borrowerID, refID, loanType, principal, rate, total,
-                              term, dtpReleaseDate.Value, dtpDueDate.Value, "Pending")
+                              term, dtpReleaseDate.Value, dtpDueDate.Value, cmbStatus.SelectedItem.ToString())
         ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
             $"Added new loan {refID} for borrower ID {borrowerID}")
         MessageBox.Show($"Loan {refID} added successfully.", "Loan Added", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -522,7 +557,7 @@ Public Class NewLoanForm
         Dim term As Integer = Integer.Parse(txtTerm.Text.Trim())
 
         LoanRepository.Update(LoanID, loanType, principal, rate, total,
-                              term, dtpReleaseDate.Value, dtpDueDate.Value, "Pending")
+                              term, dtpReleaseDate.Value, dtpDueDate.Value, cmbStatus.SelectedItem.ToString())
         ActivityLogger.Log(SessionManager.CurrentUsername, "Success",
             $"Updated loan ID {LoanID}: {txtLoanID.Text.Trim()}")
         MessageBox.Show("Loan record updated successfully.", "Loan Updated", MessageBoxButtons.OK, MessageBoxIcon.Information)
