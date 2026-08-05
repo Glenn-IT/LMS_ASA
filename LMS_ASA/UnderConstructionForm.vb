@@ -1,7 +1,7 @@
 Public Class UnderConstructionForm
     Inherits Form
 
-    Public Const CURRENT_VERSION As String = "v4.00"
+    Public Const CURRENT_VERSION As String = "v5.00"
 
     Public Sub New()
         InitializeComponent()
@@ -36,7 +36,7 @@ Public Class UnderConstructionForm
         lblVersion.Name = "lblVersion"
         lblVersion.Size = New Size(480, 28)
         lblVersion.TabIndex = 1
-        lblVersion.Text = "Current Version: v4.00"
+        lblVersion.Text = "Current Version: " & CURRENT_VERSION
         lblVersion.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' lblTitle

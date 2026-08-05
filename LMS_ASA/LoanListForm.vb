@@ -354,17 +354,27 @@ Public Class LoanListForm
         lblRecordCount.Text = $"Showing {_fullData.DefaultView.Count} record(s)"
     End Sub
 
-    ' ?? Add Button ????????????????????????????????????????????????
+    ' ── Add Button ────────────────────────────────────────────────
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        ShowNotYetAvailable()
+        Dim frm As New NewLoanForm()
+        frm.ShowDialog()
+        LoadLoans()
     End Sub
 
-    ' ?? Update Button ?????????????????????????????????????????????
+    ' ── Update Button ─────────────────────────────────────────────
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
-        ShowNotYetAvailable()
+        If dgvLoans.SelectedRows.Count = 0 Then
+            MessageBox.Show("Please select a loan record to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        Dim selectedID As Integer = CInt(dgvLoans.SelectedRows(0).Cells("LoanID").Value)
+        Dim frm As New NewLoanForm()
+        frm.LoanID = selectedID
+        frm.ShowDialog()
+        LoadLoans()
     End Sub
 
-    ' ?? View Button ???????????????????????????????????????????????
+    ' ── View Button ───────────────────────────────────────────────
     Private Sub btnView_Click(sender As Object, e As EventArgs) Handles btnView.Click
         If dgvLoans.SelectedRows.Count = 0 Then
             MessageBox.Show("Please select a loan record to view.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -375,17 +385,29 @@ Public Class LoanListForm
         frm.ShowDialog()
     End Sub
 
-    ' ?? Delete Button ?????????????????????????????????????????????
+    ' ── Delete Button ─────────────────────────────────────────────
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        ShowNotYetAvailable()
-    End Sub
-
-    ' ?? Not-Yet-Available Notice ?????????????????????????????????????
-    Private Sub ShowNotYetAvailable()
-        MessageBox.Show(
-            "This feature is not yet available in the current presentation version." & Environment.NewLine &
-            "Only View is enabled for Loan List in v4.00.",
-            "Not Yet Available", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If dgvLoans.SelectedRows.Count = 0 Then
+            MessageBox.Show("Please select a loan record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        Dim selectedRef As String = dgvLoans.SelectedRows(0).Cells("Reference ID").Value?.ToString()
+        Dim selectedBorrower As String = dgvLoans.SelectedRows(0).Cells("Borrower").Value?.ToString()
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Delete loan record ""{selectedRef}"" for ""{selectedBorrower}""? This action cannot be undone.",
+            "Confirm Delete",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Warning)
+        If confirm = DialogResult.Yes Then
+            Try
+                Dim selectedID As Integer = CInt(dgvLoans.SelectedRows(0).Cells("LoanID").Value)
+                LoanRepository.Delete(selectedID)
+                ActivityLogger.Log(SessionManager.CurrentUsername, "Success", $"Deleted loan ID {selectedID}: {selectedRef}")
+                LoadLoans()
+            Catch ex As Exception
+                MessageBox.Show($"Delete failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
     End Sub
 
     ' ?? Button Hover Effects ??????????????????????????????????????

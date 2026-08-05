@@ -117,6 +117,28 @@ Format: `[Date] | Type | File(s) | Description`
 | 2026-07-15 | docs/Version-Control.md | Added v2.00 rollout row: Login + Admin Dashboard + Borrower List/Add New Borrower unlocked, all other forms gated |
 | 2026-07-15 | UnderConstructionForm.vb | Cherry-picked onto the `v2.00` tag per docs/Cherry-Pick-Guide.md — designer-style field declarations, anchored controls, `WindowState=Maximized`; tag re-pointed to `09fba67077b58c66e9907d7c8a469e72e3f58340` |
 
+### Phase 12 — v3.00 Release
+| Date | File(s) | Description |
+|------|---------|-------------|
+| 2026-07-20 | AdminDashboardForm.vb | Unlocked Borrower Accounts and Account Settings tabs |
+| 2026-07-20 | BorrowerDashboardForm.vb | Unlocked Borrower Dashboard and My Account tabs |
+| 2026-07-20 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v3.00" |
+
+### Phase 13 — v4.00 Release
+| Date | File(s) | Description |
+|------|---------|-------------|
+| 2026-07-28 | AdminDashboardForm.vb | Unlocked Loan List tab in Admin Dashboard |
+| 2026-07-28 | LoanListForm.vb | View action enabled on Loan List; 5 sample loan records seeded (`docs/seed_loans_v4.sql`) |
+| 2026-07-28 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v4.00" |
+
+### Phase 14 — v5.00 Release
+| Date | File(s) | Description |
+|------|---------|-------------|
+| 2026-08-05 | LoanListForm.vb | Unlocked Add, Update, and Delete buttons on Loan List (Add/Edit opens `NewLoanForm`, Delete confirms and removes loan record via `LoanRepository`) |
+| 2026-08-05 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v5.00" |
+| 2026-08-05 | docs/Version-Control.md | Added v5.00 rollout row in documentation |
+
+
 ---
 
 ## Pending
