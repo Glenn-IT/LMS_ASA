@@ -138,6 +138,13 @@ Format: `[Date] | Type | File(s) | Description`
 | 2026-08-05 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v5.00" |
 | 2026-08-05 | docs/Version-Control.md | Added v5.00 rollout row in documentation |
 
+### Phase 15 — v5.10 Release
+| Date | File(s) | Description |
+|------|---------|-------------|
+| 2026-08-13 | LoanListForm.vb, BorrowerListForm.vb, BorrowerAccountsForm.vb | Added search debounce timer and "The searched data does not exist." popup message box when search yields 0 records |
+| 2026-08-13 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v5.10" |
+| 2026-08-13 | docs/Version-Control.md | Added v5.10 rollout row in documentation |
+
 
 ---
 

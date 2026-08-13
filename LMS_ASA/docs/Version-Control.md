@@ -20,6 +20,7 @@
 | v3.00 | Unlock Borrower Accounts, Account Settings, Borrower Dashboard, My Account | BorrowerAccountsForm, EditAccountForm, AdminAccountSettingsForm, BorrowerDashboardForm, MyAccountForm | Loan List, Payment List (Admin), File Loan Application, Track Loan (Applicant) |
 | v4.00 | Loan List demo: View only (Add/Update/Delete show "not yet available"); 5 sample loan records seeded | LoanListForm (View action only) | Payment List (Admin), File Loan Application, Track Loan (Applicant) |
 | v5.00 | Loan List full unlock: Add, Update, Delete buttons unlocked on Loan List | LoanListForm (All actions: Add, Update, View, Delete) | Payment List (Admin), File Loan Application, Track Loan (Applicant) |
+| v5.10 | Search missing data notification added to Loan List, Borrower List, and Borrower Accounts | LoanListForm, BorrowerListForm, BorrowerAccountsForm | Payment List (Admin), File Loan Application, Track Loan (Applicant) |
 
 ---
 
