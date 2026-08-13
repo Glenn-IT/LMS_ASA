@@ -17,6 +17,7 @@ Public Class BorrowerAccountsForm
     Private lblRecordCount As Label
 
     Private _fullData As DataTable
+    Private WithEvents searchTimer As System.Windows.Forms.Timer
 
     Public Sub New()
         InitializeComponent()
@@ -39,6 +40,8 @@ Public Class BorrowerAccountsForm
         dgvAccounts = New DataGridView()
         pnlFooter = New Panel()
         lblRecordCount = New Label()
+        searchTimer = New System.Windows.Forms.Timer()
+        searchTimer.Interval = 700
         pnlHeader.SuspendLayout()
         pnlToolbar.SuspendLayout()
         pnlGrid.SuspendLayout()
@@ -299,9 +302,14 @@ Public Class BorrowerAccountsForm
         End With
     End Sub
 
-    ' ?? Search ????????????????????????????????????????????????
+    ' ── Search ────────────────────────────────────────────────────
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
         If _fullData Is Nothing Then Return
+
+        If searchTimer IsNot Nothing Then
+            searchTimer.Stop()
+        End If
+
         Dim keyword As String = txtSearch.Text.Trim().Replace("'", "''")
         If keyword = "" Then
             _fullData.DefaultView.RowFilter = ""
@@ -310,6 +318,31 @@ Public Class BorrowerAccountsForm
                 $"[Username] LIKE '%{keyword}%' OR [Status] LIKE '%{keyword}%'"
         End If
         lblRecordCount.Text = $"Showing {_fullData.DefaultView.Count} record(s)"
+
+        If keyword <> "" AndAlso _fullData.DefaultView.Count = 0 Then
+            searchTimer.Start()
+        End If
+    End Sub
+
+    Private Sub searchTimer_Tick(sender As Object, e As EventArgs) Handles searchTimer.Tick
+        searchTimer.Stop()
+        If _fullData Is Nothing Then Return
+        If txtSearch.Text.Trim() <> "" AndAlso _fullData.DefaultView.Count = 0 Then
+            MessageBox.Show("The searched data does not exist.", "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub txtSearch_KeyDown(sender As Object, e As KeyEventArgs) Handles txtSearch.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If searchTimer IsNot Nothing Then
+                searchTimer.Stop()
+            End If
+            If _fullData Is Nothing Then Return
+            If txtSearch.Text.Trim() <> "" AndAlso _fullData.DefaultView.Count = 0 Then
+                MessageBox.Show("The searched data does not exist.", "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End If
     End Sub
 
     ' ?? Add Button ????????????????????????????????????????????????
