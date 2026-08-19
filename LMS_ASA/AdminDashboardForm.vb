@@ -386,9 +386,7 @@ Public Class AdminDashboardForm
     Private Sub btnPaymentList_Click(sender As Object, e As EventArgs) Handles btnPaymentList.Click
         SetActiveButton(btnPaymentList)
         lblPageTitle.Text = "Payment List"
-        ' GATE — remove when unlocking Payment List for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New PaymentListForm())
     End Sub
 
     Private Sub btnBorrowerAccounts_Click(sender As Object, e As EventArgs) Handles btnBorrowerAccounts.Click

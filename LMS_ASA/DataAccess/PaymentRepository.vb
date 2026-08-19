@@ -8,13 +8,50 @@ Public Module PaymentRepository
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
             Dim cmd As New SqlCommand(
-                "SELECT p.PaymentID, l.LoanReferenceID, " &
+                "SELECT p.PaymentID, p.LoanID, l.LoanReferenceID, " &
                 "b.FirstName + ' ' + b.LastName AS BorrowerName, " &
-                "p.Payee, p.Amount, p.Penalty, p.PaymentDate, p.Status " &
+                "p.Payee, p.Amount, p.Penalty, p.PaymentDate, p.Status, " &
+                "l.TotalPayable, l.Term, " &
+                "(l.TotalPayable / CASE WHEN l.Term = 0 THEN 1 ELSE l.Term END) AS MonthlyAmortization, " &
+                "ISNULL(paid.TotalPaid, 0) AS TotalPaidForLoan, " &
+                "(l.TotalPayable - ISNULL(paid.TotalPaid, 0)) AS RemainingBalance " &
                 "FROM tbl_Payments p " &
                 "INNER JOIN tbl_Loans l ON p.LoanID = l.LoanID " &
                 "INNER JOIN tbl_Borrowers b ON l.BorrowerID = b.BorrowerID " &
+                "LEFT JOIN ( " &
+                "    SELECT LoanID, SUM(Amount) AS TotalPaid " &
+                "    FROM tbl_Payments " &
+                "    WHERE Status = 'Paid' " &
+                "    GROUP BY LoanID " &
+                ") paid ON l.LoanID = paid.LoanID " &
                 "ORDER BY p.PaymentDate DESC", con)
+            Dim adapter As New SqlDataAdapter(cmd)
+            adapter.Fill(dt)
+        End Using
+        Return dt
+    End Function
+
+    Public Function GetLoanPaymentSummary(loanID As Integer) As DataTable
+        Dim dt As New DataTable()
+        Using con As New SqlConnection(dbconstring.Connection)
+            con.Open()
+            Dim cmd As New SqlCommand(
+                "SELECT l.LoanID, l.LoanReferenceID, " &
+                "b.FirstName + ' ' + ISNULL(b.MiddleName + ' ', '') + b.LastName AS BorrowerName, " &
+                "l.PrincipalAmount, l.InterestRate, l.TotalPayable, l.Term, " &
+                "ISNULL(paid.TotalPaid, 0) AS TotalPaid, " &
+                "(l.TotalPayable - ISNULL(paid.TotalPaid, 0)) AS RemainingBalance, " &
+                "(l.TotalPayable / CASE WHEN l.Term = 0 THEN 1 ELSE l.Term END) AS MonthlyAmortization " &
+                "FROM tbl_Loans l " &
+                "INNER JOIN tbl_Borrowers b ON l.BorrowerID = b.BorrowerID " &
+                "LEFT JOIN ( " &
+                "    SELECT LoanID, SUM(Amount) AS TotalPaid " &
+                "    FROM tbl_Payments " &
+                "    WHERE Status = 'Paid' " &
+                "    GROUP BY LoanID " &
+                ") paid ON l.LoanID = paid.LoanID " &
+                "WHERE l.LoanID = @loanID", con)
+            cmd.Parameters.AddWithValue("@loanID", loanID)
             Dim adapter As New SqlDataAdapter(cmd)
             adapter.Fill(dt)
         End Using

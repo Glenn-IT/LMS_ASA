@@ -145,6 +145,15 @@ Format: `[Date] | Type | File(s) | Description`
 | 2026-08-13 | UnderConstructionForm.vb | `CURRENT_VERSION` bumped to "v5.10" |
 | 2026-08-13 | docs/Version-Control.md | Added v5.10 rollout row in documentation |
 
+### Phase 16 — Payment List & Amortization Release
+| Date | File(s) | Description |
+|------|---------|-------------|
+| 2026-08-19 | AdminDashboardForm.vb | Unlocked Payment List tab in Admin Dashboard (`LoadContent(New PaymentListForm())`) |
+| 2026-08-19 | PaymentRepository.vb | Added `GetLoanPaymentSummary()` and updated `GetAll()` to calculate monthly amortization, total paid, remaining balance, and remaining schedule months |
+| 2026-08-19 | NewPaymentForm.vb | Added Loan & Amortization Overview card section (Total Loan, Monthly Payment, Total Paid, Remaining Balance, Schedule Months Left), auto-fill payee name and monthly payment amount, and real-time balance calculation preview |
+| 2026-08-19 | PaymentListForm.vb | Added KPI Summary Cards (Total Collections, Total Outstanding Balance, Total Transactions) and added Monthly Amortization, Remaining Balance, and Months Left columns to DataGridView |
+| 2026-08-19 | ViewPaymentForm.vb | Added Loan & Amortization Overview card section when viewing payment details |
+
 
 ---
 
