@@ -12,6 +12,8 @@ Public Class AdminDashboardForm
     Friend WithEvents btnPaymentList As Button
     Friend WithEvents btnBorrowerAccounts As Button
     Friend WithEvents btnAccountSettings As Button
+    Friend WithEvents btnSystemManual As Button
+    Friend WithEvents btnDevelopers As Button
     Private pnlSidebarFooter As Panel
     Friend WithEvents btnLogout As Button
     Private pnlMain As Panel
@@ -34,6 +36,8 @@ Public Class AdminDashboardForm
         pnlSidebar = New Panel()
         pnlSidebarFooter = New Panel()
         btnLogout = New Button()
+        btnDevelopers = New Button()
+        btnSystemManual = New Button()
         btnBorrowerAccounts = New Button()
         btnAccountSettings = New Button()
         btnPaymentList = New Button()
@@ -65,6 +69,8 @@ Public Class AdminDashboardForm
         ' 
         pnlSidebar.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
         pnlSidebar.Controls.Add(pnlSidebarFooter)
+        pnlSidebar.Controls.Add(btnDevelopers)
+        pnlSidebar.Controls.Add(btnSystemManual)
         pnlSidebar.Controls.Add(btnAccountSettings)
         pnlSidebar.Controls.Add(btnBorrowerAccounts)
         pnlSidebar.Controls.Add(btnPaymentList)
@@ -104,6 +110,40 @@ Public Class AdminDashboardForm
         btnLogout.Text = "   Logout"
         btnLogout.TextAlign = ContentAlignment.MiddleLeft
         btnLogout.UseVisualStyleBackColor = False
+        ' 
+        ' btnDevelopers
+        ' 
+        btnDevelopers.BackColor = Color.Transparent
+        btnDevelopers.Cursor = Cursors.Hand
+        btnDevelopers.FlatAppearance.BorderSize = 0
+        btnDevelopers.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnDevelopers.FlatStyle = FlatStyle.Flat
+        btnDevelopers.Font = New Font("Segoe UI", 10.0F)
+        btnDevelopers.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnDevelopers.Location = New Point(0, 398)
+        btnDevelopers.Name = "btnDevelopers"
+        btnDevelopers.Size = New Size(220, 48)
+        btnDevelopers.TabIndex = 5
+        btnDevelopers.Text = "   Developers"
+        btnDevelopers.TextAlign = ContentAlignment.MiddleLeft
+        btnDevelopers.UseVisualStyleBackColor = False
+        ' 
+        ' btnSystemManual
+        ' 
+        btnSystemManual.BackColor = Color.Transparent
+        btnSystemManual.Cursor = Cursors.Hand
+        btnSystemManual.FlatAppearance.BorderSize = 0
+        btnSystemManual.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnSystemManual.FlatStyle = FlatStyle.Flat
+        btnSystemManual.Font = New Font("Segoe UI", 10.0F)
+        btnSystemManual.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnSystemManual.Location = New Point(0, 350)
+        btnSystemManual.Name = "btnSystemManual"
+        btnSystemManual.Size = New Size(220, 48)
+        btnSystemManual.TabIndex = 4
+        btnSystemManual.Text = "   System Manual"
+        btnSystemManual.TextAlign = ContentAlignment.MiddleLeft
+        btnSystemManual.UseVisualStyleBackColor = False
         ' 
         ' btnBorrowerAccounts
         ' 
@@ -359,6 +399,7 @@ Public Class AdminDashboardForm
         UpdateClock()
         _clockTimer.Start()
         SetActiveButton(btnBorrowerList)
+        LoadContent(New BorrowerListForm())
     End Sub
 
     Private Sub UpdateClock()
@@ -370,7 +411,7 @@ Public Class AdminDashboardForm
         UpdateClock()
     End Sub
 
-    ' ?? Sidebar Navigation ????????????????????????????????????????
+    ' ── Sidebar Navigation ────────────────────────────────────────
     Private Sub btnLoanList_Click(sender As Object, e As EventArgs) Handles btnLoanList.Click
         SetActiveButton(btnLoanList)
         lblPageTitle.Text = "Loan List"
@@ -401,6 +442,18 @@ Public Class AdminDashboardForm
         LoadContent(New AdminAccountSettingsForm())
     End Sub
 
+    Private Sub btnSystemManual_Click(sender As Object, e As EventArgs) Handles btnSystemManual.Click
+        SetActiveButton(btnSystemManual)
+        lblPageTitle.Text = "System Manual"
+        LoadContent(New SystemManualForm())
+    End Sub
+
+    Private Sub btnDevelopers_Click(sender As Object, e As EventArgs) Handles btnDevelopers.Click
+        SetActiveButton(btnDevelopers)
+        lblPageTitle.Text = "Developers"
+        LoadContent(New DevelopersForm())
+    End Sub
+
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         Dim confirm As DialogResult = MessageBox.Show(
             "Are you sure you want to logout?",
@@ -416,7 +469,7 @@ Public Class AdminDashboardForm
         Me.Close()
     End Sub
 
-    ' ?? Helpers ???????????????????????????????????????????????????
+    ' ── Helpers ───────────────────────────────────────────────────
     Private Sub LoadContent(frm As Form)
         pnlContent.Controls.Clear()
         frm.TopLevel = False
@@ -426,18 +479,8 @@ Public Class AdminDashboardForm
         frm.Show()
     End Sub
 
-    Private Sub LoadGated()
-        Dim frm As New UnderConstructionForm()
-        frm.TopLevel = False
-        frm.FormBorderStyle = FormBorderStyle.None
-        frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Clear()
-        pnlContent.Controls.Add(frm)
-        frm.Show()
-    End Sub
-
     Private Sub SetActiveButton(activeBtn As Button)
-        Dim sidebarBtns As Button() = {btnLoanList, btnBorrowerList, btnPaymentList, btnBorrowerAccounts, btnAccountSettings}
+        Dim sidebarBtns As Button() = {btnLoanList, btnBorrowerList, btnPaymentList, btnBorrowerAccounts, btnAccountSettings, btnSystemManual, btnDevelopers}
         For Each btn As Button In sidebarBtns
             btn.BackColor = Color.Transparent
             btn.ForeColor = Color.FromArgb(200, 230, 255)

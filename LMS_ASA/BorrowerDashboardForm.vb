@@ -10,6 +10,8 @@ Public Class BorrowerDashboardForm
     Friend WithEvents btnFileLoan As Button
     Friend WithEvents btnTrackLoan As Button
     Friend WithEvents btnMyAccount As Button
+    Friend WithEvents btnSystemManual As Button
+    Friend WithEvents btnDevelopers As Button
     Private pnlSidebarFooter As Panel
     Friend WithEvents btnLogout As Button
     Private pnlMain As Panel
@@ -32,6 +34,8 @@ Public Class BorrowerDashboardForm
         btnFileLoan = New Button()
         btnTrackLoan = New Button()
         btnMyAccount = New Button()
+        btnSystemManual = New Button()
+        btnDevelopers = New Button()
         pnlSidebarFooter = New Panel()
         btnLogout = New Button()
         pnlMain = New Panel()
@@ -43,25 +47,27 @@ Public Class BorrowerDashboardForm
 
         SuspendLayout()
 
-        ' ?? pnlSidebar ????????????????????????????????????????????
+        ' ── pnlSidebar ────────────────────────────────────────────
         pnlSidebar.BackColor = Color.FromArgb(21, 67, 106)
         pnlSidebar.Dock = DockStyle.Left
         pnlSidebar.Width = 220
         pnlSidebar.Controls.Add(pnlSidebarFooter)
+        pnlSidebar.Controls.Add(btnDevelopers)
+        pnlSidebar.Controls.Add(btnSystemManual)
         pnlSidebar.Controls.Add(btnMyAccount)
         pnlSidebar.Controls.Add(btnTrackLoan)
         pnlSidebar.Controls.Add(btnFileLoan)
         pnlSidebar.Controls.Add(pnlSidebarDivider)
         pnlSidebar.Controls.Add(pnlSidebarHeader)
 
-        ' ?? pnlSidebarHeader ??????????????????????????????????????
+        ' ── pnlSidebarHeader ──────────────────────────────────────
         pnlSidebarHeader.BackColor = Color.FromArgb(15, 52, 86)
         pnlSidebarHeader.Dock = DockStyle.Top
         pnlSidebarHeader.Height = 100
         pnlSidebarHeader.Controls.Add(lblSidebarSub)
         pnlSidebarHeader.Controls.Add(lblSidebarTitle)
 
-        ' ?? lblSidebarTitle ???????????????????????????????????????
+        ' ── lblSidebarTitle ───────────────────────────────────────
         lblSidebarTitle.Text = "LMS Borrower"
         lblSidebarTitle.Font = New Font("Segoe UI", 13, FontStyle.Bold)
         lblSidebarTitle.ForeColor = Color.White
@@ -69,7 +75,7 @@ Public Class BorrowerDashboardForm
         lblSidebarTitle.Size = New Size(200, 30)
         lblSidebarTitle.Location = New Point(12, 28)
 
-        ' ?? lblSidebarSub ?????????????????????????????????????????
+        ' ── lblSidebarSub ─────────────────────────────────────────
         lblSidebarSub.Text = "Borrower Portal"
         lblSidebarSub.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSidebarSub.ForeColor = Color.FromArgb(173, 216, 255)
@@ -77,12 +83,12 @@ Public Class BorrowerDashboardForm
         lblSidebarSub.Size = New Size(200, 20)
         lblSidebarSub.Location = New Point(12, 60)
 
-        ' ?? pnlSidebarDivider ?????????????????????????????????????
+        ' ── pnlSidebarDivider ─────────────────────────────────────
         pnlSidebarDivider.BackColor = Color.FromArgb(40, 90, 130)
         pnlSidebarDivider.Dock = DockStyle.Top
         pnlSidebarDivider.Height = 1
 
-        ' ?? btnFileLoan ???????????????????????????????????????????
+        ' ── btnFileLoan ───────────────────────────────────────────
         btnFileLoan.Text = "   File Loan Application"
         btnFileLoan.Font = New Font("Segoe UI", 10, FontStyle.Regular)
         btnFileLoan.ForeColor = Color.FromArgb(200, 230, 255)
@@ -95,7 +101,7 @@ Public Class BorrowerDashboardForm
         btnFileLoan.Location = New Point(0, 110)
         btnFileLoan.Cursor = Cursors.Hand
 
-        ' ?? btnTrackLoan ??????????????????????????????????????????
+        ' ── btnTrackLoan ──────────────────────────────────────────
         btnTrackLoan.Text = "   Track Loan Application"
         btnTrackLoan.Font = New Font("Segoe UI", 10, FontStyle.Regular)
         btnTrackLoan.ForeColor = Color.FromArgb(200, 230, 255)
@@ -108,7 +114,7 @@ Public Class BorrowerDashboardForm
         btnTrackLoan.Location = New Point(0, 158)
         btnTrackLoan.Cursor = Cursors.Hand
 
-        ' ?? btnMyAccount ??????????????????????????????????????????
+        ' ── btnMyAccount ──────────────────────────────────────────
         btnMyAccount.Text = "   My Account"
         btnMyAccount.Font = New Font("Segoe UI", 10, FontStyle.Regular)
         btnMyAccount.ForeColor = Color.FromArgb(200, 230, 255)
@@ -120,6 +126,32 @@ Public Class BorrowerDashboardForm
         btnMyAccount.Size = New Size(220, 48)
         btnMyAccount.Location = New Point(0, 206)
         btnMyAccount.Cursor = Cursors.Hand
+
+        ' ── btnSystemManual ───────────────────────────────────────
+        btnSystemManual.Text = "   System Manual"
+        btnSystemManual.Font = New Font("Segoe UI", 10, FontStyle.Regular)
+        btnSystemManual.ForeColor = Color.FromArgb(200, 230, 255)
+        btnSystemManual.BackColor = Color.Transparent
+        btnSystemManual.FlatStyle = FlatStyle.Flat
+        btnSystemManual.FlatAppearance.BorderSize = 0
+        btnSystemManual.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 95, 150)
+        btnSystemManual.TextAlign = ContentAlignment.MiddleLeft
+        btnSystemManual.Size = New Size(220, 48)
+        btnSystemManual.Location = New Point(0, 254)
+        btnSystemManual.Cursor = Cursors.Hand
+
+        ' ── btnDevelopers ─────────────────────────────────────────
+        btnDevelopers.Text = "   Developers"
+        btnDevelopers.Font = New Font("Segoe UI", 10, FontStyle.Regular)
+        btnDevelopers.ForeColor = Color.FromArgb(200, 230, 255)
+        btnDevelopers.BackColor = Color.Transparent
+        btnDevelopers.FlatStyle = FlatStyle.Flat
+        btnDevelopers.FlatAppearance.BorderSize = 0
+        btnDevelopers.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 95, 150)
+        btnDevelopers.TextAlign = ContentAlignment.MiddleLeft
+        btnDevelopers.Size = New Size(220, 48)
+        btnDevelopers.Location = New Point(0, 302)
+        btnDevelopers.Cursor = Cursors.Hand
 
         ' ?? pnlSidebarFooter ??????????????????????????????????????
         pnlSidebarFooter.BackColor = Color.FromArgb(15, 52, 86)
@@ -205,29 +237,39 @@ Public Class BorrowerDashboardForm
         ShowWelcomePanel()
     End Sub
 
-    ' ?? File Loan Application ?????????????????????????????????????
+    ' ── File Loan Application ─────────────────────────────────────
     Private Sub btnFileLoan_Click(sender As Object, e As EventArgs) Handles btnFileLoan.Click
         SetActiveButton(btnFileLoan)
         lblPageTitle.Text = "File Loan Application"
-        ' GATE — remove when unlocking File Loan Application for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New LoanApplicationForm())
     End Sub
 
-    ' ?? Track Loan Application ????????????????????????????????????
+    ' ── Track Loan Application ────────────────────────────────────
     Private Sub btnTrackLoan_Click(sender As Object, e As EventArgs) Handles btnTrackLoan.Click
         SetActiveButton(btnTrackLoan)
         lblPageTitle.Text = "Track Loan Application"
-        ' GATE — remove when unlocking Track Loan for vX.XX
-        LoadGated()
-        ' END GATE
+        LoadContent(New TrackLoanForm())
     End Sub
 
-    ' ?? My Account ????????????????????????????????????????????????
+    ' ── My Account ────────────────────────────────────────────────
     Private Sub btnMyAccount_Click(sender As Object, e As EventArgs) Handles btnMyAccount.Click
         SetActiveButton(btnMyAccount)
         lblPageTitle.Text = "My Account"
         LoadContent(New MyAccountForm())
+    End Sub
+
+    ' ── System Manual ─────────────────────────────────────────────
+    Private Sub btnSystemManual_Click(sender As Object, e As EventArgs) Handles btnSystemManual.Click
+        SetActiveButton(btnSystemManual)
+        lblPageTitle.Text = "System Manual"
+        LoadContent(New SystemManualForm())
+    End Sub
+
+    ' ── Developers ────────────────────────────────────────────────
+    Private Sub btnDevelopers_Click(sender As Object, e As EventArgs) Handles btnDevelopers.Click
+        SetActiveButton(btnDevelopers)
+        lblPageTitle.Text = "Developers"
+        LoadContent(New DevelopersForm())
     End Sub
 
     ' ── Logout ────────────────────────────────────────────────────
@@ -245,22 +287,12 @@ Public Class BorrowerDashboardForm
         Me.Close()
     End Sub
 
-    ' ?? Helpers ???????????????????????????????????????????????????
+    ' ── Helpers ───────────────────────────────────────────────────
     Private Sub LoadContent(frm As Form)
         pnlContent.Controls.Clear()
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
         frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Add(frm)
-        frm.Show()
-    End Sub
-
-    Private Sub LoadGated()
-        Dim frm As New UnderConstructionForm()
-        frm.TopLevel = False
-        frm.FormBorderStyle = FormBorderStyle.None
-        frm.Dock = DockStyle.Fill
-        pnlContent.Controls.Clear()
         pnlContent.Controls.Add(frm)
         frm.Show()
     End Sub
@@ -283,7 +315,7 @@ Public Class BorrowerDashboardForm
     End Sub
 
     Private Sub SetActiveButton(activeBtn As Button)
-        Dim sidebarBtns As Button() = {btnFileLoan, btnTrackLoan, btnMyAccount}
+        Dim sidebarBtns As Button() = {btnFileLoan, btnTrackLoan, btnMyAccount, btnSystemManual, btnDevelopers}
         For Each btn As Button In sidebarBtns
             btn.BackColor = Color.Transparent
             btn.ForeColor = Color.FromArgb(200, 230, 255)
