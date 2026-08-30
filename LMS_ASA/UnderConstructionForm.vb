@@ -31,7 +31,7 @@ Public Class UnderConstructionForm
         ' 
         lblVersion.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         lblVersion.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
-        lblVersion.ForeColor = Color.Orange
+        lblVersion.ForeColor = Color.FromArgb(249, 182, 55)
         lblVersion.Location = New Point(0, 95)
         lblVersion.Name = "lblVersion"
         lblVersion.Size = New Size(480, 28)
@@ -55,7 +55,7 @@ Public Class UnderConstructionForm
         ' 
         lblDesc.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         lblDesc.Font = New Font("Segoe UI", 9.5F)
-        lblDesc.ForeColor = Color.FromArgb(CByte(200), CByte(200), CByte(255))
+        lblDesc.ForeColor = Color.FromArgb(255, 221, 156)
         lblDesc.Location = New Point(20, 183)
         lblDesc.Name = "lblDesc"
         lblDesc.Size = New Size(440, 36)
@@ -66,11 +66,11 @@ Public Class UnderConstructionForm
         ' btnBack
         ' 
         btnBack.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        btnBack.BackColor = Color.FromArgb(CByte(48), CByte(63), CByte(159))
+        btnBack.BackColor = Color.FromArgb(251, 108, 0)
         btnBack.Cursor = Cursors.Hand
-        btnBack.FlatAppearance.BorderColor = Color.FromArgb(CByte(92), CByte(107), CByte(192))
+        btnBack.FlatAppearance.BorderSize = 0
         btnBack.FlatStyle = FlatStyle.Flat
-        btnBack.Font = New Font("Segoe UI", 10F)
+        btnBack.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         btnBack.ForeColor = Color.White
         btnBack.Location = New Point(175, 248)
         btnBack.Name = "btnBack"
@@ -78,10 +78,11 @@ Public Class UnderConstructionForm
         btnBack.TabIndex = 4
         btnBack.Text = "← Go Back"
         btnBack.UseVisualStyleBackColor = False
+        AddHandler btnBack.Click, AddressOf btnBack_Click
         ' 
         ' UnderConstructionForm
         ' 
-        BackColor = Color.FromArgb(CByte(26), CByte(35), CByte(126))
+        BackColor = Color.FromArgb(184, 46, 18)
         ClientSize = New Size(480, 320)
         Controls.Add(lblEmoji)
         Controls.Add(lblVersion)

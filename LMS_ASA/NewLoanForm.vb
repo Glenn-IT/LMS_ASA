@@ -85,15 +85,15 @@ Public Class NewLoanForm
         pnlHeader.Controls.Add(lblSubtitle)
         pnlHeader.Controls.Add(lblTitle)
 
-        ' ?? lblTitle ??????????????????????????????????????????????
+        ' ── lblTitle ──────────────────────────────────────────────────
         lblTitle.Text = "New Loan"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
 
-        ' ?? lblSubtitle ???????????????????????????????????????????
+        ' ── lblSubtitle ───────────────────────────────────────────────
         lblSubtitle.Text = "Fill in the form below to create a new loan record"
         lblSubtitle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSubtitle.ForeColor = Color.Gray
@@ -101,12 +101,12 @@ Public Class NewLoanForm
         lblSubtitle.Size = New Size(500, 18)
         lblSubtitle.Location = New Point(16, 40)
 
-        ' ?? pnlDividerTop ?????????????????????????????????????????
+        ' ── pnlDividerTop ─────────────────────────────────────────────
         pnlDividerTop.BackColor = Color.FromArgb(220, 220, 220)
         pnlDividerTop.Dock = DockStyle.Top
         pnlDividerTop.Height = 1
 
-        ' ?? pnlBody ???????????????????????????????????????????????
+        ' ── pnlBody ───────────────────────────────────────────────────
         pnlBody.BackColor = Color.FromArgb(245, 247, 250)
         pnlBody.Dock = DockStyle.Fill
         pnlBody.Padding = New Padding(16)
@@ -115,12 +115,12 @@ Public Class NewLoanForm
         pnlBody.Controls.Add(grpLoanDetails)
         pnlBody.Controls.Add(grpLoanInfo)
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpLoanInfo � Loan ID, Borrower Name, Loan Type
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpLoanInfo – Loan ID, Borrower Name, Loan Type
+        ' ──────────────────────────────────────────────────────────────
         grpLoanInfo.Text = "Loan Information"
         grpLoanInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpLoanInfo.ForeColor = Color.FromArgb(21, 67, 106)
+        grpLoanInfo.ForeColor = Color.FromArgb(231, 63, 30)
         grpLoanInfo.BackColor = Color.White
         grpLoanInfo.Size = New Size(830, 156)
         grpLoanInfo.Location = New Point(16, 16)
@@ -133,7 +133,7 @@ Public Class NewLoanForm
         grpLoanInfo.Controls.Add(txtLoanID)
         grpLoanInfo.Controls.Add(lblLoanID)
 
-        ' ?? Loan ID ???????????????????????????????????????????????
+        ' ── Loan ID ───────────────────────────────────────────────────
         lblLoanID.Text = "LOAN ID"
         lblLoanID.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblLoanID.ForeColor = Color.FromArgb(100, 100, 100)
@@ -149,7 +149,7 @@ Public Class NewLoanForm
         txtLoanID.ReadOnly = True
         txtLoanID.Text = ""
 
-        ' ?? Borrower Name ?????????????????????????????????????????
+        ' ── Borrower Name ─────────────────────────────────────────────
         lblBorrowerName.Text = "BORROWER NAME"
         lblBorrowerName.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblBorrowerName.ForeColor = Color.FromArgb(100, 100, 100)
@@ -161,11 +161,11 @@ Public Class NewLoanForm
         cmbBorrowerName.Size = New Size(270, 28)
         cmbBorrowerName.Location = New Point(280, 48)
         cmbBorrowerName.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbBorrowerName.BackColor = Color.FromArgb(245, 248, 252)
+        cmbBorrowerName.BackColor = Color.FromArgb(255, 252, 248)
         cmbBorrowerName.FlatStyle = FlatStyle.Flat
         ' Borrower list populated from DB in Form Load
 
-        ' ?? Loan Type ?????????????????????????????????????????????
+        ' ── Loan Type ─────────────────────────────────────────────────
         lblLoanType.Text = "LOAN TYPE"
         lblLoanType.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblLoanType.ForeColor = Color.FromArgb(100, 100, 100)
@@ -177,7 +177,7 @@ Public Class NewLoanForm
         cmbLoanType.Size = New Size(240, 28)
         cmbLoanType.Location = New Point(574, 48)
         cmbLoanType.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbLoanType.BackColor = Color.FromArgb(245, 248, 252)
+        cmbLoanType.BackColor = Color.FromArgb(255, 252, 248)
         cmbLoanType.FlatStyle = FlatStyle.Flat
         cmbLoanType.Items.AddRange(New Object() {
             "Personal Loan",
@@ -187,7 +187,7 @@ Public Class NewLoanForm
             "Agricultural Loan"
         })
 
-        ' ?? Status ????????????????????????????????????????????????
+        ' ── Status ────────────────────────────────────────────────────
         lblStatus.Text = "STATUS"
         lblStatus.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblStatus.ForeColor = Color.FromArgb(100, 100, 100)
@@ -199,7 +199,7 @@ Public Class NewLoanForm
         cmbStatus.Size = New Size(240, 28)
         cmbStatus.Location = New Point(16, 108)
         cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbStatus.BackColor = Color.FromArgb(245, 248, 252)
+        cmbStatus.BackColor = Color.FromArgb(255, 252, 248)
         cmbStatus.FlatStyle = FlatStyle.Flat
         cmbStatus.Items.AddRange(New Object() {
             "Pending",
@@ -210,12 +210,12 @@ Public Class NewLoanForm
             "Closed"
         })
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpLoanDetails � Amounts, Rate, Term
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpLoanDetails – Amounts, Rate, Term
+        ' ──────────────────────────────────────────────────────────────
         grpLoanDetails.Text = "Loan Details"
         grpLoanDetails.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpLoanDetails.ForeColor = Color.FromArgb(21, 67, 106)
+        grpLoanDetails.ForeColor = Color.FromArgb(231, 63, 30)
         grpLoanDetails.BackColor = Color.White
         grpLoanDetails.Size = New Size(830, 140)
         grpLoanDetails.Location = New Point(16, 188)
@@ -228,7 +228,7 @@ Public Class NewLoanForm
         grpLoanDetails.Controls.Add(txtPrincipalAmount)
         grpLoanDetails.Controls.Add(lblPrincipalAmount)
 
-        ' ?? Principal Amount ??????????????????????????????????????
+        ' ── Principal Amount ──────────────────────────────────────────
         lblPrincipalAmount.Text = "PRINCIPAL AMOUNT (PHP)"
         lblPrincipalAmount.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblPrincipalAmount.ForeColor = Color.FromArgb(100, 100, 100)
@@ -240,9 +240,9 @@ Public Class NewLoanForm
         txtPrincipalAmount.Size = New Size(190, 28)
         txtPrincipalAmount.Location = New Point(16, 48)
         txtPrincipalAmount.BorderStyle = BorderStyle.FixedSingle
-        txtPrincipalAmount.BackColor = Color.FromArgb(245, 248, 252)
+        txtPrincipalAmount.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ?? Interest Rate ?????????????????????????????????????????
+        ' ── Interest Rate ─────────────────────────────────────────────
         lblInterestRate.Text = "INTEREST RATE (%)"
         lblInterestRate.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblInterestRate.ForeColor = Color.FromArgb(100, 100, 100)
@@ -254,9 +254,9 @@ Public Class NewLoanForm
         txtInterestRate.Size = New Size(190, 28)
         txtInterestRate.Location = New Point(224, 48)
         txtInterestRate.BorderStyle = BorderStyle.FixedSingle
-        txtInterestRate.BackColor = Color.FromArgb(245, 248, 252)
+        txtInterestRate.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ?? Total Payable Amount ??????????????????????????????????
+        ' ── Total Payable Amount ──────────────────────────────────────
         lblTotalPayable.Text = "TOTAL PAYABLE AMOUNT (PHP)"
         lblTotalPayable.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblTotalPayable.ForeColor = Color.FromArgb(100, 100, 100)
@@ -271,7 +271,7 @@ Public Class NewLoanForm
         txtTotalPayable.BackColor = Color.FromArgb(235, 240, 245)
         txtTotalPayable.ReadOnly = True
 
-        ' ?? Term / Duration ???????????????????????????????????????
+        ' ── Term / Duration ───────────────────────────────────────────
         lblTerm.Text = "TERM / DURATION (Months)"
         lblTerm.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblTerm.ForeColor = Color.FromArgb(100, 100, 100)
@@ -283,14 +283,14 @@ Public Class NewLoanForm
         txtTerm.Size = New Size(164, 28)
         txtTerm.Location = New Point(650, 48)
         txtTerm.BorderStyle = BorderStyle.FixedSingle
-        txtTerm.BackColor = Color.FromArgb(245, 248, 252)
+        txtTerm.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpDates � Release Date, Due Date
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpDates – Release Date, Due Date
+        ' ──────────────────────────────────────────────────────────────
         grpDates.Text = "Schedule"
         grpDates.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpDates.ForeColor = Color.FromArgb(21, 67, 106)
+        grpDates.ForeColor = Color.FromArgb(231, 63, 30)
         grpDates.BackColor = Color.White
         grpDates.Size = New Size(830, 100)
         grpDates.Location = New Point(16, 344)
@@ -299,7 +299,7 @@ Public Class NewLoanForm
         grpDates.Controls.Add(dtpReleaseDate)
         grpDates.Controls.Add(lblReleaseDate)
 
-        ' ?? Release Date ??????????????????????????????????????????
+        ' ── Release Date ──────────────────────────────────────────────
         lblReleaseDate.Text = "RELEASE DATE"
         lblReleaseDate.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblReleaseDate.ForeColor = Color.FromArgb(100, 100, 100)
@@ -312,7 +312,7 @@ Public Class NewLoanForm
         dtpReleaseDate.Location = New Point(16, 48)
         dtpReleaseDate.Format = DateTimePickerFormat.Long
 
-        ' ?? Due Date ??????????????????????????????????????????????
+        ' ── Due Date ──────────────────────────────────────────────────
         lblDueDate.Text = "DUE DATE"
         lblDueDate.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblDueDate.ForeColor = Color.FromArgb(100, 100, 100)
@@ -325,7 +325,7 @@ Public Class NewLoanForm
         dtpDueDate.Location = New Point(424, 48)
         dtpDueDate.Format = DateTimePickerFormat.Long
 
-        ' ?? pnlFooter ?????????????????????????????????????????????
+        ' ── pnlFooter ─────────────────────────────────────────────────
         pnlFooter.BackColor = Color.White
         pnlFooter.Dock = DockStyle.Bottom
         pnlFooter.Height = 60
@@ -333,15 +333,15 @@ Public Class NewLoanForm
         pnlFooter.Controls.Add(btnAdd)
         pnlFooter.Controls.Add(pnlDividerBottom)
 
-        ' ?? pnlDividerBottom ??????????????????????????????????????
+        ' ── pnlDividerBottom ──────────────────────────────────────────
         pnlDividerBottom.BackColor = Color.FromArgb(220, 220, 220)
         pnlDividerBottom.Dock = DockStyle.Top
         pnlDividerBottom.Height = 1
 
-        ' ?? btnAdd ????????????????????????????????????????????????
+        ' ── btnAdd ────────────────────────────────────────────────────
         btnAdd.Text = "Add Loan"
         btnAdd.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
+        btnAdd.BackColor = Color.FromArgb(231, 63, 30)
         btnAdd.ForeColor = Color.White
         btnAdd.FlatStyle = FlatStyle.Flat
         btnAdd.FlatAppearance.BorderSize = 0
@@ -569,12 +569,12 @@ Public Class NewLoanForm
         Me.Close()
     End Sub
 
-    ' ?? Hover Effects ?????????????????????????????????????????????
+    ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnAdd_MouseEnter(sender As Object, e As EventArgs) Handles btnAdd.MouseEnter
-        btnAdd.BackColor = Color.FromArgb(30, 95, 150)
+        btnAdd.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnAdd_MouseLeave(sender As Object, e As EventArgs) Handles btnAdd.MouseLeave
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
+        btnAdd.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnCancel_MouseEnter(sender As Object, e As EventArgs) Handles btnCancel.MouseEnter
         btnCancel.BackColor = Color.FromArgb(220, 220, 220)

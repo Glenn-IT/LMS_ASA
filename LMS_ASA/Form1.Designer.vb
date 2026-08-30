@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class LoginForm
     Inherits System.Windows.Forms.Form
 
@@ -39,7 +39,7 @@ Partial Class LoginForm
         ' 
         ' pnlBackground
         ' 
-        pnlBackground.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        pnlBackground.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         pnlBackground.Controls.Add(lblTitle)
         pnlBackground.Controls.Add(lblSubtitle)
         pnlBackground.Controls.Add(pnlCard)
@@ -64,7 +64,7 @@ Partial Class LoginForm
         ' lblSubtitle
         ' 
         lblSubtitle.Font = New Font("Segoe UI", 11F)
-        lblSubtitle.ForeColor = Color.FromArgb(CByte(173), CByte(216), CByte(255))
+        lblSubtitle.ForeColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
         lblSubtitle.Location = New Point(0, 107)
         lblSubtitle.Name = "lblSubtitle"
         lblSubtitle.Size = New Size(800, 32)
@@ -92,7 +92,7 @@ Partial Class LoginForm
         ' 
         ' pnlAccent
         ' 
-        pnlAccent.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        pnlAccent.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         pnlAccent.Location = New Point(0, 0)
         pnlAccent.Name = "pnlAccent"
         pnlAccent.Size = New Size(400, 7)
@@ -101,7 +101,7 @@ Partial Class LoginForm
         ' lblHeader
         ' 
         lblHeader.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
-        lblHeader.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lblHeader.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         lblHeader.Location = New Point(20, 23)
         lblHeader.Name = "lblHeader"
         lblHeader.Size = New Size(360, 45)
@@ -130,7 +130,7 @@ Partial Class LoginForm
         ' 
         ' txtUsername
         ' 
-        txtUsername.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
+        txtUsername.BackColor = Color.FromArgb(CByte(255), CByte(252), CByte(248))
         txtUsername.BorderStyle = BorderStyle.FixedSingle
         txtUsername.Font = New Font("Segoe UI", 10F)
         txtUsername.Location = New Point(20, 136)
@@ -150,7 +150,7 @@ Partial Class LoginForm
         ' 
         ' txtPassword
         ' 
-        txtPassword.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
+        txtPassword.BackColor = Color.FromArgb(CByte(255), CByte(252), CByte(248))
         txtPassword.BorderStyle = BorderStyle.FixedSingle
         txtPassword.Font = New Font("Segoe UI", 10F)
         txtPassword.Location = New Point(20, 211)
@@ -158,9 +158,9 @@ Partial Class LoginForm
         txtPassword.PasswordChar = "●"c
         txtPassword.Size = New Size(360, 27)
         txtPassword.TabIndex = 6
-        '
+        ' 
         ' chkShowPassword
-        '
+        ' 
         chkShowPassword.Font = New Font("Segoe UI", 9F)
         chkShowPassword.ForeColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         chkShowPassword.Location = New Point(20, 243)
@@ -169,10 +169,10 @@ Partial Class LoginForm
         chkShowPassword.TabIndex = 7
         chkShowPassword.Text = "Show Password"
         chkShowPassword.UseVisualStyleBackColor = True
-        '
+        ' 
         ' btnLogin
-        '
-        btnLogin.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        ' 
+        btnLogin.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         btnLogin.Cursor = Cursors.Hand
         btnLogin.FlatAppearance.BorderSize = 0
         btnLogin.FlatStyle = FlatStyle.Flat
@@ -184,12 +184,12 @@ Partial Class LoginForm
         btnLogin.TabIndex = 8
         btnLogin.Text = "LOGIN"
         btnLogin.UseVisualStyleBackColor = False
-        '
+        ' 
         ' lnkForgotPassword
-        '
-        lnkForgotPassword.ActiveLinkColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        ' 
+        lnkForgotPassword.ActiveLinkColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         lnkForgotPassword.Font = New Font("Segoe UI", 9F)
-        lnkForgotPassword.LinkColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lnkForgotPassword.LinkColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         lnkForgotPassword.Location = New Point(20, 330)
         lnkForgotPassword.Name = "lnkForgotPassword"
         lnkForgotPassword.Size = New Size(360, 27)
@@ -201,7 +201,7 @@ Partial Class LoginForm
         ' lblFooter
         ' 
         lblFooter.Font = New Font("Segoe UI", 8F)
-        lblFooter.ForeColor = Color.FromArgb(CByte(120), CByte(160), CByte(200))
+        lblFooter.ForeColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
         lblFooter.Location = New Point(0, 739)
         lblFooter.Name = "lblFooter"
         lblFooter.Size = New Size(800, 27)
@@ -214,7 +214,7 @@ Partial Class LoginForm
         ' 
         AutoScaleDimensions = New SizeF(7F, 17F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         ClientSize = New Size(800, 620)
         Controls.Add(pnlBackground)
         FormBorderStyle = FormBorderStyle.FixedSingle

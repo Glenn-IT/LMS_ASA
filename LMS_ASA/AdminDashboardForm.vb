@@ -67,7 +67,7 @@ Public Class AdminDashboardForm
         ' 
         ' pnlSidebar
         ' 
-        pnlSidebar.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        pnlSidebar.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         pnlSidebar.Controls.Add(pnlSidebarFooter)
         pnlSidebar.Controls.Add(btnDevelopers)
         pnlSidebar.Controls.Add(btnSystemManual)
@@ -86,7 +86,7 @@ Public Class AdminDashboardForm
         ' 
         ' pnlSidebarFooter
         ' 
-        pnlSidebarFooter.BackColor = Color.FromArgb(CByte(15), CByte(52), CByte(86))
+        pnlSidebarFooter.BackColor = Color.FromArgb(CByte(184), CByte(46), CByte(18))
         pnlSidebarFooter.Controls.Add(btnLogout)
         pnlSidebarFooter.Dock = DockStyle.Bottom
         pnlSidebarFooter.Location = New Point(0, 564)
@@ -116,10 +116,10 @@ Public Class AdminDashboardForm
         btnDevelopers.BackColor = Color.Transparent
         btnDevelopers.Cursor = Cursors.Hand
         btnDevelopers.FlatAppearance.BorderSize = 0
-        btnDevelopers.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnDevelopers.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnDevelopers.FlatStyle = FlatStyle.Flat
         btnDevelopers.Font = New Font("Segoe UI", 10.0F)
-        btnDevelopers.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnDevelopers.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
         btnDevelopers.Location = New Point(0, 398)
         btnDevelopers.Name = "btnDevelopers"
         btnDevelopers.Size = New Size(220, 48)
@@ -133,10 +133,10 @@ Public Class AdminDashboardForm
         btnSystemManual.BackColor = Color.Transparent
         btnSystemManual.Cursor = Cursors.Hand
         btnSystemManual.FlatAppearance.BorderSize = 0
-        btnSystemManual.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnSystemManual.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnSystemManual.FlatStyle = FlatStyle.Flat
         btnSystemManual.Font = New Font("Segoe UI", 10.0F)
-        btnSystemManual.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnSystemManual.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
         btnSystemManual.Location = New Point(0, 350)
         btnSystemManual.Name = "btnSystemManual"
         btnSystemManual.Size = New Size(220, 48)
@@ -150,10 +150,10 @@ Public Class AdminDashboardForm
         btnBorrowerAccounts.BackColor = Color.Transparent
         btnBorrowerAccounts.Cursor = Cursors.Hand
         btnBorrowerAccounts.FlatAppearance.BorderSize = 0
-        btnBorrowerAccounts.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnBorrowerAccounts.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnBorrowerAccounts.FlatStyle = FlatStyle.Flat
         btnBorrowerAccounts.Font = New Font("Segoe UI", 10.0F)
-        btnBorrowerAccounts.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnBorrowerAccounts.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
         btnBorrowerAccounts.Location = New Point(0, 254)
         btnBorrowerAccounts.Name = "btnBorrowerAccounts"
         btnBorrowerAccounts.Size = New Size(220, 48)
@@ -161,16 +161,16 @@ Public Class AdminDashboardForm
         btnBorrowerAccounts.Text = "   Borrower Accounts"
         btnBorrowerAccounts.TextAlign = ContentAlignment.MiddleLeft
         btnBorrowerAccounts.UseVisualStyleBackColor = False
-        '
+        ' 
         ' btnAccountSettings
-        '
+        ' 
         btnAccountSettings.BackColor = Color.Transparent
         btnAccountSettings.Cursor = Cursors.Hand
         btnAccountSettings.FlatAppearance.BorderSize = 0
-        btnAccountSettings.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnAccountSettings.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnAccountSettings.FlatStyle = FlatStyle.Flat
         btnAccountSettings.Font = New Font("Segoe UI", 10.0F)
-        btnAccountSettings.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnAccountSettings.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
         btnAccountSettings.Location = New Point(0, 302)
         btnAccountSettings.Name = "btnAccountSettings"
         btnAccountSettings.Size = New Size(220, 48)
@@ -178,16 +178,16 @@ Public Class AdminDashboardForm
         btnAccountSettings.Text = "   Account Settings"
         btnAccountSettings.TextAlign = ContentAlignment.MiddleLeft
         btnAccountSettings.UseVisualStyleBackColor = False
-        '
+        ' 
         ' btnPaymentList
         ' 
         btnPaymentList.BackColor = Color.Transparent
         btnPaymentList.Cursor = Cursors.Hand
         btnPaymentList.FlatAppearance.BorderSize = 0
-        btnPaymentList.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnPaymentList.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnPaymentList.FlatStyle = FlatStyle.Flat
         btnPaymentList.Font = New Font("Segoe UI", 10.0F)
-        btnPaymentList.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnPaymentList.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
         btnPaymentList.Location = New Point(0, 206)
         btnPaymentList.Name = "btnPaymentList"
         btnPaymentList.Size = New Size(220, 48)
@@ -201,10 +201,10 @@ Public Class AdminDashboardForm
         btnBorrowerList.BackColor = Color.Transparent
         btnBorrowerList.Cursor = Cursors.Hand
         btnBorrowerList.FlatAppearance.BorderSize = 0
-        btnBorrowerList.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnBorrowerList.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnBorrowerList.FlatStyle = FlatStyle.Flat
         btnBorrowerList.Font = New Font("Segoe UI", 10.0F)
-        btnBorrowerList.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnBorrowerList.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
         btnBorrowerList.Location = New Point(0, 158)
         btnBorrowerList.Name = "btnBorrowerList"
         btnBorrowerList.Size = New Size(220, 48)
@@ -218,10 +218,10 @@ Public Class AdminDashboardForm
         btnLoanList.BackColor = Color.Transparent
         btnLoanList.Cursor = Cursors.Hand
         btnLoanList.FlatAppearance.BorderSize = 0
-        btnLoanList.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(30), CByte(95), CByte(150))
+        btnLoanList.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnLoanList.FlatStyle = FlatStyle.Flat
         btnLoanList.Font = New Font("Segoe UI", 10.0F)
-        btnLoanList.ForeColor = Color.FromArgb(CByte(200), CByte(230), CByte(255))
+        btnLoanList.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
         btnLoanList.Location = New Point(0, 110)
         btnLoanList.Name = "btnLoanList"
         btnLoanList.Size = New Size(220, 48)
@@ -232,7 +232,7 @@ Public Class AdminDashboardForm
         ' 
         ' pnlSidebarDivider
         ' 
-        pnlSidebarDivider.BackColor = Color.FromArgb(CByte(40), CByte(90), CByte(130))
+        pnlSidebarDivider.BackColor = Color.FromArgb(CByte(249), CByte(182), CByte(55))
         pnlSidebarDivider.Dock = DockStyle.Top
         pnlSidebarDivider.Location = New Point(0, 100)
         pnlSidebarDivider.Name = "pnlSidebarDivider"
@@ -241,7 +241,7 @@ Public Class AdminDashboardForm
         ' 
         ' pnlSidebarHeader
         ' 
-        pnlSidebarHeader.BackColor = Color.FromArgb(CByte(15), CByte(52), CByte(86))
+        pnlSidebarHeader.BackColor = Color.FromArgb(CByte(184), CByte(46), CByte(18))
         pnlSidebarHeader.Controls.Add(lblSidebarSub)
         pnlSidebarHeader.Controls.Add(lblSidebarTitle)
         pnlSidebarHeader.Dock = DockStyle.Top
@@ -249,11 +249,11 @@ Public Class AdminDashboardForm
         pnlSidebarHeader.Name = "pnlSidebarHeader"
         pnlSidebarHeader.Size = New Size(220, 100)
         pnlSidebarHeader.TabIndex = 6
-        '
+        ' 
         ' lblSidebarSub — live date
-        '
+        ' 
         lblSidebarSub.Font = New Font("Segoe UI", 9.0F)
-        lblSidebarSub.ForeColor = Color.FromArgb(CByte(173), CByte(216), CByte(255))
+        lblSidebarSub.ForeColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
         lblSidebarSub.Location = New Point(10, 64)
         lblSidebarSub.Name = "lblSidebarSub"
         lblSidebarSub.Size = New Size(200, 20)
@@ -261,9 +261,9 @@ Public Class AdminDashboardForm
         lblSidebarSub.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy")
         lblSidebarSub.TextAlign = ContentAlignment.MiddleCenter
         lblSidebarSub.Visible = True
-        '
+        ' 
         ' lblSidebarTitle — live time
-        '
+        ' 
         lblSidebarTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
         lblSidebarTitle.ForeColor = Color.White
         lblSidebarTitle.Location = New Point(10, 18)
@@ -334,7 +334,7 @@ Public Class AdminDashboardForm
         ' 
         Label2.BackColor = Color.White
         Label2.Font = New Font("Segoe UI", 11.0F)
-        Label2.ForeColor = Color.FromArgb(CByte(15), CByte(52), CByte(86))
+        Label2.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         Label2.Location = New Point(6, 50)
         Label2.Name = "Label2"
         Label2.Size = New Size(308, 38)
@@ -345,7 +345,7 @@ Public Class AdminDashboardForm
         ' 
         Label1.BackColor = Color.White
         Label1.Font = New Font("Segoe UI", 13.0F, FontStyle.Bold)
-        Label1.ForeColor = Color.FromArgb(CByte(15), CByte(52), CByte(86))
+        Label1.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         Label1.Location = New Point(6, 20)
         Label1.Name = "Label1"
         Label1.Size = New Size(308, 38)
@@ -365,7 +365,7 @@ Public Class AdminDashboardForm
         ' lblPageTitle
         ' 
         lblPageTitle.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
-        lblPageTitle.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lblPageTitle.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         lblPageTitle.Location = New Point(20, 14)
         lblPageTitle.Name = "lblPageTitle"
         lblPageTitle.Size = New Size(400, 36)
@@ -483,9 +483,9 @@ Public Class AdminDashboardForm
         Dim sidebarBtns As Button() = {btnLoanList, btnBorrowerList, btnPaymentList, btnBorrowerAccounts, btnAccountSettings, btnSystemManual, btnDevelopers}
         For Each btn As Button In sidebarBtns
             btn.BackColor = Color.Transparent
-            btn.ForeColor = Color.FromArgb(200, 230, 255)
+            btn.ForeColor = Color.FromArgb(255, 245, 235)
         Next
-        activeBtn.BackColor = Color.FromArgb(30, 95, 150)
+        activeBtn.BackColor = Color.FromArgb(251, 108, 0)
         activeBtn.ForeColor = Color.White
     End Sub
 

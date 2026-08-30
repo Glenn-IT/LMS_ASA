@@ -76,7 +76,7 @@ Public Class LoanListForm
         ' lblTitle
         ' 
         lblTitle.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lblTitle.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         lblTitle.Location = New Point(16, 10)
         lblTitle.Name = "lblTitle"
         lblTitle.Size = New Size(400, 30)
@@ -137,11 +137,11 @@ Public Class LoanListForm
         '
         ' btnView
         '
-        btnView.BackColor = Color.FromArgb(CByte(23), CByte(162), CByte(184))
+        btnView.BackColor = Color.FromArgb(CByte(249), CByte(182), CByte(55))
         btnView.Cursor = Cursors.Hand
         btnView.FlatAppearance.BorderSize = 0
         btnView.FlatStyle = FlatStyle.Flat
-        btnView.Font = New Font("Segoe UI", 9F)
+        btnView.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnView.ForeColor = Color.White
         btnView.Location = New Point(208, 11)
         btnView.Name = "btnView"
@@ -152,7 +152,7 @@ Public Class LoanListForm
         '
         ' btnUpdate
         ' 
-        btnUpdate.BackColor = Color.FromArgb(CByte(52), CByte(120), CByte(180))
+        btnUpdate.BackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
         btnUpdate.Cursor = Cursors.Hand
         btnUpdate.FlatAppearance.BorderSize = 0
         btnUpdate.FlatStyle = FlatStyle.Flat
@@ -167,7 +167,7 @@ Public Class LoanListForm
         ' 
         ' btnAdd
         ' 
-        btnAdd.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        btnAdd.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         btnAdd.Cursor = Cursors.Hand
         btnAdd.FlatAppearance.BorderSize = 0
         btnAdd.FlatStyle = FlatStyle.Flat
@@ -195,17 +195,17 @@ Public Class LoanListForm
         ' 
         dgvLoans.AllowUserToAddRows = False
         dgvLoans.AllowUserToDeleteRows = False
-        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(245), CByte(249), CByte(253))
+        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(255), CByte(250), CByte(245))
         dgvLoans.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         dgvLoans.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgvLoans.BackgroundColor = Color.White
         dgvLoans.BorderStyle = BorderStyle.None
         DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         DataGridViewCellStyle2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         DataGridViewCellStyle2.ForeColor = Color.White
-        DataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
+        DataGridViewCellStyle2.SelectionForeColor = Color.White
         DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
         dgvLoans.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         dgvLoans.ColumnHeadersHeight = 36
@@ -213,8 +213,8 @@ Public Class LoanListForm
         DataGridViewCellStyle3.BackColor = SystemColors.Window
         DataGridViewCellStyle3.Font = New Font("Segoe UI", 9F)
         DataGridViewCellStyle3.ForeColor = SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(173), CByte(216), CByte(240))
-        DataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
+        DataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(CByte(184), CByte(46), CByte(18))
         DataGridViewCellStyle3.WrapMode = DataGridViewTriState.False
         dgvLoans.DefaultCellStyle = DataGridViewCellStyle3
         dgvLoans.Dock = DockStyle.Fill
@@ -443,24 +443,24 @@ Public Class LoanListForm
         End If
     End Sub
 
-    ' ?? Button Hover Effects ??????????????????????????????????????
+    ' ── Button Hover Effects ──────────────────────────────────────
     Private Sub btnAdd_MouseEnter(sender As Object, e As EventArgs) Handles btnAdd.MouseEnter
-        btnAdd.BackColor = Color.FromArgb(30, 95, 150)
+        btnAdd.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnAdd_MouseLeave(sender As Object, e As EventArgs) Handles btnAdd.MouseLeave
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
+        btnAdd.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnUpdate_MouseEnter(sender As Object, e As EventArgs) Handles btnUpdate.MouseEnter
-        btnUpdate.BackColor = Color.FromArgb(40, 100, 160)
+        btnUpdate.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnUpdate_MouseLeave(sender As Object, e As EventArgs) Handles btnUpdate.MouseLeave
-        btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
+        btnUpdate.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnView_MouseEnter(sender As Object, e As EventArgs) Handles btnView.MouseEnter
-        btnView.BackColor = Color.FromArgb(19, 132, 150)
+        btnView.BackColor = Color.FromArgb(231, 140, 20)
     End Sub
     Private Sub btnView_MouseLeave(sender As Object, e As EventArgs) Handles btnView.MouseLeave
-        btnView.BackColor = Color.FromArgb(23, 162, 184)
+        btnView.BackColor = Color.FromArgb(249, 182, 55)
     End Sub
     Private Sub btnDelete_MouseEnter(sender As Object, e As EventArgs) Handles btnDelete.MouseEnter
         btnDelete.BackColor = Color.FromArgb(160, 40, 30)

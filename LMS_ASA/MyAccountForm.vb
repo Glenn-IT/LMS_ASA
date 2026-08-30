@@ -62,7 +62,7 @@ Public Class MyAccountForm
 
         lblTitle.Text = "My Account"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
@@ -74,12 +74,12 @@ Public Class MyAccountForm
         lblSubtitle.Size = New Size(500, 18)
         lblSubtitle.Location = New Point(16, 40)
 
-        ' ?? pnlDividerTop ?????????????????????????????????????????
+        ' ── pnlDividerTop ─────────────────────────────────────────────
         pnlDividerTop.BackColor = Color.FromArgb(220, 220, 220)
         pnlDividerTop.Dock = DockStyle.Top
         pnlDividerTop.Height = 1
 
-        ' ?? pnlBody ???????????????????????????????????????????????
+        ' ── pnlBody ───────────────────────────────────────────────────
         pnlBody.BackColor = Color.FromArgb(245, 247, 250)
         pnlBody.Dock = DockStyle.Fill
         pnlBody.Padding = New Padding(16)
@@ -87,12 +87,12 @@ Public Class MyAccountForm
         pnlBody.Controls.Add(grpSecurity)
         pnlBody.Controls.Add(grpCredentials)
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpCredentials � Username, Password, Confirm Password
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpCredentials – Username, Password, Confirm Password
+        ' ──────────────────────────────────────────────────────────────
         grpCredentials.Text = "Login Credentials"
         grpCredentials.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpCredentials.ForeColor = Color.FromArgb(21, 67, 106)
+        grpCredentials.ForeColor = Color.FromArgb(231, 63, 30)
         grpCredentials.BackColor = Color.White
         grpCredentials.Size = New Size(830, 140)
         grpCredentials.Location = New Point(16, 16)
@@ -115,7 +115,6 @@ Public Class MyAccountForm
         txtUsername.Size = New Size(256, 28)
         txtUsername.Location = New Point(16, 48)
         txtUsername.BorderStyle = BorderStyle.FixedSingle
-        txtUsername.BackColor = Color.FromArgb(245, 248, 252)
         txtUsername.ReadOnly = True
         txtUsername.BackColor = Color.FromArgb(235, 240, 245)
 
@@ -131,7 +130,7 @@ Public Class MyAccountForm
         txtPassword.Size = New Size(256, 28)
         txtPassword.Location = New Point(290, 48)
         txtPassword.BorderStyle = BorderStyle.FixedSingle
-        txtPassword.BackColor = Color.FromArgb(245, 248, 252)
+        txtPassword.BackColor = Color.FromArgb(255, 252, 248)
         txtPassword.PasswordChar = "*"c
 
         ' Confirm Password
@@ -146,15 +145,15 @@ Public Class MyAccountForm
         txtConfirmPassword.Size = New Size(250, 28)
         txtConfirmPassword.Location = New Point(564, 48)
         txtConfirmPassword.BorderStyle = BorderStyle.FixedSingle
-        txtConfirmPassword.BackColor = Color.FromArgb(245, 248, 252)
+        txtConfirmPassword.BackColor = Color.FromArgb(255, 252, 248)
         txtConfirmPassword.PasswordChar = "*"c
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpSecurity � Security Question, Security Answer
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpSecurity – Security Question, Security Answer
+        ' ──────────────────────────────────────────────────────────────
         grpSecurity.Text = "Security Settings"
         grpSecurity.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpSecurity.ForeColor = Color.FromArgb(21, 67, 106)
+        grpSecurity.ForeColor = Color.FromArgb(231, 63, 30)
         grpSecurity.BackColor = Color.White
         grpSecurity.Size = New Size(830, 140)
         grpSecurity.Location = New Point(16, 172)
@@ -175,7 +174,7 @@ Public Class MyAccountForm
         cmbSecurityQuestion.Size = New Size(500, 28)
         cmbSecurityQuestion.Location = New Point(16, 48)
         cmbSecurityQuestion.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbSecurityQuestion.BackColor = Color.FromArgb(245, 248, 252)
+        cmbSecurityQuestion.BackColor = Color.FromArgb(255, 252, 248)
         cmbSecurityQuestion.FlatStyle = FlatStyle.Flat
         cmbSecurityQuestion.Items.AddRange(New Object() {
             "What is your mother's maiden name?",
@@ -197,9 +196,9 @@ Public Class MyAccountForm
         txtSecurityAnswer.Size = New Size(280, 28)
         txtSecurityAnswer.Location = New Point(534, 48)
         txtSecurityAnswer.BorderStyle = BorderStyle.FixedSingle
-        txtSecurityAnswer.BackColor = Color.FromArgb(245, 248, 252)
+        txtSecurityAnswer.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ?? pnlFooter ?????????????????????????????????????????????
+        ' ── pnlFooter ─────────────────────────────────────────────────
         pnlFooter.BackColor = Color.White
         pnlFooter.Dock = DockStyle.Bottom
         pnlFooter.Height = 60
@@ -214,7 +213,7 @@ Public Class MyAccountForm
         ' btnUpdate
         btnUpdate.Text = "Update Account"
         btnUpdate.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnUpdate.BackColor = Color.FromArgb(21, 67, 106)
+        btnUpdate.BackColor = Color.FromArgb(231, 63, 30)
         btnUpdate.ForeColor = Color.White
         btnUpdate.FlatStyle = FlatStyle.Flat
         btnUpdate.FlatAppearance.BorderSize = 0
@@ -319,12 +318,12 @@ Public Class MyAccountForm
         Me.Close()
     End Sub
 
-    ' ?? Hover Effects ?????????????????????????????????????????????
+    ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnUpdate_MouseEnter(sender As Object, e As EventArgs) Handles btnUpdate.MouseEnter
-        btnUpdate.BackColor = Color.FromArgb(30, 95, 150)
+        btnUpdate.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnUpdate_MouseLeave(sender As Object, e As EventArgs) Handles btnUpdate.MouseLeave
-        btnUpdate.BackColor = Color.FromArgb(21, 67, 106)
+        btnUpdate.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnCancel_MouseEnter(sender As Object, e As EventArgs) Handles btnCancel.MouseEnter
         btnCancel.BackColor = Color.FromArgb(220, 220, 220)

@@ -54,7 +54,7 @@ Public Class EditAccountForm
 
         lblTitle.Text = "Edit Account"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
@@ -66,21 +66,21 @@ Public Class EditAccountForm
         lblSubtitle.Size = New Size(500, 18)
         lblSubtitle.Location = New Point(16, 40)
 
-        ' ?? pnlDividerTop ?????????????????????????????????????????
+        ' ── pnlDividerTop ─────────────────────────────────────────────
         pnlDividerTop.BackColor = Color.FromArgb(220, 220, 220)
         pnlDividerTop.Dock = DockStyle.Top
         pnlDividerTop.Height = 1
 
-        ' ?? pnlBody ???????????????????????????????????????????????
+        ' ── pnlBody ───────────────────────────────────────────────────
         pnlBody.BackColor = Color.FromArgb(245, 247, 250)
         pnlBody.Dock = DockStyle.Fill
         pnlBody.Padding = New Padding(16)
         pnlBody.Controls.Add(grpCredentials)
 
-        ' ?? grpCredentials ????????????????????????????????????????
+        ' ── grpCredentials ────────────────────────────────────────────
         grpCredentials.Text = "Account Credentials"
         grpCredentials.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpCredentials.ForeColor = Color.FromArgb(21, 67, 106)
+        grpCredentials.ForeColor = Color.FromArgb(231, 63, 30)
         grpCredentials.BackColor = Color.White
         grpCredentials.Size = New Size(700, 160)
         grpCredentials.Location = New Point(16, 16)
@@ -103,7 +103,7 @@ Public Class EditAccountForm
         txtUsername.Size = New Size(210, 28)
         txtUsername.Location = New Point(16, 48)
         txtUsername.BorderStyle = BorderStyle.FixedSingle
-        txtUsername.BackColor = Color.FromArgb(245, 248, 252)
+        txtUsername.BackColor = Color.FromArgb(255, 252, 248)
 
         ' New Password
         lblNewPassword.Text = "NEW PASSWORD (leave blank to keep)"
@@ -117,7 +117,7 @@ Public Class EditAccountForm
         txtNewPassword.Size = New Size(226, 28)
         txtNewPassword.Location = New Point(242, 48)
         txtNewPassword.BorderStyle = BorderStyle.FixedSingle
-        txtNewPassword.BackColor = Color.FromArgb(245, 248, 252)
+        txtNewPassword.BackColor = Color.FromArgb(255, 252, 248)
         txtNewPassword.PasswordChar = "*"c
 
         ' Confirm Password
@@ -132,7 +132,7 @@ Public Class EditAccountForm
         txtConfirmPassword.Size = New Size(200, 28)
         txtConfirmPassword.Location = New Point(484, 48)
         txtConfirmPassword.BorderStyle = BorderStyle.FixedSingle
-        txtConfirmPassword.BackColor = Color.FromArgb(245, 248, 252)
+        txtConfirmPassword.BackColor = Color.FromArgb(255, 252, 248)
         txtConfirmPassword.PasswordChar = "*"c
 
         ' Hint label for password field
@@ -145,7 +145,7 @@ Public Class EditAccountForm
         lblHint.Location = New Point(16, 90)
         grpCredentials.Controls.Add(lblHint)
 
-        ' ?? pnlFooter ?????????????????????????????????????????????
+        ' ── pnlFooter ─────────────────────────────────────────────────
         pnlFooter.BackColor = Color.White
         pnlFooter.Dock = DockStyle.Bottom
         pnlFooter.Height = 60
@@ -159,7 +159,7 @@ Public Class EditAccountForm
 
         btnSave.Text = "Save Changes"
         btnSave.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnSave.BackColor = Color.FromArgb(21, 67, 106)
+        btnSave.BackColor = Color.FromArgb(231, 63, 30)
         btnSave.ForeColor = Color.White
         btnSave.FlatStyle = FlatStyle.Flat
         btnSave.FlatAppearance.BorderSize = 0
@@ -256,12 +256,12 @@ Public Class EditAccountForm
         Me.Close()
     End Sub
 
-    ' ?? Hover Effects ?????????????????????????????????????????????
+    ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnSave_MouseEnter(sender As Object, e As EventArgs) Handles btnSave.MouseEnter
-        btnSave.BackColor = Color.FromArgb(30, 95, 150)
+        btnSave.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnSave_MouseLeave(sender As Object, e As EventArgs) Handles btnSave.MouseLeave
-        btnSave.BackColor = Color.FromArgb(21, 67, 106)
+        btnSave.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnCancel_MouseEnter(sender As Object, e As EventArgs) Handles btnCancel.MouseEnter
         btnCancel.BackColor = Color.FromArgb(220, 220, 220)

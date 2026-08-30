@@ -48,7 +48,7 @@ Public Class BorrowerDashboardForm
         SuspendLayout()
 
         ' ── pnlSidebar ────────────────────────────────────────────
-        pnlSidebar.BackColor = Color.FromArgb(21, 67, 106)
+        pnlSidebar.BackColor = Color.FromArgb(231, 63, 30)
         pnlSidebar.Dock = DockStyle.Left
         pnlSidebar.Width = 220
         pnlSidebar.Controls.Add(pnlSidebarFooter)
@@ -61,7 +61,7 @@ Public Class BorrowerDashboardForm
         pnlSidebar.Controls.Add(pnlSidebarHeader)
 
         ' ── pnlSidebarHeader ──────────────────────────────────────
-        pnlSidebarHeader.BackColor = Color.FromArgb(15, 52, 86)
+        pnlSidebarHeader.BackColor = Color.FromArgb(184, 46, 18)
         pnlSidebarHeader.Dock = DockStyle.Top
         pnlSidebarHeader.Height = 100
         pnlSidebarHeader.Controls.Add(lblSidebarSub)
@@ -78,24 +78,24 @@ Public Class BorrowerDashboardForm
         ' ── lblSidebarSub ─────────────────────────────────────────
         lblSidebarSub.Text = "Borrower Portal"
         lblSidebarSub.Font = New Font("Segoe UI", 9, FontStyle.Regular)
-        lblSidebarSub.ForeColor = Color.FromArgb(173, 216, 255)
+        lblSidebarSub.ForeColor = Color.FromArgb(255, 221, 156)
         lblSidebarSub.AutoSize = False
         lblSidebarSub.Size = New Size(200, 20)
         lblSidebarSub.Location = New Point(12, 60)
 
         ' ── pnlSidebarDivider ─────────────────────────────────────
-        pnlSidebarDivider.BackColor = Color.FromArgb(40, 90, 130)
+        pnlSidebarDivider.BackColor = Color.FromArgb(249, 182, 55)
         pnlSidebarDivider.Dock = DockStyle.Top
         pnlSidebarDivider.Height = 1
 
         ' ── btnFileLoan ───────────────────────────────────────────
         btnFileLoan.Text = "   File Loan Application"
         btnFileLoan.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-        btnFileLoan.ForeColor = Color.FromArgb(200, 230, 255)
+        btnFileLoan.ForeColor = Color.FromArgb(255, 245, 235)
         btnFileLoan.BackColor = Color.Transparent
         btnFileLoan.FlatStyle = FlatStyle.Flat
         btnFileLoan.FlatAppearance.BorderSize = 0
-        btnFileLoan.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 95, 150)
+        btnFileLoan.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnFileLoan.TextAlign = ContentAlignment.MiddleLeft
         btnFileLoan.Size = New Size(220, 48)
         btnFileLoan.Location = New Point(0, 110)
@@ -104,11 +104,11 @@ Public Class BorrowerDashboardForm
         ' ── btnTrackLoan ──────────────────────────────────────────
         btnTrackLoan.Text = "   Track Loan Application"
         btnTrackLoan.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-        btnTrackLoan.ForeColor = Color.FromArgb(200, 230, 255)
+        btnTrackLoan.ForeColor = Color.FromArgb(255, 245, 235)
         btnTrackLoan.BackColor = Color.Transparent
         btnTrackLoan.FlatStyle = FlatStyle.Flat
         btnTrackLoan.FlatAppearance.BorderSize = 0
-        btnTrackLoan.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 95, 150)
+        btnTrackLoan.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnTrackLoan.TextAlign = ContentAlignment.MiddleLeft
         btnTrackLoan.Size = New Size(220, 48)
         btnTrackLoan.Location = New Point(0, 158)
@@ -117,11 +117,11 @@ Public Class BorrowerDashboardForm
         ' ── btnMyAccount ──────────────────────────────────────────
         btnMyAccount.Text = "   My Account"
         btnMyAccount.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-        btnMyAccount.ForeColor = Color.FromArgb(200, 230, 255)
+        btnMyAccount.ForeColor = Color.FromArgb(255, 245, 235)
         btnMyAccount.BackColor = Color.Transparent
         btnMyAccount.FlatStyle = FlatStyle.Flat
         btnMyAccount.FlatAppearance.BorderSize = 0
-        btnMyAccount.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 95, 150)
+        btnMyAccount.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnMyAccount.TextAlign = ContentAlignment.MiddleLeft
         btnMyAccount.Size = New Size(220, 48)
         btnMyAccount.Location = New Point(0, 206)
@@ -130,11 +130,11 @@ Public Class BorrowerDashboardForm
         ' ── btnSystemManual ───────────────────────────────────────
         btnSystemManual.Text = "   System Manual"
         btnSystemManual.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-        btnSystemManual.ForeColor = Color.FromArgb(200, 230, 255)
+        btnSystemManual.ForeColor = Color.FromArgb(255, 245, 235)
         btnSystemManual.BackColor = Color.Transparent
         btnSystemManual.FlatStyle = FlatStyle.Flat
         btnSystemManual.FlatAppearance.BorderSize = 0
-        btnSystemManual.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 95, 150)
+        btnSystemManual.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnSystemManual.TextAlign = ContentAlignment.MiddleLeft
         btnSystemManual.Size = New Size(220, 48)
         btnSystemManual.Location = New Point(0, 254)
@@ -143,23 +143,23 @@ Public Class BorrowerDashboardForm
         ' ── btnDevelopers ─────────────────────────────────────────
         btnDevelopers.Text = "   Developers"
         btnDevelopers.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-        btnDevelopers.ForeColor = Color.FromArgb(200, 230, 255)
+        btnDevelopers.ForeColor = Color.FromArgb(255, 245, 235)
         btnDevelopers.BackColor = Color.Transparent
         btnDevelopers.FlatStyle = FlatStyle.Flat
         btnDevelopers.FlatAppearance.BorderSize = 0
-        btnDevelopers.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 95, 150)
+        btnDevelopers.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnDevelopers.TextAlign = ContentAlignment.MiddleLeft
         btnDevelopers.Size = New Size(220, 48)
         btnDevelopers.Location = New Point(0, 302)
         btnDevelopers.Cursor = Cursors.Hand
 
-        ' ?? pnlSidebarFooter ??????????????????????????????????????
-        pnlSidebarFooter.BackColor = Color.FromArgb(15, 52, 86)
+        ' ── pnlSidebarFooter ──────────────────────────────────────
+        pnlSidebarFooter.BackColor = Color.FromArgb(184, 46, 18)
         pnlSidebarFooter.Dock = DockStyle.Bottom
         pnlSidebarFooter.Height = 56
         pnlSidebarFooter.Controls.Add(btnLogout)
 
-        ' ?? btnLogout ?????????????????????????????????????????????
+        ' ── btnLogout ─────────────────────────────────────────────
         btnLogout.Text = "   Logout"
         btnLogout.Font = New Font("Segoe UI", 10, FontStyle.Regular)
         btnLogout.ForeColor = Color.FromArgb(255, 180, 180)
@@ -172,23 +172,23 @@ Public Class BorrowerDashboardForm
         btnLogout.Location = New Point(0, 4)
         btnLogout.Cursor = Cursors.Hand
 
-        ' ?? pnlMain ???????????????????????????????????????????????
+        ' ── pnlMain ───────────────────────────────────────────────
         pnlMain.BackColor = Color.FromArgb(245, 247, 250)
         pnlMain.Dock = DockStyle.Fill
         pnlMain.Controls.Add(pnlContent)
         pnlMain.Controls.Add(pnlTopBar)
 
-        ' ?? pnlTopBar ?????????????????????????????????????????????
+        ' ── pnlTopBar ─────────────────────────────────────────────
         pnlTopBar.BackColor = Color.White
         pnlTopBar.Dock = DockStyle.Top
         pnlTopBar.Height = 64
         pnlTopBar.Controls.Add(lblWelcome)
         pnlTopBar.Controls.Add(lblPageTitle)
 
-        ' ?? lblPageTitle ??????????????????????????????????????????
+        ' ── lblPageTitle ──────────────────────────────────────────
         lblPageTitle.Text = "Borrower Dashboard"
         lblPageTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblPageTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblPageTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblPageTitle.AutoSize = False
         lblPageTitle.Size = New Size(500, 30)
         lblPageTitle.Location = New Point(20, 14)
@@ -318,9 +318,9 @@ Public Class BorrowerDashboardForm
         Dim sidebarBtns As Button() = {btnFileLoan, btnTrackLoan, btnMyAccount, btnSystemManual, btnDevelopers}
         For Each btn As Button In sidebarBtns
             btn.BackColor = Color.Transparent
-            btn.ForeColor = Color.FromArgb(200, 230, 255)
+            btn.ForeColor = Color.FromArgb(255, 245, 235)
         Next
-        activeBtn.BackColor = Color.FromArgb(30, 95, 150)
+        activeBtn.BackColor = Color.FromArgb(251, 108, 0)
         activeBtn.ForeColor = Color.White
     End Sub
 

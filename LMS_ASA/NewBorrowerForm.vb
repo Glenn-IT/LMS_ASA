@@ -83,15 +83,15 @@ Public Class NewBorrowerForm
         pnlHeader.Controls.Add(lblSubtitle)
         pnlHeader.Controls.Add(lblTitle)
 
-        ' ?? lblTitle ??????????????????????????????????????????????
+        ' ── lblTitle ──────────────────────────────────────────────────
         lblTitle.Text = "New Borrower"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
 
-        ' ?? lblSubtitle ???????????????????????????????????????????
+        ' ── lblSubtitle ───────────────────────────────────────────────
         lblSubtitle.Text = "Fill in the form below to register a new borrower"
         lblSubtitle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSubtitle.ForeColor = Color.Gray
@@ -99,12 +99,12 @@ Public Class NewBorrowerForm
         lblSubtitle.Size = New Size(500, 18)
         lblSubtitle.Location = New Point(16, 40)
 
-        ' ?? pnlDividerTop ?????????????????????????????????????????
+        ' ── pnlDividerTop ─────────────────────────────────────────────
         pnlDividerTop.BackColor = Color.FromArgb(220, 220, 220)
         pnlDividerTop.Dock = DockStyle.Top
         pnlDividerTop.Height = 1
 
-        ' ?? pnlBody ???????????????????????????????????????????????
+        ' ── pnlBody ───────────────────────────────────────────────────
         pnlBody.BackColor = Color.FromArgb(245, 247, 250)
         pnlBody.Dock = DockStyle.Fill
         pnlBody.Padding = New Padding(16)
@@ -113,12 +113,12 @@ Public Class NewBorrowerForm
         pnlBody.Controls.Add(grpDetails)
         pnlBody.Controls.Add(grpPersonalInfo)
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpPersonalInfo � UID, First, Middle, Last Name
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpPersonalInfo – UID, First, Middle, Last Name
+        ' ──────────────────────────────────────────────────────────────
         grpPersonalInfo.Text = "Personal Information"
         grpPersonalInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpPersonalInfo.ForeColor = Color.FromArgb(21, 67, 106)
+        grpPersonalInfo.ForeColor = Color.FromArgb(231, 63, 30)
         grpPersonalInfo.BackColor = Color.White
         grpPersonalInfo.Size = New Size(830, 140)
         grpPersonalInfo.Location = New Point(16, 16)
@@ -131,7 +131,7 @@ Public Class NewBorrowerForm
         grpPersonalInfo.Controls.Add(txtBorrowerUID)
         grpPersonalInfo.Controls.Add(lblBorrowerUID)
 
-        ' ?? Borrower UID ??????????????????????????????????????????
+        ' ── Borrower UID ──────────────────────────────────────────────
         lblBorrowerUID.Text = "BORROWER UID"
         lblBorrowerUID.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblBorrowerUID.ForeColor = Color.FromArgb(100, 100, 100)
@@ -147,7 +147,7 @@ Public Class NewBorrowerForm
         txtBorrowerUID.ReadOnly = True
         txtBorrowerUID.Text = "BR-0006"
 
-        ' ?? First Name ????????????????????????????????????????????
+        ' ── First Name ────────────────────────────────────────────────
         lblFirstName.Text = "FIRST NAME"
         lblFirstName.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblFirstName.ForeColor = Color.FromArgb(100, 100, 100)
@@ -159,9 +159,9 @@ Public Class NewBorrowerForm
         txtFirstName.Size = New Size(200, 28)
         txtFirstName.Location = New Point(214, 48)
         txtFirstName.BorderStyle = BorderStyle.FixedSingle
-        txtFirstName.BackColor = Color.FromArgb(245, 248, 252)
+        txtFirstName.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ?? Middle Name ???????????????????????????????????????????
+        ' ── Middle Name ───────────────────────────────────────────────
         lblMiddleName.Text = "MIDDLE NAME"
         lblMiddleName.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblMiddleName.ForeColor = Color.FromArgb(100, 100, 100)
@@ -173,9 +173,9 @@ Public Class NewBorrowerForm
         txtMiddleName.Size = New Size(200, 28)
         txtMiddleName.Location = New Point(432, 48)
         txtMiddleName.BorderStyle = BorderStyle.FixedSingle
-        txtMiddleName.BackColor = Color.FromArgb(245, 248, 252)
+        txtMiddleName.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ?? Last Name ?????????????????????????????????????????????
+        ' ── Last Name ─────────────────────────────────────────────────
         lblLastName.Text = "LAST NAME"
         lblLastName.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblLastName.ForeColor = Color.FromArgb(100, 100, 100)
@@ -187,14 +187,14 @@ Public Class NewBorrowerForm
         txtLastName.Size = New Size(164, 28)
         txtLastName.Location = New Point(650, 48)
         txtLastName.BorderStyle = BorderStyle.FixedSingle
-        txtLastName.BackColor = Color.FromArgb(245, 248, 252)
+        txtLastName.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpDetails � Age, DOB, Contact, Email
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpDetails – Age, DOB, Contact, Email
+        ' ──────────────────────────────────────────────────────────────
         grpDetails.Text = "Contact Details"
         grpDetails.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpDetails.ForeColor = Color.FromArgb(21, 67, 106)
+        grpDetails.ForeColor = Color.FromArgb(231, 63, 30)
         grpDetails.BackColor = Color.White
         grpDetails.Size = New Size(830, 140)
         grpDetails.Location = New Point(16, 172)
@@ -207,7 +207,7 @@ Public Class NewBorrowerForm
         grpDetails.Controls.Add(txtAge)
         grpDetails.Controls.Add(lblAge)
 
-        ' ?? Age ???????????????????????????????????????????????????
+        ' ── Age ───────────────────────────────────────────────────────
         lblAge.Text = "AGE"
         lblAge.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblAge.ForeColor = Color.FromArgb(100, 100, 100)
@@ -222,7 +222,7 @@ Public Class NewBorrowerForm
         txtAge.BackColor = Color.FromArgb(235, 240, 245)
         txtAge.ReadOnly = True
 
-        ' ?? Date of Birth ?????????????????????????????????????????
+        ' ── Date of Birth ─────────────────────────────────────────────
         lblDateOfBirth.Text = "DATE OF BIRTH"
         lblDateOfBirth.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblDateOfBirth.ForeColor = Color.FromArgb(100, 100, 100)
@@ -236,7 +236,7 @@ Public Class NewBorrowerForm
         dtpDateOfBirth.Format = DateTimePickerFormat.Long
         dtpDateOfBirth.Value = New DateTime(1995, 1, 1)
 
-        ' ?? Contact ???????????????????????????????????????????????
+        ' ── Contact ───────────────────────────────────────────────────
         lblContact.Text = "CONTACT NUMBER"
         lblContact.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblContact.ForeColor = Color.FromArgb(100, 100, 100)
@@ -248,10 +248,10 @@ Public Class NewBorrowerForm
         txtContact.Size = New Size(200, 28)
         txtContact.Location = New Point(412, 48)
         txtContact.BorderStyle = BorderStyle.FixedSingle
-        txtContact.BackColor = Color.FromArgb(245, 248, 252)
+        txtContact.BackColor = Color.FromArgb(255, 252, 248)
         txtContact.MaxLength = 11
 
-        ' ?? Email ?????????????????????????????????????????????????
+        ' ── Email ─────────────────────────────────────────────────────
         lblEmail.Text = "EMAIL ADDRESS"
         lblEmail.Font = New Font("Segoe UI", 8, FontStyle.Bold)
         lblEmail.ForeColor = Color.FromArgb(100, 100, 100)
@@ -263,14 +263,14 @@ Public Class NewBorrowerForm
         txtEmail.Size = New Size(184, 28)
         txtEmail.Location = New Point(630, 48)
         txtEmail.BorderStyle = BorderStyle.FixedSingle
-        txtEmail.BackColor = Color.FromArgb(245, 248, 252)
+        txtEmail.BackColor = Color.FromArgb(255, 252, 248)
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpID � Upload ID
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpID – Upload ID
+        ' ──────────────────────────────────────────────────────────────
         grpID.Text = "Valid ID"
         grpID.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpID.ForeColor = Color.FromArgb(21, 67, 106)
+        grpID.ForeColor = Color.FromArgb(231, 63, 30)
         grpID.BackColor = Color.White
         grpID.Size = New Size(830, 90)
         grpID.Location = New Point(16, 328)
@@ -278,7 +278,7 @@ Public Class NewBorrowerForm
         grpID.Controls.Add(btnUploadID)
         grpID.Controls.Add(lblIDInstruction)
 
-        ' ?? lblIDInstruction ??????????????????????????????????????
+        ' ── lblIDInstruction ──────────────────────────────────────────
         lblIDInstruction.Text = "Upload a valid government-issued ID (JPG, PNG, PDF):"
         lblIDInstruction.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblIDInstruction.ForeColor = Color.FromArgb(80, 80, 80)
@@ -286,19 +286,19 @@ Public Class NewBorrowerForm
         lblIDInstruction.Size = New Size(420, 22)
         lblIDInstruction.Location = New Point(16, 28)
 
-        ' ?? btnUploadID ???????????????????????????????????????????
+        ' ── btnUploadID ───────────────────────────────────────────────
         btnUploadID.Text = "Browse File..."
         btnUploadID.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         btnUploadID.BackColor = Color.FromArgb(245, 247, 250)
-        btnUploadID.ForeColor = Color.FromArgb(21, 67, 106)
+        btnUploadID.ForeColor = Color.FromArgb(231, 63, 30)
         btnUploadID.FlatStyle = FlatStyle.Flat
         btnUploadID.FlatAppearance.BorderSize = 1
-        btnUploadID.FlatAppearance.BorderColor = Color.FromArgb(21, 67, 106)
+        btnUploadID.FlatAppearance.BorderColor = Color.FromArgb(231, 63, 30)
         btnUploadID.Size = New Size(130, 34)
         btnUploadID.Location = New Point(16, 50)
         btnUploadID.Cursor = Cursors.Hand
 
-        ' ?? lblIDFileName ?????????????????????????????????????????
+        ' ── lblIDFileName ─────────────────────────────────────────────
         lblIDFileName.Text = "No file selected"
         lblIDFileName.Font = New Font("Segoe UI", 9, FontStyle.Italic)
         lblIDFileName.ForeColor = Color.Gray
@@ -306,7 +306,7 @@ Public Class NewBorrowerForm
         lblIDFileName.Size = New Size(450, 34)
         lblIDFileName.Location = New Point(160, 56)
 
-        ' ?? pnlFooter ?????????????????????????????????????????????
+        ' ── pnlFooter ─────────────────────────────────────────────────
         pnlFooter.BackColor = Color.White
         pnlFooter.Dock = DockStyle.Bottom
         pnlFooter.Height = 60
@@ -314,15 +314,15 @@ Public Class NewBorrowerForm
         pnlFooter.Controls.Add(btnAdd)
         pnlFooter.Controls.Add(pnlDividerBottom)
 
-        ' ?? pnlDividerBottom ??????????????????????????????????????
+        ' ── pnlDividerBottom ──────────────────────────────────────────
         pnlDividerBottom.BackColor = Color.FromArgb(220, 220, 220)
         pnlDividerBottom.Dock = DockStyle.Top
         pnlDividerBottom.Height = 1
 
-        ' ?? btnAdd ????????????????????????????????????????????????
+        ' ── btnAdd ────────────────────────────────────────────────────
         btnAdd.Text = "Add Borrower"
         btnAdd.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
+        btnAdd.BackColor = Color.FromArgb(231, 63, 30)
         btnAdd.ForeColor = Color.White
         btnAdd.FlatStyle = FlatStyle.Flat
         btnAdd.FlatAppearance.BorderSize = 0
@@ -405,14 +405,14 @@ Public Class NewBorrowerForm
             If row("IDImagePath") IsNot DBNull.Value AndAlso row("IDImagePath").ToString() <> "" Then
                 _idImagePath = row("IDImagePath").ToString()
                 lblIDFileName.Text = IO.Path.GetFileName(_idImagePath)
-                lblIDFileName.ForeColor = Color.FromArgb(21, 67, 106)
+                lblIDFileName.ForeColor = Color.FromArgb(231, 63, 30)
             End If
         Catch ex As Exception
             MessageBox.Show($"Failed to load borrower: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    ' ?? Upload ID ?????????????????????????????????????????????????
+    ' ── Upload ID ─────────────────────────────────────────────────
     Private Sub btnUploadID_Click(sender As Object, e As EventArgs) Handles btnUploadID.Click
         Using dlg As New OpenFileDialog()
             dlg.Title = "Select Valid ID"
@@ -421,7 +421,7 @@ Public Class NewBorrowerForm
             If dlg.ShowDialog() = DialogResult.OK Then
                 _idImagePath = dlg.FileName
                 lblIDFileName.Text = IO.Path.GetFileName(dlg.FileName)
-                lblIDFileName.ForeColor = Color.FromArgb(21, 67, 106)
+                lblIDFileName.ForeColor = Color.FromArgb(231, 63, 30)
             End If
         End Using
     End Sub
@@ -566,12 +566,12 @@ Public Class NewBorrowerForm
         Me.Close()
     End Sub
 
-    ' ?? Hover Effects ?????????????????????????????????????????????
+    ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnAdd_MouseEnter(sender As Object, e As EventArgs) Handles btnAdd.MouseEnter
-        btnAdd.BackColor = Color.FromArgb(30, 95, 150)
+        btnAdd.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnAdd_MouseLeave(sender As Object, e As EventArgs) Handles btnAdd.MouseLeave
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
+        btnAdd.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnCancel_MouseEnter(sender As Object, e As EventArgs) Handles btnCancel.MouseEnter
         btnCancel.BackColor = Color.FromArgb(220, 220, 220)
@@ -580,12 +580,12 @@ Public Class NewBorrowerForm
         btnCancel.BackColor = Color.FromArgb(240, 240, 240)
     End Sub
     Private Sub btnUploadID_MouseEnter(sender As Object, e As EventArgs) Handles btnUploadID.MouseEnter
-        btnUploadID.BackColor = Color.FromArgb(21, 67, 106)
+        btnUploadID.BackColor = Color.FromArgb(231, 63, 30)
         btnUploadID.ForeColor = Color.White
     End Sub
     Private Sub btnUploadID_MouseLeave(sender As Object, e As EventArgs) Handles btnUploadID.MouseLeave
         btnUploadID.BackColor = Color.FromArgb(245, 247, 250)
-        btnUploadID.ForeColor = Color.FromArgb(21, 67, 106)
+        btnUploadID.ForeColor = Color.FromArgb(231, 63, 30)
     End Sub
 
 End Class

@@ -81,13 +81,15 @@ Public Class ViewBorrowerForm
         pnlHeader.Controls.Add(lblSubtitle)
         pnlHeader.Controls.Add(lblTitle)
 
+        ' ── lblTitle ──────────────────────────────────────────────────
         lblTitle.Text = "Borrower Details"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
 
+        ' ── lblSubtitle ───────────────────────────────────────────────
         lblSubtitle.Text = "Read-only view of the borrower's information"
         lblSubtitle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSubtitle.ForeColor = Color.Gray
@@ -95,12 +97,12 @@ Public Class ViewBorrowerForm
         lblSubtitle.Size = New Size(500, 18)
         lblSubtitle.Location = New Point(16, 40)
 
-        ' ?? pnlDividerTop ?????????????????????????????????????????
+        ' ── pnlDividerTop ─────────────────────────────────────────────
         pnlDividerTop.BackColor = Color.FromArgb(220, 220, 220)
         pnlDividerTop.Dock = DockStyle.Top
         pnlDividerTop.Height = 1
 
-        ' ?? pnlBody ???????????????????????????????????????????????
+        ' ── pnlBody ───────────────────────────────────────────────────
         pnlBody.BackColor = Color.FromArgb(245, 247, 250)
         pnlBody.Dock = DockStyle.Fill
         pnlBody.Padding = New Padding(16)
@@ -109,12 +111,12 @@ Public Class ViewBorrowerForm
         pnlBody.Controls.Add(grpDetails)
         pnlBody.Controls.Add(grpPersonalInfo)
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpPersonalInfo ? Borrower UID, First, Middle, Last Name
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpPersonalInfo – Borrower UID, First, Middle, Last Name
+        ' ──────────────────────────────────────────────────────────────
         grpPersonalInfo.Text = "Personal Information"
         grpPersonalInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpPersonalInfo.ForeColor = Color.FromArgb(21, 67, 106)
+        grpPersonalInfo.ForeColor = Color.FromArgb(231, 63, 30)
         grpPersonalInfo.BackColor = Color.White
         grpPersonalInfo.Size = New Size(830, 140)
         grpPersonalInfo.Location = New Point(16, 16)
@@ -187,12 +189,12 @@ Public Class ViewBorrowerForm
         txtLastName.BackColor = Color.FromArgb(235, 240, 245)
         txtLastName.ReadOnly = True
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpDetails ? Age, DOB, Contact, Email
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpDetails – Age, DOB, Contact, Email
+        ' ──────────────────────────────────────────────────────────────
         grpDetails.Text = "Contact Details"
         grpDetails.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpDetails.ForeColor = Color.FromArgb(21, 67, 106)
+        grpDetails.ForeColor = Color.FromArgb(231, 63, 30)
         grpDetails.BackColor = Color.White
         grpDetails.Size = New Size(830, 140)
         grpDetails.Location = New Point(16, 172)
@@ -265,12 +267,12 @@ Public Class ViewBorrowerForm
         txtEmail.BackColor = Color.FromArgb(235, 240, 245)
         txtEmail.ReadOnly = True
 
-        ' ??????????????????????????????????????????????????????????
-        ' grpAdditional ? Valid ID file, Registered On
-        ' ??????????????????????????????????????????????????????????
+        ' ──────────────────────────────────────────────────────────────
+        ' grpAdditional – Valid ID file, Registered On
+        ' ──────────────────────────────────────────────────────────────
         grpAdditional.Text = "Additional Information"
         grpAdditional.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpAdditional.ForeColor = Color.FromArgb(21, 67, 106)
+        grpAdditional.ForeColor = Color.FromArgb(231, 63, 30)
         grpAdditional.BackColor = Color.White
         grpAdditional.Size = New Size(830, 100)
         grpAdditional.Location = New Point(16, 328)
@@ -307,7 +309,7 @@ Public Class ViewBorrowerForm
         txtRegisteredOn.BackColor = Color.FromArgb(235, 240, 245)
         txtRegisteredOn.ReadOnly = True
 
-        ' ?? pnlFooter ?????????????????????????????????????????????
+        ' ── pnlFooter ─────────────────────────────────────────────────
         pnlFooter.BackColor = Color.White
         pnlFooter.Dock = DockStyle.Bottom
         pnlFooter.Height = 60
@@ -320,7 +322,7 @@ Public Class ViewBorrowerForm
 
         btnBack.Text = "Back to List"
         btnBack.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnBack.BackColor = Color.FromArgb(21, 67, 106)
+        btnBack.BackColor = Color.FromArgb(231, 63, 30)
         btnBack.ForeColor = Color.White
         btnBack.FlatStyle = FlatStyle.Flat
         btnBack.FlatAppearance.BorderSize = 0
@@ -328,7 +330,7 @@ Public Class ViewBorrowerForm
         btnBack.Location = New Point(16, 12)
         btnBack.Cursor = Cursors.Hand
 
-        ' ?? Form ??????????????????????????????????????????????????
+        ' ── Form ──────────────────────────────────────────────────────
         Me.Text = "LMS - Borrower Details"
         Me.ClientSize = New Size(880, 560)
         Me.StartPosition = FormStartPosition.CenterParent
@@ -344,7 +346,7 @@ Public Class ViewBorrowerForm
         ResumeLayout(False)
     End Sub
 
-    ' ?? Load Borrower from DB ????????????????????????????????????????????
+    ' ── Load Borrower from DB ─────────────────────────────────────
     Private Sub LoadBorrower(borrowerID As Integer)
         Try
             Dim dt As DataTable = BorrowerRepository.GetByID(borrowerID)
@@ -353,20 +355,25 @@ Public Class ViewBorrowerForm
                 Me.Close()
                 Return
             End If
+
             Dim row As DataRow = dt.Rows(0)
             txtBorrowerUID.Text = row("BorrowerUID").ToString()
             txtFirstName.Text = row("FirstName").ToString()
             txtMiddleName.Text = If(row("MiddleName") Is DBNull.Value, "", row("MiddleName").ToString())
             txtLastName.Text = row("LastName").ToString()
             txtAge.Text = row("Age").ToString()
-            txtDateOfBirth.Text = If(row("DateOfBirth") Is DBNull.Value, "", CDate(row("DateOfBirth")).ToString("MMMM dd, yyyy"))
+
+            If row("DateOfBirth") IsNot DBNull.Value Then
+                txtDateOfBirth.Text = CDate(row("DateOfBirth")).ToString("MMMM dd, yyyy")
+            End If
+
             txtContact.Text = row("Contact").ToString()
-            txtEmail.Text = If(row("Email") Is DBNull.Value, "", row("Email").ToString())
+            txtEmail.Text = row("Email").ToString()
 
             If row("IDImagePath") IsNot DBNull.Value AndAlso row("IDImagePath").ToString() <> "" Then
                 txtIDFile.Text = IO.Path.GetFileName(row("IDImagePath").ToString())
             Else
-                txtIDFile.Text = "No file on record"
+                txtIDFile.Text = "None uploaded"
             End If
 
             txtRegisteredOn.Text = If(row("CreatedAt") Is DBNull.Value, "", CDate(row("CreatedAt")).ToString("MMMM dd, yyyy"))
@@ -375,21 +382,21 @@ Public Class ViewBorrowerForm
         End Try
     End Sub
 
-    ' ?? Form Load ?????????????????????????????????????????????????
+    ' ── Form Load ─────────────────────────────────────────────────
     Private Sub ViewBorrowerForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     End Sub
 
-    ' ?? Back Button ???????????????????????????????????????????????
+    ' ── Back Button ───────────────────────────────────────────────
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         Me.Close()
     End Sub
 
-    ' ?? Hover Effects ?????????????????????????????????????????????
+    ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnBack_MouseEnter(sender As Object, e As EventArgs) Handles btnBack.MouseEnter
-        btnBack.BackColor = Color.FromArgb(30, 95, 150)
+        btnBack.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnBack_MouseLeave(sender As Object, e As EventArgs) Handles btnBack.MouseLeave
-        btnBack.BackColor = Color.FromArgb(21, 67, 106)
+        btnBack.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
 
 End Class

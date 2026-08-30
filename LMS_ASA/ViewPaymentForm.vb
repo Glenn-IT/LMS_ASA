@@ -112,7 +112,7 @@ Public Class ViewPaymentForm
 
         lblTitle.Text = "Payment Details"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
@@ -143,7 +143,7 @@ Public Class ViewPaymentForm
         ' ── grpPaymentInfo — Loan Reference, Borrower Name, Payee ────
         grpPaymentInfo.Text = "Payment Information"
         grpPaymentInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpPaymentInfo.ForeColor = Color.FromArgb(21, 67, 106)
+        grpPaymentInfo.ForeColor = Color.FromArgb(231, 63, 30)
         grpPaymentInfo.BackColor = Color.White
         grpPaymentInfo.Size = New Size(830, 95)
         grpPaymentInfo.Location = New Point(16, 16)
@@ -202,8 +202,8 @@ Public Class ViewPaymentForm
         ' ── grpLoanSummary — Loan & Amortization Overview ─────────
         grpLoanSummary.Text = "Loan & Amortization Overview"
         grpLoanSummary.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpLoanSummary.ForeColor = Color.FromArgb(21, 67, 106)
-        grpLoanSummary.BackColor = Color.FromArgb(248, 250, 254)
+        grpLoanSummary.ForeColor = Color.FromArgb(231, 63, 30)
+        grpLoanSummary.BackColor = Color.FromArgb(255, 250, 245)
         grpLoanSummary.Size = New Size(830, 115)
         grpLoanSummary.Location = New Point(16, 120)
 
@@ -229,7 +229,7 @@ Public Class ViewPaymentForm
 
         lblValMonthlyAmort.Text = "PHP 0.00"
         lblValMonthlyAmort.Font = New Font("Segoe UI", 10.5F, FontStyle.Bold)
-        lblValMonthlyAmort.ForeColor = Color.FromArgb(21, 67, 106)
+        lblValMonthlyAmort.ForeColor = Color.FromArgb(231, 63, 30)
         lblValMonthlyAmort.Location = New Point(170, 48)
         lblValMonthlyAmort.Size = New Size(150, 24)
 
@@ -286,7 +286,7 @@ Public Class ViewPaymentForm
         ' ── grpAmounts — Amount, Penalty ───────────────────────────
         grpAmounts.Text = "Transaction Amount"
         grpAmounts.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpAmounts.ForeColor = Color.FromArgb(21, 67, 106)
+        grpAmounts.ForeColor = Color.FromArgb(231, 63, 30)
         grpAmounts.BackColor = Color.White
         grpAmounts.Size = New Size(830, 95)
         grpAmounts.Location = New Point(16, 245)
@@ -328,7 +328,7 @@ Public Class ViewPaymentForm
         ' ── grpSchedule — Payment Date ─────────────────────────────
         grpSchedule.Text = "Schedule"
         grpSchedule.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpSchedule.ForeColor = Color.FromArgb(21, 67, 106)
+        grpSchedule.ForeColor = Color.FromArgb(231, 63, 30)
         grpSchedule.BackColor = Color.White
         grpSchedule.Size = New Size(830, 85)
         grpSchedule.Location = New Point(16, 350)
@@ -351,8 +351,8 @@ Public Class ViewPaymentForm
         ' ── grpStatusInfo — Current Status, Recorded On ───────────
         grpStatusInfo.Text = "Payment Status"
         grpStatusInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpStatusInfo.ForeColor = Color.FromArgb(21, 67, 106)
-        grpStatusInfo.BackColor = Color.FromArgb(240, 246, 252)
+        grpStatusInfo.ForeColor = Color.FromArgb(231, 63, 30)
+        grpStatusInfo.BackColor = Color.FromArgb(255, 250, 245)
         grpStatusInfo.Size = New Size(830, 60)
         grpStatusInfo.Location = New Point(16, 445)
         grpStatusInfo.Controls.Add(lblRecordedValue)
@@ -368,7 +368,7 @@ Public Class ViewPaymentForm
 
         lblStatusValue.Text = "Pending"
         lblStatusValue.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        lblStatusValue.ForeColor = Color.FromArgb(21, 67, 106)
+        lblStatusValue.ForeColor = Color.FromArgb(231, 63, 30)
         lblStatusValue.AutoSize = True
         lblStatusValue.Location = New Point(110, 26)
 
@@ -380,7 +380,7 @@ Public Class ViewPaymentForm
 
         lblRecordedValue.Text = ""
         lblRecordedValue.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        lblRecordedValue.ForeColor = Color.FromArgb(21, 67, 106)
+        lblRecordedValue.ForeColor = Color.FromArgb(231, 63, 30)
         lblRecordedValue.AutoSize = True
         lblRecordedValue.Location = New Point(498, 26)
 
@@ -397,7 +397,7 @@ Public Class ViewPaymentForm
 
         btnBack.Text = "Back to List"
         btnBack.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnBack.BackColor = Color.FromArgb(21, 67, 106)
+        btnBack.BackColor = Color.FromArgb(231, 63, 30)
         btnBack.ForeColor = Color.White
         btnBack.FlatStyle = FlatStyle.Flat
         btnBack.FlatAppearance.BorderSize = 0
@@ -452,7 +452,7 @@ Public Class ViewPaymentForm
                 Case "Overdue"
                     lblStatusValue.ForeColor = Color.FromArgb(192, 57, 43)
                 Case Else
-                    lblStatusValue.ForeColor = Color.FromArgb(21, 67, 106)
+                    lblStatusValue.ForeColor = Color.FromArgb(231, 63, 30)
             End Select
         Catch ex As Exception
             MessageBox.Show($"Failed to load payment: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -498,10 +498,10 @@ Public Class ViewPaymentForm
     End Sub
 
     Private Sub btnBack_MouseEnter(sender As Object, e As EventArgs) Handles btnBack.MouseEnter
-        btnBack.BackColor = Color.FromArgb(30, 95, 150)
+        btnBack.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnBack_MouseLeave(sender As Object, e As EventArgs) Handles btnBack.MouseLeave
-        btnBack.BackColor = Color.FromArgb(21, 67, 106)
+        btnBack.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
 
 End Class

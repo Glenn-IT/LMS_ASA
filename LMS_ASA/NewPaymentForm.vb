@@ -117,7 +117,7 @@ Public Class NewPaymentForm
         ' ── lblTitle ───────────────────────────────────────────────
         lblTitle.Text = "New Payment"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
@@ -148,7 +148,7 @@ Public Class NewPaymentForm
         ' ── grpPaymentInfo — Loan Reference, Payee, Status ────────
         grpPaymentInfo.Text = "Payment Information"
         grpPaymentInfo.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpPaymentInfo.ForeColor = Color.FromArgb(21, 67, 106)
+        grpPaymentInfo.ForeColor = Color.FromArgb(231, 63, 30)
         grpPaymentInfo.BackColor = Color.White
         grpPaymentInfo.Size = New Size(830, 95)
         grpPaymentInfo.Location = New Point(16, 16)
@@ -171,7 +171,7 @@ Public Class NewPaymentForm
         cmbLoanRef.Size = New Size(260, 28)
         cmbLoanRef.Location = New Point(16, 45)
         cmbLoanRef.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbLoanRef.BackColor = Color.FromArgb(245, 248, 252)
+        cmbLoanRef.BackColor = Color.FromArgb(255, 252, 248)
         cmbLoanRef.FlatStyle = FlatStyle.Flat
 
         ' Payee
@@ -186,7 +186,7 @@ Public Class NewPaymentForm
         txtPayee.Size = New Size(260, 28)
         txtPayee.Location = New Point(296, 45)
         txtPayee.BorderStyle = BorderStyle.FixedSingle
-        txtPayee.BackColor = Color.FromArgb(245, 248, 252)
+        txtPayee.BackColor = Color.FromArgb(255, 252, 248)
 
         ' Status
         lblStatus.Text = "STATUS"
@@ -200,15 +200,15 @@ Public Class NewPaymentForm
         cmbStatus.Size = New Size(240, 28)
         cmbStatus.Location = New Point(574, 45)
         cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbStatus.BackColor = Color.FromArgb(245, 248, 252)
+        cmbStatus.BackColor = Color.FromArgb(255, 252, 248)
         cmbStatus.FlatStyle = FlatStyle.Flat
         cmbStatus.Items.AddRange(New Object() {"Paid", "Pending", "Overdue"})
 
         ' ── grpLoanSummary — Loan & Amortization Summary Cards ──────
         grpLoanSummary.Text = "Loan & Amortization Overview"
         grpLoanSummary.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpLoanSummary.ForeColor = Color.FromArgb(21, 67, 106)
-        grpLoanSummary.BackColor = Color.FromArgb(248, 250, 254)
+        grpLoanSummary.ForeColor = Color.FromArgb(231, 63, 30)
+        grpLoanSummary.BackColor = Color.FromArgb(255, 250, 245)
         grpLoanSummary.Size = New Size(830, 115)
         grpLoanSummary.Location = New Point(16, 120)
 
@@ -234,7 +234,7 @@ Public Class NewPaymentForm
 
         lblValMonthlyAmort.Text = "PHP 0.00"
         lblValMonthlyAmort.Font = New Font("Segoe UI", 10.5F, FontStyle.Bold)
-        lblValMonthlyAmort.ForeColor = Color.FromArgb(21, 67, 106)
+        lblValMonthlyAmort.ForeColor = Color.FromArgb(231, 63, 30)
         lblValMonthlyAmort.Location = New Point(170, 48)
         lblValMonthlyAmort.Size = New Size(150, 24)
 
@@ -291,7 +291,7 @@ Public Class NewPaymentForm
         ' ── grpAmounts — Amount, Penalty, Preview Calculation ────
         grpAmounts.Text = "Amounts"
         grpAmounts.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpAmounts.ForeColor = Color.FromArgb(21, 67, 106)
+        grpAmounts.ForeColor = Color.FromArgb(231, 63, 30)
         grpAmounts.BackColor = Color.White
         grpAmounts.Size = New Size(830, 125)
         grpAmounts.Location = New Point(16, 245)
@@ -313,7 +313,7 @@ Public Class NewPaymentForm
         txtAmount.Size = New Size(390, 28)
         txtAmount.Location = New Point(16, 45)
         txtAmount.BorderStyle = BorderStyle.FixedSingle
-        txtAmount.BackColor = Color.FromArgb(245, 248, 252)
+        txtAmount.BackColor = Color.FromArgb(255, 252, 248)
 
         ' Penalty (PHP)
         lblPenalty.Text = "PENALTY (PHP)"
@@ -327,7 +327,7 @@ Public Class NewPaymentForm
         txtPenalty.Size = New Size(390, 28)
         txtPenalty.Location = New Point(424, 45)
         txtPenalty.BorderStyle = BorderStyle.FixedSingle
-        txtPenalty.BackColor = Color.FromArgb(245, 248, 252)
+        txtPenalty.BackColor = Color.FromArgb(255, 252, 248)
 
         ' Real-time Calculation Preview Note
         lblCalcPreview.Text = "💡 Enter payment amount to preview updated balance."
@@ -339,7 +339,7 @@ Public Class NewPaymentForm
         ' ── grpSchedule — Payment Date ─────────────────────────────
         grpSchedule.Text = "Schedule"
         grpSchedule.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        grpSchedule.ForeColor = Color.FromArgb(21, 67, 106)
+        grpSchedule.ForeColor = Color.FromArgb(231, 63, 30)
         grpSchedule.BackColor = Color.White
         grpSchedule.Size = New Size(830, 85)
         grpSchedule.Location = New Point(16, 380)
@@ -375,7 +375,7 @@ Public Class NewPaymentForm
         ' btnSave
         btnSave.Text = "Add Payment"
         btnSave.Font = New Font("Segoe UI", 10, FontStyle.Bold)
-        btnSave.BackColor = Color.FromArgb(21, 67, 106)
+        btnSave.BackColor = Color.FromArgb(231, 63, 30)
         btnSave.ForeColor = Color.White
         btnSave.FlatStyle = FlatStyle.Flat
         btnSave.FlatAppearance.BorderSize = 0
@@ -516,7 +516,7 @@ Public Class NewPaymentForm
             Else
                 Dim newMosLeft As Integer = If(_currentMonthlyAmort > 0, CInt(Math.Ceiling(newBal / _currentMonthlyAmort)), 0)
                 lblCalcPreview.Text = $"💡 New Balance after payment: PHP {newBal:N2} (~{newMosLeft} month(s) remaining)"
-                lblCalcPreview.ForeColor = Color.FromArgb(21, 67, 106)
+                lblCalcPreview.ForeColor = Color.FromArgb(231, 63, 30)
             End If
         Else
             lblCalcPreview.Text = $"💡 Enter payment amount. Current Balance: PHP {_currentRemainingBal:N2}"
@@ -630,10 +630,10 @@ Public Class NewPaymentForm
 
     ' ── Hover Effects ──────────────────────────────────────────────
     Private Sub btnSave_MouseEnter(sender As Object, e As EventArgs) Handles btnSave.MouseEnter
-        btnSave.BackColor = Color.FromArgb(30, 95, 150)
+        btnSave.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnSave_MouseLeave(sender As Object, e As EventArgs) Handles btnSave.MouseLeave
-        btnSave.BackColor = Color.FromArgb(21, 67, 106)
+        btnSave.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnCancel_MouseEnter(sender As Object, e As EventArgs) Handles btnCancel.MouseEnter
         btnCancel.BackColor = Color.FromArgb(220, 220, 220)

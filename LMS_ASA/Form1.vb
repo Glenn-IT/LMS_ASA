@@ -128,10 +128,10 @@ Public Class LoginForm
 
     ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnLogin_MouseEnter(sender As Object, e As EventArgs) Handles btnLogin.MouseEnter
-        If btnLogin.Enabled Then btnLogin.BackColor = Color.FromArgb(30, 95, 150)
+        If btnLogin.Enabled Then btnLogin.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnLogin_MouseLeave(sender As Object, e As EventArgs) Handles btnLogin.MouseLeave
-        If btnLogin.Enabled Then btnLogin.BackColor = Color.FromArgb(21, 67, 106)
+        If btnLogin.Enabled Then btnLogin.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
 
 End Class

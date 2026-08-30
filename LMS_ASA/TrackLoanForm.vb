@@ -1,10 +1,11 @@
 Public Class TrackLoanForm
     Inherits Form
 
-    ' ?? Controls ??????????????????????????????????????????????????
+    ' ── Controls ──────────────────────────────────────────────────
     Private pnlHeader As Panel
     Private lblTitle As Label
     Private lblSubtitle As Label
+    Private pnlDividerTop As Panel
     Private pnlGrid As Panel
     Friend WithEvents dgvTrackLoans As DataGridView
     Private pnlFooter As Panel
@@ -18,6 +19,7 @@ Public Class TrackLoanForm
         pnlHeader = New Panel()
         lblTitle = New Label()
         lblSubtitle = New Label()
+        pnlDividerTop = New Panel()
         pnlGrid = New Panel()
         dgvTrackLoans = New DataGridView()
         pnlFooter = New Panel()
@@ -32,15 +34,15 @@ Public Class TrackLoanForm
         pnlHeader.Controls.Add(lblSubtitle)
         pnlHeader.Controls.Add(lblTitle)
 
-        ' ?? lblTitle ??????????????????????????????????????????????
+        ' ── lblTitle ──────────────────────────────────────────────────
         lblTitle.Text = "Track Loan Application"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
 
-        ' ?? lblSubtitle ???????????????????????????????????????????
+        ' ── lblSubtitle ───────────────────────────────────────────────
         lblSubtitle.Text = "View the status of your submitted loan applications"
         lblSubtitle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSubtitle.ForeColor = Color.Gray
@@ -48,13 +50,18 @@ Public Class TrackLoanForm
         lblSubtitle.Size = New Size(500, 18)
         lblSubtitle.Location = New Point(16, 40)
 
-        ' ?? pnlGrid ???????????????????????????????????????????????
+        ' ── pnlDividerTop ─────────────────────────────────────────────
+        pnlDividerTop.BackColor = Color.FromArgb(220, 220, 220)
+        pnlDividerTop.Dock = DockStyle.Top
+        pnlDividerTop.Height = 1
+
+        ' ── pnlGrid ───────────────────────────────────────────────────
         pnlGrid.BackColor = Color.White
         pnlGrid.Dock = DockStyle.Fill
         pnlGrid.Padding = New Padding(12)
         pnlGrid.Controls.Add(dgvTrackLoans)
 
-        ' ?? dgvTrackLoans ?????????????????????????????????????????
+        ' ── dgvTrackLoans ─────────────────────────────────────────────
         dgvTrackLoans.Dock = DockStyle.Fill
         dgvTrackLoans.BackgroundColor = Color.White
         dgvTrackLoans.BorderStyle = BorderStyle.None
@@ -70,20 +77,20 @@ Public Class TrackLoanForm
         dgvTrackLoans.RowTemplate.Height = 36
 
         ' Column header style
-        dgvTrackLoans.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(21, 67, 106)
+        dgvTrackLoans.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(231, 63, 30)
         dgvTrackLoans.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
         dgvTrackLoans.ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
         dgvTrackLoans.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
         dgvTrackLoans.EnableHeadersVisualStyles = False
 
         ' Alternating row style
-        dgvTrackLoans.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 249, 253)
+        dgvTrackLoans.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(255, 250, 245)
 
         ' Selection style
-        dgvTrackLoans.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 240)
-        dgvTrackLoans.DefaultCellStyle.SelectionForeColor = Color.FromArgb(21, 67, 106)
+        dgvTrackLoans.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 221, 156)
+        dgvTrackLoans.DefaultCellStyle.SelectionForeColor = Color.FromArgb(184, 46, 18)
 
-        ' ?? Columns ???????????????????????????????????????????????
+        ' ── Columns ───────────────────────────────────────────────────
         Dim colRefID As New DataGridViewTextBoxColumn()
         colRefID.Name = "LoanReferenceID"
         colRefID.HeaderText = "Loan Reference ID"
@@ -114,7 +121,7 @@ Public Class TrackLoanForm
         colView.Text = "View"
         colView.UseColumnTextForButtonValue = True
         colView.FillWeight = 12
-        colView.DefaultCellStyle.BackColor = Color.FromArgb(21, 67, 106)
+        colView.DefaultCellStyle.BackColor = Color.FromArgb(249, 182, 55)
         colView.DefaultCellStyle.ForeColor = Color.White
         colView.DefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         colView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -135,12 +142,13 @@ Public Class TrackLoanForm
         lblRecordCount.AutoSize = True
         lblRecordCount.Location = New Point(12, 8)
 
-        ' ?? Form ??????????????????????????????????????????????????
+        ' ── Form ──────────────────────────────────────────────────────
         Me.Text = "LMS - Track Loan Application"
         Me.ClientSize = New Size(860, 480)
         Me.BackColor = Color.White
         Me.Controls.Add(pnlGrid)
         Me.Controls.Add(pnlFooter)
+        Me.Controls.Add(pnlDividerTop)
         Me.Controls.Add(pnlHeader)
 
         ResumeLayout(False)

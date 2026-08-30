@@ -81,7 +81,7 @@ Public Class PaymentListForm
         ' lblTitle
         lblTitle.Text = "Payment List"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(400, 28)
         lblTitle.Location = New Point(16, 8)
@@ -148,7 +148,7 @@ Public Class PaymentListForm
         lblKpi3Title.Size = New Size(250, 16)
         lblKpi3Val.Text = "0 Record(s)"
         lblKpi3Val.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
-        lblKpi3Val.ForeColor = Color.FromArgb(21, 67, 106)
+        lblKpi3Val.ForeColor = Color.FromArgb(231, 63, 30)
         lblKpi3Val.Location = New Point(10, 22)
         lblKpi3Val.Size = New Size(250, 24)
         grpKpi3.Controls.Add(lblKpi3Title)
@@ -172,7 +172,7 @@ Public Class PaymentListForm
         ' btnAdd
         btnAdd.Text = "+ Add"
         btnAdd.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
+        btnAdd.BackColor = Color.FromArgb(231, 63, 30)
         btnAdd.ForeColor = Color.White
         btnAdd.FlatStyle = FlatStyle.Flat
         btnAdd.FlatAppearance.BorderSize = 0
@@ -183,7 +183,7 @@ Public Class PaymentListForm
         ' btnUpdate
         btnUpdate.Text = "Update"
         btnUpdate.Font = New Font("Segoe UI", 9, FontStyle.Regular)
-        btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
+        btnUpdate.BackColor = Color.FromArgb(251, 108, 0)
         btnUpdate.ForeColor = Color.White
         btnUpdate.FlatStyle = FlatStyle.Flat
         btnUpdate.FlatAppearance.BorderSize = 0
@@ -193,8 +193,8 @@ Public Class PaymentListForm
 
         ' btnView
         btnView.Text = "View"
-        btnView.Font = New Font("Segoe UI", 9, FontStyle.Regular)
-        btnView.BackColor = Color.FromArgb(23, 162, 184)
+        btnView.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        btnView.BackColor = Color.FromArgb(249, 182, 55)
         btnView.ForeColor = Color.White
         btnView.FlatStyle = FlatStyle.Flat
         btnView.FlatAppearance.BorderSize = 0
@@ -250,18 +250,18 @@ Public Class PaymentListForm
         dgvPayments.RowTemplate.Height = 32
 
         ' Column header style
-        dgvPayments.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(21, 67, 106)
+        dgvPayments.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(231, 63, 30)
         dgvPayments.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
         dgvPayments.ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
         dgvPayments.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
         dgvPayments.EnableHeadersVisualStyles = False
 
         ' Alternating row style
-        dgvPayments.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 249, 253)
+        dgvPayments.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(255, 250, 245)
 
         ' Selection style
-        dgvPayments.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 240)
-        dgvPayments.DefaultCellStyle.SelectionForeColor = Color.FromArgb(21, 67, 106)
+        dgvPayments.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 221, 156)
+        dgvPayments.DefaultCellStyle.SelectionForeColor = Color.FromArgb(184, 46, 18)
 
         ' ── pnlFooter ──────────────────────────────────────────────
         pnlFooter.BackColor = Color.FromArgb(245, 247, 250)
@@ -493,22 +493,22 @@ Public Class PaymentListForm
 
     ' ── Hover Effects ──────────────────────────────────────────────
     Private Sub btnAdd_MouseEnter(sender As Object, e As EventArgs) Handles btnAdd.MouseEnter
-        btnAdd.BackColor = Color.FromArgb(30, 95, 150)
+        btnAdd.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnAdd_MouseLeave(sender As Object, e As EventArgs) Handles btnAdd.MouseLeave
-        btnAdd.BackColor = Color.FromArgb(21, 67, 106)
+        btnAdd.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnUpdate_MouseEnter(sender As Object, e As EventArgs) Handles btnUpdate.MouseEnter
-        btnUpdate.BackColor = Color.FromArgb(40, 100, 160)
+        btnUpdate.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
     Private Sub btnUpdate_MouseLeave(sender As Object, e As EventArgs) Handles btnUpdate.MouseLeave
-        btnUpdate.BackColor = Color.FromArgb(52, 120, 180)
+        btnUpdate.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnView_MouseEnter(sender As Object, e As EventArgs) Handles btnView.MouseEnter
-        btnView.BackColor = Color.FromArgb(19, 132, 150)
+        btnView.BackColor = Color.FromArgb(231, 140, 20)
     End Sub
     Private Sub btnView_MouseLeave(sender As Object, e As EventArgs) Handles btnView.MouseLeave
-        btnView.BackColor = Color.FromArgb(23, 162, 184)
+        btnView.BackColor = Color.FromArgb(249, 182, 55)
     End Sub
     Private Sub btnDelete_MouseEnter(sender As Object, e As EventArgs) Handles btnDelete.MouseEnter
         btnDelete.BackColor = Color.FromArgb(160, 40, 30)

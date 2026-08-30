@@ -48,7 +48,7 @@ Public Class DevelopersForm
 
         lblTitle.Text = "Development Team"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
@@ -73,7 +73,7 @@ Public Class DevelopersForm
 
         ' ── Banner Card ───────────────────────────────────────────────
         Dim pnlBanner As New Panel()
-        pnlBanner.BackColor = Color.FromArgb(21, 67, 106)
+        pnlBanner.BackColor = Color.FromArgb(231, 63, 30)
         pnlBanner.Size = New Size(860, 95)
         pnlBanner.Location = New Point(20, 16)
         pnlBanner.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
@@ -89,7 +89,7 @@ Public Class DevelopersForm
         Dim lblBannerDesc As New Label()
         lblBannerDesc.Text = "Designed and developed to automate microfinance loan applications, credit evaluations, amortization tracking, and payment processing."
         lblBannerDesc.Font = New Font("Segoe UI", 9.5F, FontStyle.Regular)
-        lblBannerDesc.ForeColor = Color.FromArgb(200, 230, 255)
+        lblBannerDesc.ForeColor = Color.FromArgb(255, 221, 156)
         lblBannerDesc.Location = New Point(20, 44)
         lblBannerDesc.Size = New Size(800, 38)
         pnlBanner.Controls.Add(lblBannerDesc)
@@ -132,7 +132,7 @@ Public Class DevelopersForm
         Dim lblInfoTitle As New Label()
         lblInfoTitle.Text = "System & Technology Stack"
         lblInfoTitle.Font = New Font("Segoe UI", 11, FontStyle.Bold)
-        lblInfoTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblInfoTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblInfoTitle.Location = New Point(18, 14)
         lblInfoTitle.AutoSize = True
         pnlProjectInfo.Controls.Add(lblInfoTitle)
@@ -171,7 +171,7 @@ Public Class DevelopersForm
 
         ' Avatar / Monogram Box
         Dim pnlAvatar As New Panel()
-        pnlAvatar.BackColor = Color.FromArgb(30, 95, 150)
+        pnlAvatar.BackColor = Color.FromArgb(251, 108, 0)
         pnlAvatar.Size = New Size(54, 54)
         pnlAvatar.Location = New Point(18, 18)
 
@@ -188,7 +188,7 @@ Public Class DevelopersForm
         Dim lblName As New Label()
         lblName.Text = name
         lblName.Font = New Font("Segoe UI", 12, FontStyle.Bold)
-        lblName.ForeColor = Color.FromArgb(21, 67, 106)
+        lblName.ForeColor = Color.FromArgb(231, 63, 30)
         lblName.Location = New Point(82, 16)
         lblName.Size = New Size(325, 26)
         card.Controls.Add(lblName)
@@ -197,7 +197,7 @@ Public Class DevelopersForm
         Dim lblRole As New Label()
         lblRole.Text = role
         lblRole.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
-        lblRole.ForeColor = Color.FromArgb(30, 95, 150)
+        lblRole.ForeColor = Color.FromArgb(251, 108, 0)
         lblRole.Location = New Point(82, 42)
         lblRole.Size = New Size(325, 20)
         card.Controls.Add(lblRole)
@@ -238,7 +238,7 @@ Public Class DevelopersForm
         Dim lblBioHeader As New Label()
         lblBioHeader.Text = "Key Responsibilities:"
         lblBioHeader.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-        lblBioHeader.ForeColor = Color.FromArgb(21, 67, 106)
+        lblBioHeader.ForeColor = Color.FromArgb(231, 63, 30)
         lblBioHeader.Location = New Point(18, 166)
         lblBioHeader.Size = New Size(389, 18)
         card.Controls.Add(lblBioHeader)

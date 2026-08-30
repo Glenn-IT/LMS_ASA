@@ -46,7 +46,7 @@ Public Class SystemManualForm
 
         lblTitle.Text = "System Manual & Documentation"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
-        lblTitle.ForeColor = Color.FromArgb(21, 67, 106)
+        lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
         lblTitle.Size = New Size(500, 30)
         lblTitle.Location = New Point(16, 10)
@@ -129,7 +129,7 @@ Public Class SystemManualForm
             b.Font = New Font("Segoe UI", 9.5F, FontStyle.Regular)
         Next
         btn.BackColor = Color.White
-        btn.ForeColor = Color.FromArgb(21, 67, 106)
+        btn.ForeColor = Color.FromArgb(231, 63, 30)
         btn.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
         activeTabBtn = btn
 
@@ -271,7 +271,7 @@ Public Class SystemManualForm
         Dim lblHead As New Label()
         lblHead.Text = headerText
         lblHead.Font = New Font("Segoe UI", 12, FontStyle.Bold)
-        lblHead.ForeColor = Color.FromArgb(21, 67, 106)
+        lblHead.ForeColor = Color.FromArgb(231, 63, 30)
         lblHead.Location = New Point(20, 16)
         lblHead.AutoSize = True
         card.Controls.Add(lblHead)

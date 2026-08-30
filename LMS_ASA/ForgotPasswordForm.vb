@@ -64,7 +64,7 @@ Public Class ForgotPasswordForm
         SuspendLayout()
 
         ' ── pnlBackground ─────────────────────────────────────────
-        pnlBackground.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        pnlBackground.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         pnlBackground.Controls.Add(lblFooter)
         pnlBackground.Controls.Add(pnlCard)
         pnlBackground.Controls.Add(lblSubtitle)
@@ -76,7 +76,7 @@ Public Class ForgotPasswordForm
 
         ' ── lblFooter ──────────────────────────────────────────────
         lblFooter.Font = New Font("Segoe UI", 8.0F)
-        lblFooter.ForeColor = Color.FromArgb(CByte(120), CByte(160), CByte(200))
+        lblFooter.ForeColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
         lblFooter.Location = New Point(0, 710)
         lblFooter.Name = "lblFooter"
         lblFooter.Size = New Size(800, 24)
@@ -93,7 +93,7 @@ Public Class ForgotPasswordForm
 
         ' ── lblSubtitle ────────────────────────────────────────────
         lblSubtitle.Font = New Font("Segoe UI", 11.0F)
-        lblSubtitle.ForeColor = Color.FromArgb(CByte(173), CByte(216), CByte(255))
+        lblSubtitle.ForeColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
         lblSubtitle.Location = New Point(0, 96)
         lblSubtitle.Size = New Size(800, 28)
         lblSubtitle.Text = "ASA Philippines Foundation, Inc."
@@ -115,13 +115,13 @@ Public Class ForgotPasswordForm
         pnlCard.Size = New Size(480, 568)
 
         ' ── pnlAccent ──────────────────────────────────────────────
-        pnlAccent.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        pnlAccent.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         pnlAccent.Location = New Point(0, 0)
         pnlAccent.Size = New Size(480, 6)
 
         ' ── lblHeader ──────────────────────────────────────────────
         lblHeader.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
-        lblHeader.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        lblHeader.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         lblHeader.Location = New Point(20, 18)
         lblHeader.Size = New Size(440, 40)
         lblHeader.Text = "Forgot Password"
@@ -146,7 +146,7 @@ Public Class ForgotPasswordForm
         lblUsernameLabel.Text = "USERNAME"
 
         ' ── txtUsernameReset [NEW] ─────────────────────────────────
-        txtUsernameReset.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
+        txtUsernameReset.BackColor = Color.FromArgb(CByte(255), CByte(252), CByte(248))
         txtUsernameReset.BorderStyle = BorderStyle.FixedSingle
         txtUsernameReset.Font = New Font("Segoe UI", 10.0F)
         txtUsernameReset.Location = New Point(20, 118)
@@ -160,7 +160,7 @@ Public Class ForgotPasswordForm
         grpSecurityQuestion.Controls.Add(lblAnswer)
         grpSecurityQuestion.Controls.Add(txtAnswer)
         grpSecurityQuestion.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        grpSecurityQuestion.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        grpSecurityQuestion.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         grpSecurityQuestion.Location = New Point(20, 160)
         grpSecurityQuestion.Name = "grpSecurityQuestion"
         grpSecurityQuestion.Size = New Size(440, 152)
@@ -173,7 +173,7 @@ Public Class ForgotPasswordForm
         lblSecurityQuestionStatic.Size = New Size(408, 18)
         lblSecurityQuestionStatic.Text = "SELECT QUESTION"
 
-        cmbSecurityQuestion.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
+        cmbSecurityQuestion.BackColor = Color.FromArgb(CByte(255), CByte(252), CByte(248))
         cmbSecurityQuestion.DropDownStyle = ComboBoxStyle.DropDownList
         cmbSecurityQuestion.FlatStyle = FlatStyle.Flat
         cmbSecurityQuestion.Font = New Font("Segoe UI", 10.0F)
@@ -194,7 +194,7 @@ Public Class ForgotPasswordForm
         lblAnswer.Size = New Size(408, 18)
         lblAnswer.Text = "ANSWER"
 
-        txtAnswer.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
+        txtAnswer.BackColor = Color.FromArgb(CByte(255), CByte(252), CByte(248))
         txtAnswer.BorderStyle = BorderStyle.FixedSingle
         txtAnswer.Font = New Font("Segoe UI", 10.0F)
         txtAnswer.Location = New Point(12, 116)
@@ -208,7 +208,7 @@ Public Class ForgotPasswordForm
         grpNewPassword.Controls.Add(lblConfirmPassword)
         grpNewPassword.Controls.Add(txtConfirmPassword)
         grpNewPassword.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        grpNewPassword.ForeColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        grpNewPassword.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         grpNewPassword.Location = New Point(20, 324)
         grpNewPassword.Name = "grpNewPassword"
         grpNewPassword.Size = New Size(440, 170)
@@ -221,7 +221,7 @@ Public Class ForgotPasswordForm
         lblNewPassword.Size = New Size(408, 18)
         lblNewPassword.Text = "NEW PASSWORD"
 
-        txtNewPassword.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
+        txtNewPassword.BackColor = Color.FromArgb(CByte(255), CByte(252), CByte(248))
         txtNewPassword.BorderStyle = BorderStyle.FixedSingle
         txtNewPassword.Font = New Font("Segoe UI", 10.0F)
         txtNewPassword.Location = New Point(12, 46)
@@ -236,7 +236,7 @@ Public Class ForgotPasswordForm
         lblConfirmPassword.Size = New Size(408, 18)
         lblConfirmPassword.Text = "CONFIRM PASSWORD"
 
-        txtConfirmPassword.BackColor = Color.FromArgb(CByte(245), CByte(248), CByte(252))
+        txtConfirmPassword.BackColor = Color.FromArgb(CByte(255), CByte(252), CByte(248))
         txtConfirmPassword.BorderStyle = BorderStyle.FixedSingle
         txtConfirmPassword.Font = New Font("Segoe UI", 10.0F)
         txtConfirmPassword.Location = New Point(12, 116)
@@ -252,7 +252,7 @@ Public Class ForgotPasswordForm
         pnlButtons.Location = New Point(20, 508)
         pnlButtons.Size = New Size(440, 44)
 
-        btnSubmit.BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        btnSubmit.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         btnSubmit.Cursor = Cursors.Hand
         btnSubmit.FlatAppearance.BorderSize = 0
         btnSubmit.FlatStyle = FlatStyle.Flat
@@ -277,7 +277,7 @@ Public Class ForgotPasswordForm
         btnBackToLogin.UseVisualStyleBackColor = False
 
         ' ── Form ───────────────────────────────────────────────────
-        BackColor = Color.FromArgb(CByte(21), CByte(67), CByte(106))
+        BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
         ClientSize = New Size(800, 740)
         Controls.Add(pnlBackground)
         FormBorderStyle = FormBorderStyle.FixedSingle
@@ -387,11 +387,11 @@ Public Class ForgotPasswordForm
 
     ' ── Hover Effects ─────────────────────────────────────────────
     Private Sub btnSubmit_MouseEnter(sender As Object, e As EventArgs) Handles btnSubmit.MouseEnter
-        btnSubmit.BackColor = Color.FromArgb(30, 95, 150)
+        btnSubmit.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
 
     Private Sub btnSubmit_MouseLeave(sender As Object, e As EventArgs) Handles btnSubmit.MouseLeave
-        btnSubmit.BackColor = Color.FromArgb(21, 67, 106)
+        btnSubmit.BackColor = Color.FromArgb(231, 63, 30)
     End Sub
 
     Private Sub btnBackToLogin_MouseEnter(sender As Object, e As EventArgs) Handles btnBackToLogin.MouseEnter
