@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -30,6 +30,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="AdminDashboardForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdminOverviewForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="LoanListForm.vb">
@@ -71,6 +74,9 @@
     <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Update="img\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

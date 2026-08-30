@@ -19,6 +19,7 @@ Partial Class LoginForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         pnlBackground = New Panel()
+        picLogo = New PictureBox()
         lblTitle = New Label()
         lblSubtitle = New Label()
         pnlCard = New Panel()
@@ -34,12 +35,14 @@ Partial Class LoginForm
         chkShowPassword = New CheckBox()
         lblFooter = New Label()
         pnlBackground.SuspendLayout()
+        CType(picLogo, ComponentModel.ISupportInitialize).BeginInit()
         pnlCard.SuspendLayout()
         SuspendLayout()
         ' 
         ' pnlBackground
         ' 
         pnlBackground.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
+        pnlBackground.Controls.Add(picLogo)
         pnlBackground.Controls.Add(lblTitle)
         pnlBackground.Controls.Add(lblSubtitle)
         pnlBackground.Controls.Add(pnlCard)
@@ -50,24 +53,34 @@ Partial Class LoginForm
         pnlBackground.Size = New Size(800, 620)
         pnlBackground.TabIndex = 0
         ' 
+        ' picLogo
+        ' 
+        picLogo.Location = New Point(365, 18)
+        picLogo.Name = "picLogo"
+        picLogo.Size = New Size(70, 70)
+        picLogo.SizeMode = PictureBoxSizeMode.Zoom
+        picLogo.Image = AppTheme.GetLogoImage()
+        picLogo.TabIndex = 4
+        picLogo.TabStop = False
+        ' 
         ' lblTitle
         ' 
-        lblTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
-        lblTitle.Location = New Point(0, 45)
+        lblTitle.Location = New Point(0, 92)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(800, 59)
+        lblTitle.Size = New Size(800, 42)
         lblTitle.TabIndex = 0
         lblTitle.Text = "Loan Management System"
         lblTitle.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' lblSubtitle
         ' 
-        lblSubtitle.Font = New Font("Segoe UI", 11F)
+        lblSubtitle.Font = New Font("Segoe UI", 10.5F)
         lblSubtitle.ForeColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
-        lblSubtitle.Location = New Point(0, 107)
+        lblSubtitle.Location = New Point(0, 134)
         lblSubtitle.Name = "lblSubtitle"
-        lblSubtitle.Size = New Size(800, 32)
+        lblSubtitle.Size = New Size(800, 26)
         lblSubtitle.TabIndex = 1
         lblSubtitle.Text = "ASA Philippines Foundation, Inc."
         lblSubtitle.TextAlign = ContentAlignment.MiddleCenter
@@ -85,9 +98,9 @@ Partial Class LoginForm
         pnlCard.Controls.Add(chkShowPassword)
         pnlCard.Controls.Add(btnLogin)
         pnlCard.Controls.Add(lnkForgotPassword)
-        pnlCard.Location = New Point(200, 152)
+        pnlCard.Location = New Point(200, 172)
         pnlCard.Name = "pnlCard"
-        pnlCard.Size = New Size(400, 400)
+        pnlCard.Size = New Size(400, 410)
         pnlCard.TabIndex = 2
         ' 
         ' pnlAccent
@@ -229,6 +242,7 @@ Partial Class LoginForm
     End Sub
 
     Friend WithEvents pnlBackground As Panel
+    Friend WithEvents picLogo As PictureBox
     Friend WithEvents lblTitle As Label
     Friend WithEvents lblSubtitle As Label
     Friend WithEvents pnlCard As Panel

@@ -16,6 +16,7 @@ Public Class BorrowerDashboardForm
     Friend WithEvents btnLogout As Button
     Private pnlMain As Panel
     Private pnlTopBar As Panel
+    Private picTopLogo As PictureBox
     Private lblPageTitle As Label
     Private lblWelcome As Label
     Private pnlContent As Panel
@@ -40,6 +41,7 @@ Public Class BorrowerDashboardForm
         btnLogout = New Button()
         pnlMain = New Panel()
         pnlTopBar = New Panel()
+        picTopLogo = New PictureBox()
         lblPageTitle = New Label()
         lblWelcome = New Label()
         pnlContent = New Panel()
@@ -181,25 +183,32 @@ Public Class BorrowerDashboardForm
         ' ── pnlTopBar ─────────────────────────────────────────────
         pnlTopBar.BackColor = Color.White
         pnlTopBar.Dock = DockStyle.Top
-        pnlTopBar.Height = 64
+        pnlTopBar.Height = 70
+        pnlTopBar.Controls.Add(picTopLogo)
         pnlTopBar.Controls.Add(lblWelcome)
         pnlTopBar.Controls.Add(lblPageTitle)
 
+        ' ── picTopLogo ────────────────────────────────────────────
+        picTopLogo.Location = New Point(12, 10)
+        picTopLogo.Size = New Size(50, 50)
+        picTopLogo.SizeMode = PictureBoxSizeMode.Zoom
+        picTopLogo.Image = AppTheme.GetLogoImage()
+
         ' ── lblPageTitle ──────────────────────────────────────────
         lblPageTitle.Text = "Borrower Dashboard"
-        lblPageTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
+        lblPageTitle.Font = New Font("Segoe UI", 13, FontStyle.Bold)
         lblPageTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblPageTitle.AutoSize = False
-        lblPageTitle.Size = New Size(500, 30)
-        lblPageTitle.Location = New Point(20, 14)
+        lblPageTitle.Size = New Size(500, 24)
+        lblPageTitle.Location = New Point(70, 12)
 
-        ' ?? lblWelcome ????????????????????????????????????????????
+        ' ── lblWelcome ────────────────────────────────────────────
         lblWelcome.Text = "Welcome, Juan dela Cruz"
         lblWelcome.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblWelcome.ForeColor = Color.Gray
         lblWelcome.AutoSize = False
         lblWelcome.Size = New Size(300, 20)
-        lblWelcome.Location = New Point(20, 40)
+        lblWelcome.Location = New Point(70, 38)
 
         ' ?? pnlContent ????????????????????????????????????????????
         pnlContent.BackColor = Color.FromArgb(245, 247, 250)

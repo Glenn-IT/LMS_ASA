@@ -7,6 +7,7 @@ Public Class AdminDashboardForm
     Private lblSidebarTitle As Label
     Private lblSidebarSub As Label
     Private pnlSidebarDivider As Panel
+    Friend WithEvents btnDashboard As Button
     Friend WithEvents btnLoanList As Button
     Friend WithEvents btnBorrowerList As Button
     Friend WithEvents btnPaymentList As Button
@@ -22,6 +23,7 @@ Public Class AdminDashboardForm
     Private lblWelcome As Label
     Private pnlContent As Panel
     Friend WithEvents Panel1 As Panel
+    Private picTopLogo As PictureBox
     Private WithEvents Label1 As Label
     Private WithEvents Label2 As Label
     Private lblPlaceholder As Label
@@ -43,6 +45,7 @@ Public Class AdminDashboardForm
         btnPaymentList = New Button()
         btnBorrowerList = New Button()
         btnLoanList = New Button()
+        btnDashboard = New Button()
         pnlSidebarDivider = New Panel()
         pnlSidebarHeader = New Panel()
         lblSidebarSub = New Label()
@@ -52,6 +55,7 @@ Public Class AdminDashboardForm
         lblPlaceholder = New Label()
         pnlTopBar = New Panel()
         Panel1 = New Panel()
+        picTopLogo = New PictureBox()
         Label2 = New Label()
         Label1 = New Label()
         lblWelcome = New Label()
@@ -76,6 +80,7 @@ Public Class AdminDashboardForm
         pnlSidebar.Controls.Add(btnPaymentList)
         pnlSidebar.Controls.Add(btnBorrowerList)
         pnlSidebar.Controls.Add(btnLoanList)
+        pnlSidebar.Controls.Add(btnDashboard)
         pnlSidebar.Controls.Add(pnlSidebarDivider)
         pnlSidebar.Controls.Add(pnlSidebarHeader)
         pnlSidebar.Dock = DockStyle.Left
@@ -120,7 +125,7 @@ Public Class AdminDashboardForm
         btnDevelopers.FlatStyle = FlatStyle.Flat
         btnDevelopers.Font = New Font("Segoe UI", 10.0F)
         btnDevelopers.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
-        btnDevelopers.Location = New Point(0, 398)
+        btnDevelopers.Location = New Point(0, 446)
         btnDevelopers.Name = "btnDevelopers"
         btnDevelopers.Size = New Size(220, 48)
         btnDevelopers.TabIndex = 5
@@ -137,30 +142,13 @@ Public Class AdminDashboardForm
         btnSystemManual.FlatStyle = FlatStyle.Flat
         btnSystemManual.Font = New Font("Segoe UI", 10.0F)
         btnSystemManual.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
-        btnSystemManual.Location = New Point(0, 350)
+        btnSystemManual.Location = New Point(0, 398)
         btnSystemManual.Name = "btnSystemManual"
         btnSystemManual.Size = New Size(220, 48)
         btnSystemManual.TabIndex = 4
         btnSystemManual.Text = "   System Manual"
         btnSystemManual.TextAlign = ContentAlignment.MiddleLeft
         btnSystemManual.UseVisualStyleBackColor = False
-        ' 
-        ' btnBorrowerAccounts
-        ' 
-        btnBorrowerAccounts.BackColor = Color.Transparent
-        btnBorrowerAccounts.Cursor = Cursors.Hand
-        btnBorrowerAccounts.FlatAppearance.BorderSize = 0
-        btnBorrowerAccounts.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
-        btnBorrowerAccounts.FlatStyle = FlatStyle.Flat
-        btnBorrowerAccounts.Font = New Font("Segoe UI", 10.0F)
-        btnBorrowerAccounts.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
-        btnBorrowerAccounts.Location = New Point(0, 254)
-        btnBorrowerAccounts.Name = "btnBorrowerAccounts"
-        btnBorrowerAccounts.Size = New Size(220, 48)
-        btnBorrowerAccounts.TabIndex = 1
-        btnBorrowerAccounts.Text = "   Borrower Accounts"
-        btnBorrowerAccounts.TextAlign = ContentAlignment.MiddleLeft
-        btnBorrowerAccounts.UseVisualStyleBackColor = False
         ' 
         ' btnAccountSettings
         ' 
@@ -171,13 +159,30 @@ Public Class AdminDashboardForm
         btnAccountSettings.FlatStyle = FlatStyle.Flat
         btnAccountSettings.Font = New Font("Segoe UI", 10.0F)
         btnAccountSettings.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
-        btnAccountSettings.Location = New Point(0, 302)
+        btnAccountSettings.Location = New Point(0, 350)
         btnAccountSettings.Name = "btnAccountSettings"
         btnAccountSettings.Size = New Size(220, 48)
         btnAccountSettings.TabIndex = 1
         btnAccountSettings.Text = "   Account Settings"
         btnAccountSettings.TextAlign = ContentAlignment.MiddleLeft
         btnAccountSettings.UseVisualStyleBackColor = False
+        ' 
+        ' btnBorrowerAccounts
+        ' 
+        btnBorrowerAccounts.BackColor = Color.Transparent
+        btnBorrowerAccounts.Cursor = Cursors.Hand
+        btnBorrowerAccounts.FlatAppearance.BorderSize = 0
+        btnBorrowerAccounts.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
+        btnBorrowerAccounts.FlatStyle = FlatStyle.Flat
+        btnBorrowerAccounts.Font = New Font("Segoe UI", 10.0F)
+        btnBorrowerAccounts.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
+        btnBorrowerAccounts.Location = New Point(0, 302)
+        btnBorrowerAccounts.Name = "btnBorrowerAccounts"
+        btnBorrowerAccounts.Size = New Size(220, 48)
+        btnBorrowerAccounts.TabIndex = 1
+        btnBorrowerAccounts.Text = "   Borrower Accounts"
+        btnBorrowerAccounts.TextAlign = ContentAlignment.MiddleLeft
+        btnBorrowerAccounts.UseVisualStyleBackColor = False
         ' 
         ' btnPaymentList
         ' 
@@ -188,7 +193,7 @@ Public Class AdminDashboardForm
         btnPaymentList.FlatStyle = FlatStyle.Flat
         btnPaymentList.Font = New Font("Segoe UI", 10.0F)
         btnPaymentList.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
-        btnPaymentList.Location = New Point(0, 206)
+        btnPaymentList.Location = New Point(0, 254)
         btnPaymentList.Name = "btnPaymentList"
         btnPaymentList.Size = New Size(220, 48)
         btnPaymentList.TabIndex = 2
@@ -205,7 +210,7 @@ Public Class AdminDashboardForm
         btnBorrowerList.FlatStyle = FlatStyle.Flat
         btnBorrowerList.Font = New Font("Segoe UI", 10.0F)
         btnBorrowerList.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
-        btnBorrowerList.Location = New Point(0, 158)
+        btnBorrowerList.Location = New Point(0, 206)
         btnBorrowerList.Name = "btnBorrowerList"
         btnBorrowerList.Size = New Size(220, 48)
         btnBorrowerList.TabIndex = 3
@@ -222,13 +227,30 @@ Public Class AdminDashboardForm
         btnLoanList.FlatStyle = FlatStyle.Flat
         btnLoanList.Font = New Font("Segoe UI", 10.0F)
         btnLoanList.ForeColor = Color.FromArgb(CByte(255), CByte(245), CByte(235))
-        btnLoanList.Location = New Point(0, 110)
+        btnLoanList.Location = New Point(0, 158)
         btnLoanList.Name = "btnLoanList"
         btnLoanList.Size = New Size(220, 48)
         btnLoanList.TabIndex = 4
         btnLoanList.Text = "   Loan List"
         btnLoanList.TextAlign = ContentAlignment.MiddleLeft
         btnLoanList.UseVisualStyleBackColor = False
+        ' 
+        ' btnDashboard
+        ' 
+        btnDashboard.BackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
+        btnDashboard.Cursor = Cursors.Hand
+        btnDashboard.FlatAppearance.BorderSize = 0
+        btnDashboard.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
+        btnDashboard.FlatStyle = FlatStyle.Flat
+        btnDashboard.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnDashboard.ForeColor = Color.White
+        btnDashboard.Location = New Point(0, 110)
+        btnDashboard.Name = "btnDashboard"
+        btnDashboard.Size = New Size(220, 48)
+        btnDashboard.TabIndex = 0
+        btnDashboard.Text = "   Dashboard"
+        btnDashboard.TextAlign = ContentAlignment.MiddleLeft
+        btnDashboard.UseVisualStyleBackColor = False
         ' 
         ' pnlSidebarDivider
         ' 
@@ -322,6 +344,7 @@ Public Class AdminDashboardForm
         ' 
         ' Panel1
         ' 
+        Panel1.Controls.Add(picTopLogo)
         Panel1.Controls.Add(Label2)
         Panel1.Controls.Add(Label1)
         Panel1.Dock = DockStyle.Top
@@ -330,12 +353,22 @@ Public Class AdminDashboardForm
         Panel1.Size = New Size(780, 99)
         Panel1.TabIndex = 1
         ' 
+        ' picTopLogo
+        ' 
+        picTopLogo.Location = New Point(12, 14)
+        picTopLogo.Name = "picTopLogo"
+        picTopLogo.Size = New Size(70, 70)
+        picTopLogo.SizeMode = PictureBoxSizeMode.Zoom
+        picTopLogo.Image = AppTheme.GetLogoImage()
+        picTopLogo.TabIndex = 0
+        picTopLogo.TabStop = False
+        ' 
         ' Label2
         ' 
         Label2.BackColor = Color.White
         Label2.Font = New Font("Segoe UI", 11.0F)
         Label2.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
-        Label2.Location = New Point(6, 50)
+        Label2.Location = New Point(90, 50)
         Label2.Name = "Label2"
         Label2.Size = New Size(308, 38)
         Label2.TabIndex = 3
@@ -346,7 +379,7 @@ Public Class AdminDashboardForm
         Label1.BackColor = Color.White
         Label1.Font = New Font("Segoe UI", 13.0F, FontStyle.Bold)
         Label1.ForeColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
-        Label1.Location = New Point(6, 20)
+        Label1.Location = New Point(90, 20)
         Label1.Name = "Label1"
         Label1.Size = New Size(308, 38)
         Label1.TabIndex = 2
@@ -370,7 +403,7 @@ Public Class AdminDashboardForm
         lblPageTitle.Name = "lblPageTitle"
         lblPageTitle.Size = New Size(400, 36)
         lblPageTitle.TabIndex = 1
-        lblPageTitle.Text = "Admin Dashboard"
+        lblPageTitle.Text = "Dashboard Overview"
         ' 
         ' AdminDashboardForm
         ' 
@@ -396,10 +429,11 @@ Public Class AdminDashboardForm
     ' ── Form Load ─────────────────────────────────────────────────
     Private Sub AdminDashboardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
+        lblPageTitle.Text = "Dashboard Overview"
         UpdateClock()
         _clockTimer.Start()
-        SetActiveButton(btnBorrowerList)
-        LoadContent(New BorrowerListForm())
+        SetActiveButton(btnDashboard)
+        LoadContent(New AdminOverviewForm())
     End Sub
 
     Private Sub UpdateClock()
@@ -412,6 +446,12 @@ Public Class AdminDashboardForm
     End Sub
 
     ' ── Sidebar Navigation ────────────────────────────────────────
+    Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
+        SetActiveButton(btnDashboard)
+        lblPageTitle.Text = "Dashboard Overview"
+        LoadContent(New AdminOverviewForm())
+    End Sub
+
     Private Sub btnLoanList_Click(sender As Object, e As EventArgs) Handles btnLoanList.Click
         SetActiveButton(btnLoanList)
         lblPageTitle.Text = "Loan List"
@@ -480,7 +520,7 @@ Public Class AdminDashboardForm
     End Sub
 
     Private Sub SetActiveButton(activeBtn As Button)
-        Dim sidebarBtns As Button() = {btnLoanList, btnBorrowerList, btnPaymentList, btnBorrowerAccounts, btnAccountSettings, btnSystemManual, btnDevelopers}
+        Dim sidebarBtns As Button() = {btnDashboard, btnLoanList, btnBorrowerList, btnPaymentList, btnBorrowerAccounts, btnAccountSettings, btnSystemManual, btnDevelopers}
         For Each btn As Button In sidebarBtns
             btn.BackColor = Color.Transparent
             btn.ForeColor = Color.FromArgb(255, 245, 235)

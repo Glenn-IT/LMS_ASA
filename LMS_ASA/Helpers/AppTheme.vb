@@ -1,4 +1,5 @@
 Imports System.Drawing
+Imports System.IO
 
 ''' <summary>
 ''' Centralized theme colors for the LMS application based on ASA Philippines brand colors.
@@ -36,5 +37,31 @@ Public Module AppTheme
     ' ── Button States ────────────────────────────────────────────
     Public ReadOnly ButtonPrimary As Color = Color.FromArgb(231, 63, 30)     ' #E73F1E
     Public ReadOnly ButtonHover As Color = Color.FromArgb(251, 108, 0)       ' #FB6C00
+
+    ''' <summary>
+    ''' Loads the system logo from the img directory with failover paths.
+    ''' </summary>
+    Public Function GetLogoImage() As Image
+        Dim possiblePaths As String() = {
+            Path.Combine(Application.StartupPath, "img", "Logo.png"),
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", "Logo.png"),
+            Path.Combine(Application.StartupPath, "..", "..", "..", "img", "Logo.png"),
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "img", "Logo.png"),
+            Path.Combine(Application.StartupPath, "Logo.png"),
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logo.png")
+        }
+
+        For Each p In possiblePaths
+            If File.Exists(p) Then
+                Try
+                    Using fs As New FileStream(p, FileMode.Open, FileAccess.Read)
+                        Return Image.FromStream(fs)
+                    End Using
+                Catch
+                End Try
+            End If
+        Next
+        Return Nothing
+    End Function
 
 End Module

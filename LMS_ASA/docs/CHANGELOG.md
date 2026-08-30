@@ -155,6 +155,15 @@ Format: `[Date] | Type | File(s) | Description`
 | 2026-08-19 | ViewPaymentForm.vb | Added Loan & Amortization Overview card section when viewing payment details |
 
 
+### Phase 17 — Main Dashboard Overview, Visual Analytics, & Logo Integration
+| Date | File(s) | Description |
+|------|---------|-------------|
+| 2026-08-31 | img/Logo.png, Helpers/AppTheme.vb, LMS_ASA.vbproj | Integrated system logo from `img/Logo.png` with failover path loader (`AppTheme.GetLogoImage()`) and automatic output directory copying. |
+| 2026-08-31 | Form1.Designer.vb, Form1.vb, BorrowerDashboardForm.vb, AdminDashboardForm.vb | Added system logo branding to Login Form, Borrower Dashboard top bar, and Admin Dashboard top bar header. |
+| 2026-08-31 | DataAccess/DashboardRepository.vb | Created repository for aggregating system metrics, KPI summaries, loan distribution by status, loans by type, and recent transactions. |
+| 2026-08-31 | AdminOverviewForm.vb | Created full-featured Analytics & Graphs Dashboard with hero banner, 6 real-time KPI metric summary cards, anti-aliased visual graphs (Status Donut Chart, Type Comparison Bar Chart, Repayment Efficiency Gauge), and recent loans/payments tables. |
+| 2026-08-31 | AdminDashboardForm.vb | Added dedicated "Dashboard" button at top of sidebar navigation and redirected initial admin login directly to `AdminOverviewForm` instead of `BorrowerListForm`. |
+
 ---
 
 ## Pending
