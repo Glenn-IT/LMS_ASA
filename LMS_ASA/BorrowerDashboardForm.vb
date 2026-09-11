@@ -104,7 +104,7 @@ Public Class BorrowerDashboardForm
         btnFileLoan.Cursor = Cursors.Hand
 
         ' ── btnTrackLoan ──────────────────────────────────────────
-        btnTrackLoan.Text = "   Track Loan Application"
+        btnTrackLoan.Text = "   Loan Monitoring"
         btnTrackLoan.Font = New Font("Segoe UI", 10, FontStyle.Regular)
         btnTrackLoan.ForeColor = Color.FromArgb(255, 245, 235)
         btnTrackLoan.BackColor = Color.Transparent
@@ -253,10 +253,10 @@ Public Class BorrowerDashboardForm
         LoadContent(New LoanApplicationForm())
     End Sub
 
-    ' ── Track Loan Application ────────────────────────────────────
+    ' ── Loan Monitoring ───────────────────────────────────────────
     Private Sub btnTrackLoan_Click(sender As Object, e As EventArgs) Handles btnTrackLoan.Click
         SetActiveButton(btnTrackLoan)
-        lblPageTitle.Text = "Track Loan Application"
+        lblPageTitle.Text = "Loan Monitoring"
         LoadContent(New TrackLoanForm())
     End Sub
 

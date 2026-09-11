@@ -179,8 +179,8 @@ Public Class SystemManualForm
             "   • Enter the Principal Amount (PHP) and desired Term in months." & vbCrLf &
             "   • The interest rate and total payable amount will automatically compute." & vbCrLf &
             "   • Review the Release Date and Due Date, then click 'Submit Application'." & vbCrLf & vbCrLf &
-            "2. Tracking Your Loan Status:" & vbCrLf &
-            "   • Click 'Track Loan Application' to view all your past and active applications." & vbCrLf &
+            "2. Loan Monitoring:" & vbCrLf &
+            "   • Click 'Loan Monitoring' to view all your past and active applications." & vbCrLf &
             "   • Status Indicators:" & vbCrLf &
             "     - PENDING: Your application is under review by loan officers." & vbCrLf &
             "     - APPROVED: Your application has been approved and disbursed." & vbCrLf &

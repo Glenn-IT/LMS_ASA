@@ -35,7 +35,7 @@ Public Class TrackLoanForm
         pnlHeader.Controls.Add(lblTitle)
 
         ' ── lblTitle ──────────────────────────────────────────────────
-        lblTitle.Text = "Track Loan Application"
+        lblTitle.Text = "Loan Monitoring"
         lblTitle.Font = New Font("Segoe UI", 14, FontStyle.Bold)
         lblTitle.ForeColor = Color.FromArgb(231, 63, 30)
         lblTitle.AutoSize = False
@@ -143,7 +143,7 @@ Public Class TrackLoanForm
         lblRecordCount.Location = New Point(12, 8)
 
         ' ── Form ──────────────────────────────────────────────────────
-        Me.Text = "LMS - Track Loan Application"
+        Me.Text = "LMS - Loan Monitoring"
         Me.ClientSize = New Size(860, 480)
         Me.BackColor = Color.White
         Me.Controls.Add(pnlGrid)
