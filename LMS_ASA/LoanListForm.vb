@@ -134,6 +134,7 @@ Public Class LoanListForm
         btnDelete.TabIndex = 2
         btnDelete.Text = "Delete"
         btnDelete.UseVisualStyleBackColor = False
+        btnDelete.Visible = False
         '
         ' btnView
         '

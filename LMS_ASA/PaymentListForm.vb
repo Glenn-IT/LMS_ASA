@@ -212,7 +212,7 @@ Public Class PaymentListForm
         btnDelete.Size = New Size(90, 34)
         btnDelete.Location = New Point(306, 8)
         btnDelete.Cursor = Cursors.Hand
-        btnDelete.Visible = True
+        btnDelete.Visible = False
 
         ' lblSearch
         lblSearch.Text = "Search:"
