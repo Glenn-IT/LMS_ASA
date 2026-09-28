@@ -28,9 +28,9 @@ Public Class LoanListForm
 
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As DataGridViewCellStyle = New DataGridViewCellStyle()
         pnlHeader = New Panel()
         lblSubtitle = New Label()
         lblTitle = New Label()
@@ -108,7 +108,7 @@ Public Class LoanListForm
         lblSearch.AutoSize = True
         lblSearch.Font = New Font("Segoe UI", 9F)
         lblSearch.ForeColor = Color.Gray
-        lblSearch.Location = New Point(428, 20)
+        lblSearch.Location = New Point(306, 19)
         lblSearch.Name = "lblSearch"
         lblSearch.Size = New Size(52, 19)
         lblSearch.TabIndex = 0
@@ -119,7 +119,7 @@ Public Class LoanListForm
         txtSearch.BackColor = Color.White
         txtSearch.BorderStyle = BorderStyle.FixedSingle
         txtSearch.Font = New Font("Segoe UI", 9F)
-        txtSearch.Location = New Point(486, 18)
+        txtSearch.Location = New Point(364, 17)
         txtSearch.Name = "txtSearch"
         txtSearch.Size = New Size(200, 25)
         txtSearch.TabIndex = 1
@@ -216,28 +216,28 @@ Public Class LoanListForm
         ' 
         dgvLoans.AllowUserToAddRows = False
         dgvLoans.AllowUserToDeleteRows = False
-        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(255), CByte(250), CByte(245))
-        dgvLoans.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.BackColor = Color.FromArgb(CByte(255), CByte(250), CByte(245))
+        dgvLoans.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         dgvLoans.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgvLoans.BackgroundColor = Color.White
         dgvLoans.BorderStyle = BorderStyle.None
-        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
-        DataGridViewCellStyle2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        DataGridViewCellStyle2.ForeColor = Color.White
-        DataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
-        DataGridViewCellStyle2.SelectionForeColor = Color.White
-        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
-        dgvLoans.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = Color.FromArgb(CByte(231), CByte(63), CByte(30))
+        DataGridViewCellStyle5.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle5.ForeColor = Color.White
+        DataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
+        DataGridViewCellStyle5.SelectionForeColor = Color.White
+        DataGridViewCellStyle5.WrapMode = DataGridViewTriState.True
+        dgvLoans.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         dgvLoans.ColumnHeadersHeight = 36
-        DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = SystemColors.Window
-        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9F)
-        DataGridViewCellStyle3.ForeColor = SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
-        DataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(CByte(184), CByte(46), CByte(18))
-        DataGridViewCellStyle3.WrapMode = DataGridViewTriState.False
-        dgvLoans.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = SystemColors.Window
+        DataGridViewCellStyle6.Font = New Font("Segoe UI", 9F)
+        DataGridViewCellStyle6.ForeColor = SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(CByte(255), CByte(221), CByte(156))
+        DataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(CByte(184), CByte(46), CByte(18))
+        DataGridViewCellStyle6.WrapMode = DataGridViewTriState.False
+        dgvLoans.DefaultCellStyle = DataGridViewCellStyle6
         dgvLoans.Dock = DockStyle.Fill
         dgvLoans.EnableHeadersVisualStyles = False
         dgvLoans.Font = New Font("Segoe UI", 9F)
