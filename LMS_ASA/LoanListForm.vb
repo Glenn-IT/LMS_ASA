@@ -19,6 +19,7 @@ Public Class LoanListForm
     Private lblRecordCount As Label
 
     Private _fullData As DataTable
+    Private components As System.ComponentModel.IContainer
     Private WithEvents searchTimer As System.Windows.Forms.Timer
 
     Public Sub New()
@@ -26,6 +27,7 @@ Public Class LoanListForm
     End Sub
 
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
@@ -44,8 +46,7 @@ Public Class LoanListForm
         dgvLoans = New DataGridView()
         pnlFooter = New Panel()
         lblRecordCount = New Label()
-        searchTimer = New System.Windows.Forms.Timer()
-        searchTimer.Interval = 700
+        searchTimer = New Timer(components)
         pnlHeader.SuspendLayout()
         pnlToolbar.SuspendLayout()
         pnlGrid.SuspendLayout()
@@ -112,9 +113,9 @@ Public Class LoanListForm
         lblSearch.Size = New Size(52, 19)
         lblSearch.TabIndex = 0
         lblSearch.Text = "Search:"
-        '
+        ' 
         ' txtSearch
-        '
+        ' 
         txtSearch.BackColor = Color.White
         txtSearch.BorderStyle = BorderStyle.FixedSingle
         txtSearch.Font = New Font("Segoe UI", 9F)
@@ -122,24 +123,9 @@ Public Class LoanListForm
         txtSearch.Name = "txtSearch"
         txtSearch.Size = New Size(200, 25)
         txtSearch.TabIndex = 1
-        '
-        ' btnApplications
-        '
-        btnApplications.BackColor = Color.FromArgb(CByte(142), CByte(68), CByte(173))
-        btnApplications.Cursor = Cursors.Hand
-        btnApplications.FlatAppearance.BorderSize = 0
-        btnApplications.FlatStyle = FlatStyle.Flat
-        btnApplications.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        btnApplications.ForeColor = Color.White
-        btnApplications.Location = New Point(306, 11)
-        btnApplications.Name = "btnApplications"
-        btnApplications.Size = New Size(110, 34)
-        btnApplications.TabIndex = 6
-        btnApplications.Text = "📋 Applications"
-        btnApplications.UseVisualStyleBackColor = False
-        '
+        ' 
         ' btnDelete
-        '
+        ' 
         btnDelete.BackColor = Color.FromArgb(CByte(192), CByte(57), CByte(43))
         btnDelete.Cursor = Cursors.Hand
         btnDelete.FlatAppearance.BorderSize = 0
@@ -153,9 +139,25 @@ Public Class LoanListForm
         btnDelete.Text = "Delete"
         btnDelete.UseVisualStyleBackColor = False
         btnDelete.Visible = False
-        '
+        ' 
+        ' btnApplications
+        ' 
+        btnApplications.BackColor = Color.FromArgb(CByte(142), CByte(68), CByte(173))
+        btnApplications.Cursor = Cursors.Hand
+        btnApplications.FlatAppearance.BorderSize = 0
+        btnApplications.FlatStyle = FlatStyle.Flat
+        btnApplications.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnApplications.ForeColor = Color.White
+        btnApplications.Location = New Point(306, 11)
+        btnApplications.Name = "btnApplications"
+        btnApplications.Size = New Size(110, 34)
+        btnApplications.TabIndex = 6
+        btnApplications.Text = "📋 Applications"
+        btnApplications.UseVisualStyleBackColor = False
+        btnApplications.Visible = False
+        ' 
         ' btnView
-        '
+        ' 
         btnView.BackColor = Color.FromArgb(CByte(249), CByte(182), CByte(55))
         btnView.Cursor = Cursors.Hand
         btnView.FlatAppearance.BorderSize = 0
@@ -168,7 +170,7 @@ Public Class LoanListForm
         btnView.TabIndex = 5
         btnView.Text = "View"
         btnView.UseVisualStyleBackColor = False
-        '
+        ' 
         ' btnUpdate
         ' 
         btnUpdate.BackColor = Color.FromArgb(CByte(251), CByte(108), CByte(0))
@@ -270,6 +272,10 @@ Public Class LoanListForm
         lblRecordCount.Size = New Size(59, 15)
         lblRecordCount.TabIndex = 0
         lblRecordCount.Text = "Loading..."
+        ' 
+        ' searchTimer
+        ' 
+        searchTimer.Interval = 700
         ' 
         ' LoanListForm
         ' 
