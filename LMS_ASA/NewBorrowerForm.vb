@@ -493,7 +493,19 @@ Public Class NewBorrowerForm
 
     Private Sub InsertNewBorrower(ageVal As Integer)
         Dim uid As String = txtBorrowerUID.Text.Trim()
+        If String.IsNullOrWhiteSpace(uid) OrElse BorrowerRepository.ExistsUID(uid) Then
+            uid = BorrowerRepository.GetNextUID()
+            txtBorrowerUID.Text = uid
+        End If
+
         Dim defaultUsername As String = uid.Replace("-", "").ToLower()
+        Dim userSuffix As Integer = 1
+        Dim baseUsername As String = defaultUsername
+        While UserRepository.UsernameExists(defaultUsername)
+            defaultUsername = $"{baseUsername}_{userSuffix}"
+            userSuffix += 1
+        End While
+
         Dim defaultHash As String = PasswordHelper.HashPassword("Password@1")
 
         BorrowerRepository.InsertWithUser(

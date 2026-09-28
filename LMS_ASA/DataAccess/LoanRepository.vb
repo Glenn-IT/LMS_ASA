@@ -51,16 +51,36 @@ Public Module LoanRepository
         Return dt
     End Function
 
+    Public Function ExistsReferenceID(loanReferenceID As String) As Boolean
+        Using con As New SqlConnection(dbconstring.Connection)
+            con.Open()
+            Dim cmd As New SqlCommand("SELECT COUNT(1) FROM tbl_Loans WHERE LoanReferenceID = @ref", con)
+            cmd.Parameters.AddWithValue("@ref", loanReferenceID)
+            Return CInt(cmd.ExecuteScalar()) > 0
+        End Using
+    End Function
+
     Public Function GetNextReferenceID() As String
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
             Dim cmd As New SqlCommand(
-                "SELECT TOP 1 LoanReferenceID FROM tbl_Loans ORDER BY LoanID DESC", con)
-            Dim last = cmd.ExecuteScalar()
-            If last Is Nothing OrElse last Is DBNull.Value Then Return "LN-0001"
-            Dim num As Integer = Integer.Parse(last.ToString().Split("-"c)(1)) + 1
-            Return $"LN-{num:D4}"
+                "SELECT ISNULL(MAX(TRY_CAST(SUBSTRING(LoanReferenceID, CHARINDEX('-', LoanReferenceID) + 1, 20) AS INT)), 0) + 1 FROM tbl_Loans", con)
+            Dim nextNum As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+            If nextNum <= 0 Then nextNum = 1
+
+            While True
+                Dim candidate As String = $"LN-{nextNum:D4}"
+                Using checkCmd As New SqlCommand("SELECT COUNT(1) FROM tbl_Loans WHERE LoanReferenceID = @ref", con)
+                    checkCmd.Parameters.AddWithValue("@ref", candidate)
+                    Dim count As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
+                    If count = 0 Then
+                        Return candidate
+                    End If
+                End Using
+                nextNum += 1
+            End While
         End Using
+        Return "LN-0001"
     End Function
 
     Public Sub Insert(borrowerID As Integer, loanReferenceID As String, loanType As String,

@@ -43,16 +43,41 @@ Public Module BorrowerRepository
         Return dt
     End Function
 
+    Public Function ExistsUID(borrowerUID As String) As Boolean
+        Using con As New SqlConnection(dbconstring.Connection)
+            con.Open()
+            Dim cmd As New SqlCommand("SELECT COUNT(1) FROM tbl_Borrowers WHERE BorrowerUID = @uid", con)
+            cmd.Parameters.AddWithValue("@uid", borrowerUID)
+            Return CInt(cmd.ExecuteScalar()) > 0
+        End Using
+    End Function
+
     Public Function GetNextUID() As String
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
             Dim cmd As New SqlCommand(
-                "SELECT TOP 1 BorrowerUID FROM tbl_Borrowers ORDER BY BorrowerID DESC", con)
-            Dim last = cmd.ExecuteScalar()
-            If last Is Nothing OrElse last Is DBNull.Value Then Return "BRW-0001"
-            Dim num As Integer = Integer.Parse(last.ToString().Split("-"c)(1)) + 1
-            Return $"BRW-{num:D4}"
+                "SELECT ISNULL(MAX(TRY_CAST(SUBSTRING(BorrowerUID, CHARINDEX('-', BorrowerUID) + 1, 20) AS INT)), 0) + 1 FROM tbl_Borrowers", con)
+            Dim nextNum As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+            If nextNum <= 0 Then nextNum = 1
+
+            While True
+                Dim candidate As String = $"BRW-{nextNum:D4}"
+                Dim candidateUser As String = candidate.Replace("-", "").ToLower()
+
+                Using checkCmd As New SqlCommand(
+                    "SELECT (SELECT COUNT(1) FROM tbl_Borrowers WHERE BorrowerUID = @uid) + " &
+                    "(SELECT COUNT(1) FROM tbl_Users WHERE Username = @uname)", con)
+                    checkCmd.Parameters.AddWithValue("@uid", candidate)
+                    checkCmd.Parameters.AddWithValue("@uname", candidateUser)
+                    Dim count As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
+                    If count = 0 Then
+                        Return candidate
+                    End If
+                End Using
+                nextNum += 1
+            End While
         End Using
+        Return "BRW-0001"
     End Function
 
     Public Sub Insert(userID As Integer, borrowerUID As String,

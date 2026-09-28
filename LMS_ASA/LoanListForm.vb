@@ -9,6 +9,7 @@ Public Class LoanListForm
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnView As Button
+    Friend WithEvents btnApplications As Button
     Friend WithEvents btnDelete As Button
     Private WithEvents txtSearch As TextBox
     Private lblSearch As Label
@@ -35,6 +36,7 @@ Public Class LoanListForm
         lblSearch = New Label()
         txtSearch = New TextBox()
         btnDelete = New Button()
+        btnApplications = New Button()
         btnView = New Button()
         btnUpdate = New Button()
         btnAdd = New Button()
@@ -89,6 +91,7 @@ Public Class LoanListForm
         pnlToolbar.Controls.Add(lblSearch)
         pnlToolbar.Controls.Add(txtSearch)
         pnlToolbar.Controls.Add(btnDelete)
+        pnlToolbar.Controls.Add(btnApplications)
         pnlToolbar.Controls.Add(btnView)
         pnlToolbar.Controls.Add(btnUpdate)
         pnlToolbar.Controls.Add(btnAdd)
@@ -120,6 +123,21 @@ Public Class LoanListForm
         txtSearch.Size = New Size(200, 25)
         txtSearch.TabIndex = 1
         '
+        ' btnApplications
+        '
+        btnApplications.BackColor = Color.FromArgb(CByte(142), CByte(68), CByte(173))
+        btnApplications.Cursor = Cursors.Hand
+        btnApplications.FlatAppearance.BorderSize = 0
+        btnApplications.FlatStyle = FlatStyle.Flat
+        btnApplications.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnApplications.ForeColor = Color.White
+        btnApplications.Location = New Point(306, 11)
+        btnApplications.Name = "btnApplications"
+        btnApplications.Size = New Size(110, 34)
+        btnApplications.TabIndex = 6
+        btnApplications.Text = "📋 Applications"
+        btnApplications.UseVisualStyleBackColor = False
+        '
         ' btnDelete
         '
         btnDelete.BackColor = Color.FromArgb(CByte(192), CByte(57), CByte(43))
@@ -128,7 +146,7 @@ Public Class LoanListForm
         btnDelete.FlatStyle = FlatStyle.Flat
         btnDelete.Font = New Font("Segoe UI", 9F)
         btnDelete.ForeColor = Color.White
-        btnDelete.Location = New Point(306, 11)
+        btnDelete.Location = New Point(0, 0)
         btnDelete.Name = "btnDelete"
         btnDelete.Size = New Size(90, 34)
         btnDelete.TabIndex = 2
@@ -442,6 +460,22 @@ Public Class LoanListForm
                 MessageBox.Show($"Delete failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End If
+    End Sub
+
+    ' ── Applications Button ─────────────────────────────────────────
+    Private Sub btnApplications_Click(sender As Object, e As EventArgs) Handles btnApplications.Click
+        Dim dash = TryCast(Me.FindForm(), AdminDashboardForm)
+        If dash IsNot Nothing Then
+            dash.NavigateToLoanApplications()
+        End If
+    End Sub
+
+    Private Sub btnApplications_MouseEnter(sender As Object, e As EventArgs) Handles btnApplications.MouseEnter
+        btnApplications.BackColor = Color.FromArgb(125, 60, 152)
+    End Sub
+
+    Private Sub btnApplications_MouseLeave(sender As Object, e As EventArgs) Handles btnApplications.MouseLeave
+        btnApplications.BackColor = Color.FromArgb(142, 68, 173)
     End Sub
 
     ' ── Button Hover Effects ──────────────────────────────────────

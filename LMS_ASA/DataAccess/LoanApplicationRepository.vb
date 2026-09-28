@@ -8,7 +8,7 @@ Public Module LoanApplicationRepository
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
             Dim cmd As New SqlCommand(
-                "SELECT a.ApplicationID, b.BorrowerUID, " &
+                "SELECT a.ApplicationID, a.BorrowerID, b.BorrowerUID, " &
                 "b.FirstName + ' ' + b.LastName AS BorrowerName, " &
                 "a.LoanType, a.PrincipalAmount, a.InterestRate, a.TotalPayable, " &
                 "a.Term, a.ReleaseDate, a.DueDate, a.Status, a.SubmittedAt " &
@@ -41,8 +41,12 @@ Public Module LoanApplicationRepository
             con.Open()
             Dim cmd As New SqlCommand(
                 "SELECT ISNULL(MAX(ApplicationID), 0) + 1 FROM tbl_LoanApplications", con)
-            nextID = CInt(cmd.ExecuteScalar())
+            Dim res = cmd.ExecuteScalar()
+            If res IsNot Nothing AndAlso res IsNot DBNull.Value Then
+                nextID = Convert.ToInt32(res)
+            End If
         End Using
+        If nextID <= 0 Then nextID = 1
         Return $"APP-{nextID:D4}"
     End Function
 
@@ -62,9 +66,9 @@ Public Module LoanApplicationRepository
         Return dt
     End Function
 
-    Public Sub Insert(borrowerID As Integer, loanType As String,
-                      principalAmount As Decimal, interestRate As Decimal, totalPayable As Decimal,
-                      term As Integer, releaseDate As DateTime, dueDate As DateTime)
+    Public Function Insert(borrowerID As Integer, loanType As String,
+                           principalAmount As Decimal, interestRate As Decimal, totalPayable As Decimal,
+                           term As Integer, releaseDate As DateTime, dueDate As DateTime) As Integer
         Using con As New SqlConnection(dbconstring.Connection)
             con.Open()
             Using cmd As New SqlCommand(
@@ -72,7 +76,8 @@ Public Module LoanApplicationRepository
                 "(BorrowerID, LoanType, PrincipalAmount, InterestRate, TotalPayable, " &
                 "Term, ReleaseDate, DueDate, Status, SubmittedAt) " &
                 "VALUES (@borrowerID, @loanType, @principal, @rate, @total, " &
-                "@term, @release, @due, 'Pending', GETDATE())", con)
+                "@term, @release, @due, 'Pending', GETDATE()); " &
+                "SELECT CAST(SCOPE_IDENTITY() AS INT)", con)
                 cmd.Parameters.AddWithValue("@borrowerID", borrowerID)
                 cmd.Parameters.AddWithValue("@loanType", loanType)
                 cmd.Parameters.AddWithValue("@principal", principalAmount)
@@ -81,10 +86,10 @@ Public Module LoanApplicationRepository
                 cmd.Parameters.AddWithValue("@term", term)
                 cmd.Parameters.AddWithValue("@release", releaseDate)
                 cmd.Parameters.AddWithValue("@due", dueDate)
-                cmd.ExecuteNonQuery()
+                Return CInt(cmd.ExecuteScalar())
             End Using
         End Using
-    End Sub
+    End Function
 
     Public Sub UpdateStatus(applicationID As Integer, status As String)
         Using con As New SqlConnection(dbconstring.Connection)
@@ -108,5 +113,37 @@ Public Module LoanApplicationRepository
             End Using
         End Using
     End Sub
+
+    Public Function ApproveApplication(applicationID As Integer, approvedBy As String, ByRef outLoanRef As String) As Boolean
+        Dim dt As DataTable = GetByID(applicationID)
+        If dt.Rows.Count = 0 Then Return False
+        Dim row As DataRow = dt.Rows(0)
+
+        Dim borrowerID As Integer = CInt(row("BorrowerID"))
+        Dim loanType As String = row("LoanType").ToString()
+        Dim principal As Decimal = CDec(row("PrincipalAmount"))
+        Dim rate As Decimal = CDec(row("InterestRate"))
+        Dim totalPayable As Decimal = CDec(row("TotalPayable"))
+        Dim term As Integer = CInt(row("Term"))
+        Dim releaseDate As DateTime = If(row("ReleaseDate") IsNot DBNull.Value, CDate(row("ReleaseDate")), DateTime.Today)
+        Dim dueDate As DateTime = If(row("DueDate") IsNot DBNull.Value, CDate(row("DueDate")), DateTime.Today.AddMonths(term))
+
+        outLoanRef = LoanRepository.GetNextReferenceID()
+        LoanRepository.Insert(borrowerID, outLoanRef, loanType, principal, rate, totalPayable, term, releaseDate, dueDate, "Active")
+        UpdateStatus(applicationID, "Approved")
+        ActivityLogger.Log(approvedBy, "Success", $"Approved loan application APP-{applicationID:D4} for Borrower ID {borrowerID}. Created active loan {outLoanRef}.")
+        Return True
+    End Function
+
+    Public Function RejectApplication(applicationID As Integer, rejectedBy As String) As Boolean
+        Dim dt As DataTable = GetByID(applicationID)
+        If dt.Rows.Count = 0 Then Return False
+        Dim row As DataRow = dt.Rows(0)
+        Dim borrowerID As Integer = CInt(row("BorrowerID"))
+
+        UpdateStatus(applicationID, "Rejected")
+        ActivityLogger.Log(rejectedBy, "Warning", $"Rejected loan application APP-{applicationID:D4} for Borrower ID {borrowerID}.")
+        Return True
+    End Function
 
 End Module

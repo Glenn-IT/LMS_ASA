@@ -142,6 +142,12 @@ Public Class AdminOverviewForm
         cardCollections = CreateKpiCard("💵 TOTAL COLLECTED", "₱0.00", "Payments Received", Color.FromArgb(251, 108, 0))
         cardOutstanding = CreateKpiCard("⏳ OUTSTANDING", "₱0.00", "Remaining Balance", Color.FromArgb(211, 84, 0))
         cardPendingApps = CreateKpiCard("📋 PENDING APPS", "0", "Awaiting Review", Color.FromArgb(142, 68, 173))
+        MakeCardClickable(cardPendingApps, Sub()
+                                               Dim dash = TryCast(Me.FindForm(), AdminDashboardForm)
+                                               If dash IsNot Nothing Then
+                                                   dash.NavigateToLoanApplications()
+                                               End If
+                                           End Sub)
 
         pnlKpiContainer.Controls.Add(cardBorrowers, 0, 0)
         pnlKpiContainer.Controls.Add(cardActiveLoans, 1, 0)
@@ -297,6 +303,15 @@ Public Class AdminOverviewForm
         For Each c As Control In card.Controls
             If c.Name = "lblVal" Then c.Text = value
             If c.Name = "lblSub" Then c.Text = subText
+        Next
+    End Sub
+
+    Private Sub MakeCardClickable(card As Panel, onClickAction As Action)
+        card.Cursor = Cursors.Hand
+        AddHandler card.Click, Sub(s, e) onClickAction()
+        For Each child As Control In card.Controls
+            child.Cursor = Cursors.Hand
+            AddHandler child.Click, Sub(s, e) onClickAction()
         Next
     End Sub
 

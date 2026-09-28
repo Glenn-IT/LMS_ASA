@@ -29,6 +29,15 @@ Public Module UserRepository
         Return dt
     End Function
 
+    Public Function UsernameExists(username As String) As Boolean
+        Using con As New SqlConnection(dbconstring.Connection)
+            con.Open()
+            Dim cmd As New SqlCommand("SELECT COUNT(1) FROM tbl_Users WHERE LOWER(Username) = LOWER(@username)", con)
+            cmd.Parameters.AddWithValue("@username", username)
+            Return CInt(cmd.ExecuteScalar()) > 0
+        End Using
+    End Function
+
     Public Function GetByID(userID As Integer) As DataTable
         Dim dt As New DataTable()
         Using con As New SqlConnection(dbconstring.Connection)

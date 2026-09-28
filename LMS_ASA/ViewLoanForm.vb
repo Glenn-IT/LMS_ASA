@@ -33,6 +33,10 @@ Public Class ViewLoanForm
     Private lblStatusValue As Label
     Private lblCreatedLabel As Label
     Private lblCreatedValue As Label
+    Private grpPaymentHistory As GroupBox
+    Private lblPaymentSummary As Label
+    Friend WithEvents dgvPayments As DataGridView
+    Private lblNoPayments As Label
     Private pnlFooter As Panel
     Private pnlDividerBottom As Panel
     Friend WithEvents btnBack As Button
@@ -74,6 +78,10 @@ Public Class ViewLoanForm
         lblStatusValue = New Label()
         lblCreatedLabel = New Label()
         lblCreatedValue = New Label()
+        grpPaymentHistory = New GroupBox()
+        lblPaymentSummary = New Label()
+        dgvPayments = New DataGridView()
+        lblNoPayments = New Label()
         pnlFooter = New Panel()
         pnlDividerBottom = New Panel()
         btnBack = New Button()
@@ -113,6 +121,7 @@ Public Class ViewLoanForm
         pnlBody.Dock = DockStyle.Fill
         pnlBody.Padding = New Padding(16)
         pnlBody.AutoScroll = True
+        pnlBody.Controls.Add(grpPaymentHistory)
         pnlBody.Controls.Add(grpStatusInfo)
         pnlBody.Controls.Add(grpSchedule)
         pnlBody.Controls.Add(grpLoanDetails)
@@ -335,6 +344,56 @@ Public Class ViewLoanForm
         lblCreatedValue.AutoSize = True
         lblCreatedValue.Location = New Point(490, 26)
 
+        ' ──────────────────────────────────────────────────────────────
+        ' grpPaymentHistory – Payment Summary & Payment List
+        ' ──────────────────────────────────────────────────────────────
+        grpPaymentHistory.Text = "Payment History"
+        grpPaymentHistory.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        grpPaymentHistory.ForeColor = Color.FromArgb(231, 63, 30)
+        grpPaymentHistory.BackColor = Color.White
+        grpPaymentHistory.Size = New Size(830, 220)
+        grpPaymentHistory.Location = New Point(16, 520)
+        grpPaymentHistory.Controls.Add(lblNoPayments)
+        grpPaymentHistory.Controls.Add(dgvPayments)
+        grpPaymentHistory.Controls.Add(lblPaymentSummary)
+
+        ' lblPaymentSummary
+        lblPaymentSummary.Text = "Total Paid: PHP 0.00    |    Remaining Balance: PHP 0.00"
+        lblPaymentSummary.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        lblPaymentSummary.ForeColor = Color.FromArgb(60, 80, 100)
+        lblPaymentSummary.AutoSize = False
+        lblPaymentSummary.Size = New Size(798, 22)
+        lblPaymentSummary.Location = New Point(16, 26)
+
+        ' dgvPayments
+        dgvPayments.Location = New Point(16, 52)
+        dgvPayments.Size = New Size(798, 152)
+        dgvPayments.BackgroundColor = Color.White
+        dgvPayments.BorderStyle = BorderStyle.Fixed3D
+        dgvPayments.RowHeadersVisible = False
+        dgvPayments.AllowUserToAddRows = False
+        dgvPayments.AllowUserToDeleteRows = False
+        dgvPayments.ReadOnly = True
+        dgvPayments.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvPayments.MultiSelect = False
+        dgvPayments.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        dgvPayments.Font = New Font("Segoe UI", 9)
+        dgvPayments.ColumnHeadersHeight = 32
+        dgvPayments.RowTemplate.Height = 28
+        dgvPayments.EnableHeadersVisualStyles = False
+        dgvPayments.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(231, 63, 30)
+        dgvPayments.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
+        dgvPayments.ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        dgvPayments.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 252)
+
+        ' lblNoPayments
+        lblNoPayments.Text = "No payment records found for this loan."
+        lblNoPayments.Font = New Font("Segoe UI", 9, FontStyle.Italic)
+        lblNoPayments.ForeColor = Color.Gray
+        lblNoPayments.AutoSize = True
+        lblNoPayments.Location = New Point(280, 110)
+        lblNoPayments.Visible = False
+
         ' ── pnlFooter ─────────────────────────────────────────────────
         pnlFooter.BackColor = Color.White
         pnlFooter.Dock = DockStyle.Bottom
@@ -358,7 +417,7 @@ Public Class ViewLoanForm
 
         ' ── Form ──────────────────────────────────────────────────────
         Me.Text = "LMS - Loan Details"
-        Me.ClientSize = New Size(880, 560)
+        Me.ClientSize = New Size(880, 680)
         Me.StartPosition = FormStartPosition.CenterParent
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
@@ -388,8 +447,8 @@ Public Class ViewLoanForm
             txtLoanType.Text = row("LoanType").ToString()
             txtPrincipalAmount.Text = $"PHP {CDec(row("PrincipalAmount")):N2}"
             txtInterestRate.Text = $"{CDec(row("InterestRate")):N2}%"
-            txtTotalPayable.Text = $"PHP {CDec(row("TotalPayableAmount")):N2}"
-            txtTerm.Text = $"{row("TermMonths")} Month(s)"
+            txtTotalPayable.Text = $"PHP {CDec(row("TotalPayable")):N2}"
+            txtTerm.Text = $"{row("Term")} Month(s)"
 
             If row("ReleaseDate") IsNot DBNull.Value Then
                 dtpReleaseDate.Value = CDate(row("ReleaseDate"))
@@ -418,9 +477,121 @@ Public Class ViewLoanForm
                 Case Else
                     lblStatusValue.ForeColor = Color.FromArgb(231, 63, 30)
             End Select
+
+            LoadPaymentHistory(loanID)
         Catch ex As Exception
             MessageBox.Show($"Failed to load loan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    ' ── Payment History ───────────────────────────────────────────
+    Private Sub LoadPaymentHistory(loanID As Integer)
+        Try
+            ' 1. Payment summary
+            Dim summaryDt As DataTable = PaymentRepository.GetLoanPaymentSummary(loanID)
+            If summaryDt IsNot Nothing AndAlso summaryDt.Rows.Count > 0 Then
+                Dim sRow As DataRow = summaryDt.Rows(0)
+                Dim totalPaid As Decimal = If(sRow("TotalPaid") IsNot DBNull.Value, CDec(sRow("TotalPaid")), 0D)
+                Dim remBal As Decimal = If(sRow("RemainingBalance") IsNot DBNull.Value, CDec(sRow("RemainingBalance")), 0D)
+                Dim monthlyAmort As Decimal = If(sRow("MonthlyAmortization") IsNot DBNull.Value, CDec(sRow("MonthlyAmortization")), 0D)
+
+                lblPaymentSummary.Text = $"Total Paid: PHP {totalPaid:N2}    |    Remaining Balance: PHP {remBal:N2}    |    Monthly Amortization: PHP {monthlyAmort:N2}"
+            Else
+                lblPaymentSummary.Text = "Total Paid: PHP 0.00    |    Remaining Balance: PHP 0.00"
+            End If
+
+            ' 2. Payment list
+            Dim raw As DataTable = PaymentRepository.GetByLoanID(loanID)
+            Dim displayDt As New DataTable()
+            displayDt.Columns.Add("PaymentDate", GetType(DateTime))
+            displayDt.Columns.Add("Payee", GetType(String))
+            displayDt.Columns.Add("Amount", GetType(Decimal))
+            displayDt.Columns.Add("Penalty", GetType(Decimal))
+            displayDt.Columns.Add("Status", GetType(String))
+
+            If raw IsNot Nothing Then
+                For Each row As DataRow In raw.Rows
+                    Dim pDate As DateTime = If(row("PaymentDate") IsNot DBNull.Value, CDate(row("PaymentDate")), DateTime.MinValue)
+                    Dim payee As String = If(row("Payee") IsNot DBNull.Value, row("Payee").ToString(), "")
+                    Dim amt As Decimal = If(row("Amount") IsNot DBNull.Value, CDec(row("Amount")), 0D)
+                    Dim pen As Decimal = If(row("Penalty") IsNot DBNull.Value, CDec(row("Penalty")), 0D)
+                    Dim st As String = If(row("Status") IsNot DBNull.Value, row("Status").ToString(), "")
+                    displayDt.Rows.Add(pDate, payee, amt, pen, st)
+                Next
+            End If
+
+            dgvPayments.DataSource = displayDt
+
+            If dgvPayments.Columns.Contains("PaymentDate") Then
+                With dgvPayments.Columns("PaymentDate")
+                    .HeaderText = "Date Paid"
+                    .DefaultCellStyle.Format = "yyyy-MM-dd"
+                    .FillWeight = 20
+                End With
+            End If
+            If dgvPayments.Columns.Contains("Payee") Then
+                With dgvPayments.Columns("Payee")
+                    .HeaderText = "Payee / Member"
+                    .FillWeight = 30
+                End With
+            End If
+            If dgvPayments.Columns.Contains("Amount") Then
+                With dgvPayments.Columns("Amount")
+                    .HeaderText = "Amount (PHP)"
+                    .DefaultCellStyle.Format = "N2"
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .FillWeight = 20
+                End With
+            End If
+            If dgvPayments.Columns.Contains("Penalty") Then
+                With dgvPayments.Columns("Penalty")
+                    .HeaderText = "Penalty (PHP)"
+                    .DefaultCellStyle.Format = "N2"
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .FillWeight = 15
+                End With
+            End If
+            If dgvPayments.Columns.Contains("Status") Then
+                With dgvPayments.Columns("Status")
+                    .HeaderText = "Status"
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .FillWeight = 15
+                End With
+            End If
+
+            If displayDt.Rows.Count = 0 Then
+                lblNoPayments.Visible = True
+                lblNoPayments.BringToFront()
+            Else
+                lblNoPayments.Visible = False
+            End If
+
+        Catch ex As Exception
+            lblPaymentSummary.Text = "Unable to load payment history: " & ex.Message
+        End Try
+    End Sub
+
+    Private Sub dgvPayments_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvPayments.CellFormatting
+        If e.RowIndex < 0 OrElse e.Value Is Nothing Then Return
+        If dgvPayments.Columns(e.ColumnIndex).Name = "Status" Then
+            Dim status As String = e.Value.ToString()
+            Select Case status
+                Case "Paid"
+                    e.CellStyle.ForeColor = Color.FromArgb(40, 167, 69)
+                    e.CellStyle.Font = New Font(dgvPayments.Font, FontStyle.Bold)
+                Case "Pending"
+                    e.CellStyle.ForeColor = Color.FromArgb(251, 108, 0)
+                    e.CellStyle.Font = New Font(dgvPayments.Font, FontStyle.Bold)
+                Case "Overdue"
+                    e.CellStyle.ForeColor = Color.FromArgb(220, 53, 69)
+                    e.CellStyle.Font = New Font(dgvPayments.Font, FontStyle.Bold)
+                Case Else
+                    e.CellStyle.ForeColor = Color.FromArgb(108, 117, 125)
+            End Select
+        End If
     End Sub
 
     ' ── Form Load ─────────────────────────────────────────────────

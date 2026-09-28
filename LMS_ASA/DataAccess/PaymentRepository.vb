@@ -71,6 +71,36 @@ Public Module PaymentRepository
         Return dt
     End Function
 
+    Public Function GetByBorrowerID(borrowerID As Integer) As DataTable
+        Dim dt As New DataTable()
+        Using con As New SqlConnection(dbconstring.Connection)
+            con.Open()
+            Dim cmd As New SqlCommand(
+                "SELECT p.PaymentID, p.LoanID, l.LoanReferenceID, " &
+                "b.FirstName + ' ' + b.LastName AS BorrowerName, " &
+                "p.Payee, p.Amount, p.Penalty, p.PaymentDate, p.Status, " &
+                "l.TotalPayable, l.Term, " &
+                "(l.TotalPayable / CASE WHEN l.Term = 0 THEN 1 ELSE l.Term END) AS MonthlyAmortization, " &
+                "ISNULL(paid.TotalPaid, 0) AS TotalPaidForLoan, " &
+                "(l.TotalPayable - ISNULL(paid.TotalPaid, 0)) AS RemainingBalance " &
+                "FROM tbl_Payments p " &
+                "INNER JOIN tbl_Loans l ON p.LoanID = l.LoanID " &
+                "INNER JOIN tbl_Borrowers b ON l.BorrowerID = b.BorrowerID " &
+                "LEFT JOIN ( " &
+                "    SELECT LoanID, SUM(Amount) AS TotalPaid " &
+                "    FROM tbl_Payments " &
+                "    WHERE Status = 'Paid' " &
+                "    GROUP BY LoanID " &
+                ") paid ON l.LoanID = paid.LoanID " &
+                "WHERE b.BorrowerID = @borrowerID " &
+                "ORDER BY p.PaymentDate DESC", con)
+            cmd.Parameters.AddWithValue("@borrowerID", borrowerID)
+            Dim adapter As New SqlDataAdapter(cmd)
+            adapter.Fill(dt)
+        End Using
+        Return dt
+    End Function
+
     Public Function GetByID(paymentID As Integer) As DataTable
         Dim dt As New DataTable()
         Using con As New SqlConnection(dbconstring.Connection)

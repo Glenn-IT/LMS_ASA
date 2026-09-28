@@ -9,6 +9,7 @@ Public Class BorrowerDashboardForm
     Private pnlSidebarDivider As Panel
     Friend WithEvents btnFileLoan As Button
     Friend WithEvents btnTrackLoan As Button
+    Friend WithEvents btnPaymentHistory As Button
     Friend WithEvents btnMyAccount As Button
     Friend WithEvents btnSystemManual As Button
     Friend WithEvents btnDevelopers As Button
@@ -34,6 +35,7 @@ Public Class BorrowerDashboardForm
         pnlSidebarDivider = New Panel()
         btnFileLoan = New Button()
         btnTrackLoan = New Button()
+        btnPaymentHistory = New Button()
         btnMyAccount = New Button()
         btnSystemManual = New Button()
         btnDevelopers = New Button()
@@ -57,6 +59,7 @@ Public Class BorrowerDashboardForm
         pnlSidebar.Controls.Add(btnDevelopers)
         pnlSidebar.Controls.Add(btnSystemManual)
         pnlSidebar.Controls.Add(btnMyAccount)
+        pnlSidebar.Controls.Add(btnPaymentHistory)
         pnlSidebar.Controls.Add(btnTrackLoan)
         pnlSidebar.Controls.Add(btnFileLoan)
         pnlSidebar.Controls.Add(pnlSidebarDivider)
@@ -116,6 +119,19 @@ Public Class BorrowerDashboardForm
         btnTrackLoan.Location = New Point(0, 158)
         btnTrackLoan.Cursor = Cursors.Hand
 
+        ' ── btnPaymentHistory ─────────────────────────────────────
+        btnPaymentHistory.Text = "   Payment History"
+        btnPaymentHistory.Font = New Font("Segoe UI", 10, FontStyle.Regular)
+        btnPaymentHistory.ForeColor = Color.FromArgb(255, 245, 235)
+        btnPaymentHistory.BackColor = Color.Transparent
+        btnPaymentHistory.FlatStyle = FlatStyle.Flat
+        btnPaymentHistory.FlatAppearance.BorderSize = 0
+        btnPaymentHistory.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
+        btnPaymentHistory.TextAlign = ContentAlignment.MiddleLeft
+        btnPaymentHistory.Size = New Size(220, 48)
+        btnPaymentHistory.Location = New Point(0, 206)
+        btnPaymentHistory.Cursor = Cursors.Hand
+
         ' ── btnMyAccount ──────────────────────────────────────────
         btnMyAccount.Text = "   My Account"
         btnMyAccount.Font = New Font("Segoe UI", 10, FontStyle.Regular)
@@ -126,7 +142,7 @@ Public Class BorrowerDashboardForm
         btnMyAccount.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnMyAccount.TextAlign = ContentAlignment.MiddleLeft
         btnMyAccount.Size = New Size(220, 48)
-        btnMyAccount.Location = New Point(0, 206)
+        btnMyAccount.Location = New Point(0, 254)
         btnMyAccount.Cursor = Cursors.Hand
 
         ' ── btnSystemManual ───────────────────────────────────────
@@ -139,7 +155,7 @@ Public Class BorrowerDashboardForm
         btnSystemManual.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnSystemManual.TextAlign = ContentAlignment.MiddleLeft
         btnSystemManual.Size = New Size(220, 48)
-        btnSystemManual.Location = New Point(0, 254)
+        btnSystemManual.Location = New Point(0, 302)
         btnSystemManual.Cursor = Cursors.Hand
 
         ' ── btnDevelopers ─────────────────────────────────────────
@@ -152,7 +168,7 @@ Public Class BorrowerDashboardForm
         btnDevelopers.FlatAppearance.MouseOverBackColor = Color.FromArgb(251, 108, 0)
         btnDevelopers.TextAlign = ContentAlignment.MiddleLeft
         btnDevelopers.Size = New Size(220, 48)
-        btnDevelopers.Location = New Point(0, 302)
+        btnDevelopers.Location = New Point(0, 350)
         btnDevelopers.Cursor = Cursors.Hand
 
         ' ── pnlSidebarFooter ──────────────────────────────────────
@@ -240,7 +256,28 @@ Public Class BorrowerDashboardForm
 
     ' ── Form Load ─────────────────────────────────────────────────
     Private Sub BorrowerDashboardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
+        Dim borrowerID As Integer = SessionManager.CurrentBorrowerID
+        If borrowerID = 0 AndAlso SessionManager.CurrentUserID > 0 Then
+            Dim bDt As DataTable = BorrowerRepository.GetByUserID(SessionManager.CurrentUserID)
+            If bDt.Rows.Count > 0 Then
+                borrowerID = CInt(bDt.Rows(0)("BorrowerID"))
+                SessionManager.CurrentBorrowerID = borrowerID
+            End If
+        End If
+
+        If borrowerID > 0 Then
+            Dim bInfo As DataTable = BorrowerRepository.GetByID(borrowerID)
+            If bInfo.Rows.Count > 0 Then
+                Dim bRow As DataRow = bInfo.Rows(0)
+                Dim fullName As String = $"{bRow("FirstName")} {bRow("LastName")}".Trim()
+                lblWelcome.Text = $"Welcome, {fullName} ({SessionManager.CurrentUsername})!"
+            Else
+                lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
+            End If
+        Else
+            lblWelcome.Text = $"Welcome, {SessionManager.CurrentUsername}!"
+        End If
+
         lblSidebarSub.Text = SessionManager.CurrentUsername
         SetActiveButton(btnFileLoan)
         ShowWelcomePanel()
@@ -258,6 +295,13 @@ Public Class BorrowerDashboardForm
         SetActiveButton(btnTrackLoan)
         lblPageTitle.Text = "Loan Monitoring"
         LoadContent(New TrackLoanForm())
+    End Sub
+
+    ' ── Payment History ───────────────────────────────────────────
+    Private Sub btnPaymentHistory_Click(sender As Object, e As EventArgs) Handles btnPaymentHistory.Click
+        SetActiveButton(btnPaymentHistory)
+        lblPageTitle.Text = "Payment History"
+        LoadContent(New PaymentListForm(SessionManager.CurrentBorrowerID))
     End Sub
 
     ' ── My Account ────────────────────────────────────────────────
@@ -324,7 +368,7 @@ Public Class BorrowerDashboardForm
     End Sub
 
     Private Sub SetActiveButton(activeBtn As Button)
-        Dim sidebarBtns As Button() = {btnFileLoan, btnTrackLoan, btnMyAccount, btnSystemManual, btnDevelopers}
+        Dim sidebarBtns As Button() = {btnFileLoan, btnTrackLoan, btnPaymentHistory, btnMyAccount, btnSystemManual, btnDevelopers}
         For Each btn As Button In sidebarBtns
             btn.BackColor = Color.Transparent
             btn.ForeColor = Color.FromArgb(255, 245, 235)

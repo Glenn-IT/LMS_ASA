@@ -535,6 +535,13 @@ Public Class NewLoanForm
         Dim borrowerRow As DataRow = _borrowers.Rows(cmbBorrowerName.SelectedIndex)
         Dim borrowerID As Integer = CInt(borrowerRow("BorrowerID"))
         Dim refID As String = txtLoanID.Text.Trim()
+
+        ' Ensure refID is not duplicate before inserting
+        If String.IsNullOrWhiteSpace(refID) OrElse LoanRepository.ExistsReferenceID(refID) Then
+            refID = LoanRepository.GetNextReferenceID()
+            txtLoanID.Text = refID
+        End If
+
         Dim loanType As String = cmbLoanType.SelectedItem.ToString()
         Dim principal As Decimal = Decimal.Parse(txtPrincipalAmount.Text.Trim())
         Dim rate As Decimal = Decimal.Parse(txtInterestRate.Text.Trim())

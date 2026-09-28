@@ -439,7 +439,7 @@ Public Class LoanApplicationForm
 
         Try
             Dim totalPayable As Decimal = principal * (1 + rate / 100)
-            LoanApplicationRepository.Insert(
+            Dim newAppID As Integer = LoanApplicationRepository.Insert(
                 SessionManager.CurrentBorrowerID,
                 cmbLoanType.SelectedItem.ToString(),
                 principal, rate, totalPayable, term,
@@ -448,7 +448,7 @@ Public Class LoanApplicationForm
                 $"Submitted loan application: {cmbLoanType.SelectedItem} for PHP {principal:N2}")
             MessageBox.Show(
                 "Your loan application has been submitted successfully." & Environment.NewLine &
-                $"Application ID: {txtLoanID.Text}" & Environment.NewLine &
+                $"Application ID: APP-{newAppID:D4}" & Environment.NewLine &
                 "Status: Pending Review",
                 "Application Submitted",
                 MessageBoxButtons.OK,

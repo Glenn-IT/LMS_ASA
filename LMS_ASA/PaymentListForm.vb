@@ -5,9 +5,10 @@ Public Class PaymentListForm
     Private pnlHeader As Panel
     Private lblTitle As Label
     Private lblSubtitle As Label
+    Private pnlDividerHeader As Panel
 
     ' ── KPI Summary Cards Bar ─────────────────────────────────────
-    Private pnlKpiSummary As Panel
+    Private WithEvents pnlKpiSummary As Panel
     Private grpKpi1 As Panel
     Private lblKpi1Title As Label
     Private lblKpi1Val As Label
@@ -36,15 +37,18 @@ Public Class PaymentListForm
     Private lblRecordCount As Label
 
     Private _fullData As DataTable
+    Private _borrowerFilterID As Integer = 0
 
-    Public Sub New()
+    Public Sub New(Optional borrowerFilterID As Integer = 0)
         InitializeComponent()
+        _borrowerFilterID = borrowerFilterID
     End Sub
 
     Private Sub InitializeComponent()
         pnlHeader = New Panel()
         lblTitle = New Label()
         lblSubtitle = New Label()
+        pnlDividerHeader = New Panel()
 
         pnlKpiSummary = New Panel()
         grpKpi1 = New Panel()
@@ -93,6 +97,12 @@ Public Class PaymentListForm
         lblSubtitle.AutoSize = False
         lblSubtitle.Size = New Size(500, 18)
         lblSubtitle.Location = New Point(16, 36)
+
+        ' pnlDividerHeader
+        pnlDividerHeader.BackColor = Color.FromArgb(225, 228, 234)
+        pnlDividerHeader.Dock = DockStyle.Bottom
+        pnlDividerHeader.Height = 1
+        pnlHeader.Controls.Add(pnlDividerHeader)
 
         ' ── pnlKpiSummary Cards Bar ───────────────────────────────
         pnlKpiSummary.BackColor = Color.FromArgb(245, 247, 250)
@@ -219,12 +229,14 @@ Public Class PaymentListForm
         lblSearch.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSearch.ForeColor = Color.Gray
         lblSearch.AutoSize = True
-        lblSearch.Location = New Point(428, 17)
+        lblSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        lblSearch.Location = New Point(630, 17)
 
         ' txtSearch
         txtSearch.Font = New Font("Segoe UI", 9)
         txtSearch.Size = New Size(220, 28)
-        txtSearch.Location = New Point(478, 12)
+        txtSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        txtSearch.Location = New Point(684, 12)
         txtSearch.BorderStyle = BorderStyle.FixedSingle
         txtSearch.BackColor = Color.White
 
@@ -252,15 +264,17 @@ Public Class PaymentListForm
         ' Column header style
         dgvPayments.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(231, 63, 30)
         dgvPayments.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
+        dgvPayments.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(231, 63, 30)
+        dgvPayments.ColumnHeadersDefaultCellStyle.SelectionForeColor = Color.White
         dgvPayments.ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
         dgvPayments.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
         dgvPayments.EnableHeadersVisualStyles = False
 
         ' Alternating row style
-        dgvPayments.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(255, 250, 245)
+        dgvPayments.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(253, 253, 254)
 
-        ' Selection style
-        dgvPayments.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 221, 156)
+        ' Selection style - softer warm cream instead of harsh mustard yellow
+        dgvPayments.DefaultCellStyle.SelectionBackColor = Color.FromArgb(254, 237, 222)
         dgvPayments.DefaultCellStyle.SelectionForeColor = Color.FromArgb(184, 46, 18)
 
         ' ── pnlFooter ──────────────────────────────────────────────
@@ -291,14 +305,61 @@ Public Class PaymentListForm
 
     ' ── Form Load ──────────────────────────────────────────────────
     Private Sub PaymentListForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim isBorrower As Boolean = (_borrowerFilterID > 0 OrElse SessionManager.CurrentRole = "Borrower")
+        If isBorrower Then
+            lblTitle.Text = "My Payment History"
+            lblSubtitle.Text = "Track your loan payments, amortization schedules, and remaining balances"
+            btnAdd.Visible = False
+            btnUpdate.Visible = False
+            btnDelete.Visible = False
+            btnView.Location = New Point(12, 8)
+            btnView.Size = New Size(100, 34)
+            btnView.BackColor = Color.FromArgb(231, 63, 30)
+            lblKpi1Title.Text = "TOTAL PAID BY YOU"
+        End If
+        LayoutKpiCards()
         LoadPayments()
+    End Sub
+
+    Private Sub PaymentListForm_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        LayoutKpiCards()
+    End Sub
+
+    Private Sub pnlKpiSummary_Resize(sender As Object, e As EventArgs) Handles pnlKpiSummary.Resize
+        LayoutKpiCards()
+    End Sub
+
+    Private Sub LayoutKpiCards()
+        If pnlKpiSummary Is Nothing OrElse grpKpi1 Is Nothing Then Return
+        Dim totalW As Integer = pnlKpiSummary.ClientSize.Width
+        If totalW <= 0 Then Return
+        Dim margin As Integer = 12
+        Dim gap As Integer = 12
+        Dim cardW As Integer = Math.Max(120, (totalW - (margin * 2) - (gap * 2)) \ 3)
+
+        grpKpi1.SetBounds(margin, 8, cardW, 52)
+        grpKpi2.SetBounds(margin + cardW + gap, 8, cardW, 52)
+        grpKpi3.SetBounds(margin + (cardW + gap) * 2, 8, cardW, 52)
+
+        lblKpi1Title.Width = cardW - 20
+        lblKpi1Val.Width = cardW - 20
+        lblKpi2Title.Width = cardW - 20
+        lblKpi2Val.Width = cardW - 20
+        lblKpi3Title.Width = cardW - 20
+        lblKpi3Val.Width = cardW - 20
     End Sub
 
     ' ── Load Payments from DB ──────────────────────────────────────
     Private Sub LoadPayments()
         Cursor.Current = Cursors.WaitCursor
         Try
-            Dim raw As DataTable = PaymentRepository.GetAll()
+            Dim raw As DataTable
+            Dim bID As Integer = If(_borrowerFilterID > 0, _borrowerFilterID, If(SessionManager.CurrentRole = "Borrower", SessionManager.CurrentBorrowerID, 0))
+            If bID > 0 Then
+                raw = PaymentRepository.GetByBorrowerID(bID)
+            Else
+                raw = PaymentRepository.GetAll()
+            End If
             _fullData = BuildDisplayTable(raw)
             dgvPayments.DataSource = _fullData
 
@@ -307,7 +368,9 @@ Public Class PaymentListForm
             End If
 
             ConfigureColumns()
+            dgvPayments.ClearSelection()
             UpdateKpiCards(raw)
+            LayoutKpiCards()
             lblRecordCount.Text = $"Showing {_fullData.Rows.Count} record(s)"
         Catch ex As Exception
             MessageBox.Show($"Failed to load payments: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -351,6 +414,7 @@ Public Class PaymentListForm
         Dim dt As New DataTable()
         dt.Columns.Add("PaymentID", GetType(Integer))
         dt.Columns.Add("Loan Ref", GetType(String))
+        dt.Columns.Add("Payment Date", GetType(DateTime))
         dt.Columns.Add("Borrower", GetType(String))
         dt.Columns.Add("Payee", GetType(String))
         dt.Columns.Add("Amount (PHP)", GetType(Decimal))
@@ -358,7 +422,6 @@ Public Class PaymentListForm
         dt.Columns.Add("Monthly Amort (PHP)", GetType(Decimal))
         dt.Columns.Add("Remaining Bal (PHP)", GetType(Decimal))
         dt.Columns.Add("Months Left", GetType(String))
-        dt.Columns.Add("Payment Date", GetType(DateTime))
         dt.Columns.Add("Status", GetType(String))
 
         For Each row As DataRow In raw.Rows
@@ -374,6 +437,7 @@ Public Class PaymentListForm
             dt.Rows.Add(
                 row("PaymentID"),
                 row("LoanReferenceID").ToString(),
+                row("PaymentDate"),
                 row("BorrowerName").ToString(),
                 row("Payee").ToString(),
                 row("Amount"),
@@ -381,42 +445,83 @@ Public Class PaymentListForm
                 monthlyAmort,
                 remBal,
                 mosLeftStr,
-                row("PaymentDate"),
                 row("Status").ToString())
         Next
         Return dt
     End Function
 
     Private Sub ConfigureColumns()
+        Dim isBorrower As Boolean = (_borrowerFilterID > 0 OrElse SessionManager.CurrentRole = "Borrower")
+
         With dgvPayments
-            If .Columns.Contains("Loan Ref") Then .Columns("Loan Ref").FillWeight = 11
-            If .Columns.Contains("Borrower") Then .Columns("Borrower").FillWeight = 16
-            If .Columns.Contains("Payee") Then .Columns("Payee").FillWeight = 14
+            If .Columns.Contains("PaymentID") Then .Columns("PaymentID").Visible = False
+
+            If .Columns.Contains("Loan Ref") Then
+                .Columns("Loan Ref").FillWeight = If(isBorrower, 13, 11)
+                .Columns("Loan Ref").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+                .Columns("Loan Ref").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
+            End If
+
+            If .Columns.Contains("Payment Date") Then
+                .Columns("Payment Date").DefaultCellStyle.Format = "yyyy-MM-dd"
+                .Columns("Payment Date").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("Payment Date").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("Payment Date").FillWeight = If(isBorrower, 14, 12)
+            End If
+
+            If .Columns.Contains("Borrower") Then
+                .Columns("Borrower").Visible = Not isBorrower
+                .Columns("Borrower").FillWeight = 16
+                .Columns("Borrower").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+                .Columns("Borrower").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
+            End If
+
+            If .Columns.Contains("Payee") Then
+                .Columns("Payee").Visible = Not isBorrower
+                .Columns("Payee").FillWeight = 14
+                .Columns("Payee").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+                .Columns("Payee").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
+            End If
+
             If .Columns.Contains("Amount (PHP)") Then
                 .Columns("Amount (PHP)").DefaultCellStyle.Format = "N2"
-                .Columns("Amount (PHP)").FillWeight = 12
+                .Columns("Amount (PHP)").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Amount (PHP)").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Amount (PHP)").FillWeight = If(isBorrower, 14, 12)
             End If
+
             If .Columns.Contains("Penalty (PHP)") Then
                 .Columns("Penalty (PHP)").DefaultCellStyle.Format = "N2"
-                .Columns("Penalty (PHP)").FillWeight = 10
+                .Columns("Penalty (PHP)").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Penalty (PHP)").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Penalty (PHP)").FillWeight = If(isBorrower, 11, 10)
             End If
+
             If .Columns.Contains("Monthly Amort (PHP)") Then
                 .Columns("Monthly Amort (PHP)").DefaultCellStyle.Format = "N2"
-                .Columns("Monthly Amort (PHP)").FillWeight = 13
+                .Columns("Monthly Amort (PHP)").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Monthly Amort (PHP)").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Monthly Amort (PHP)").FillWeight = If(isBorrower, 16, 13)
             End If
+
             If .Columns.Contains("Remaining Bal (PHP)") Then
                 .Columns("Remaining Bal (PHP)").DefaultCellStyle.Format = "N2"
-                .Columns("Remaining Bal (PHP)").FillWeight = 13
+                .Columns("Remaining Bal (PHP)").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Remaining Bal (PHP)").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Remaining Bal (PHP)").FillWeight = If(isBorrower, 16, 13)
             End If
+
             If .Columns.Contains("Months Left") Then
                 .Columns("Months Left").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                .Columns("Months Left").FillWeight = 10
+                .Columns("Months Left").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("Months Left").FillWeight = If(isBorrower, 11, 10)
             End If
-            If .Columns.Contains("Payment Date") Then
-                .Columns("Payment Date").DefaultCellStyle.Format = "MMM dd, yyyy"
-                .Columns("Payment Date").FillWeight = 13
+
+            If .Columns.Contains("Status") Then
+                .Columns("Status").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("Status").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("Status").FillWeight = If(isBorrower, 11, 9)
             End If
-            If .Columns.Contains("Status") Then .Columns("Status").FillWeight = 9
         End With
     End Sub
 
@@ -465,6 +570,15 @@ Public Class PaymentListForm
         frm.ShowDialog()
     End Sub
 
+    ' ── Double-Click on Row to View ───────────────────────────────
+    Private Sub dgvPayments_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPayments.CellDoubleClick
+        If e.RowIndex >= 0 Then
+            Dim selectedID As Integer = CInt(dgvPayments.Rows(e.RowIndex).Cells("PaymentID").Value)
+            Dim frm As New ViewPaymentForm(selectedID)
+            frm.ShowDialog()
+        End If
+    End Sub
+
     ' ── Delete Button ──────────────────────────────────────────────
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         If dgvPayments.SelectedRows.Count = 0 Then
@@ -505,10 +619,20 @@ Public Class PaymentListForm
         btnUpdate.BackColor = Color.FromArgb(251, 108, 0)
     End Sub
     Private Sub btnView_MouseEnter(sender As Object, e As EventArgs) Handles btnView.MouseEnter
-        btnView.BackColor = Color.FromArgb(231, 140, 20)
+        Dim isBorrower As Boolean = (_borrowerFilterID > 0 OrElse SessionManager.CurrentRole = "Borrower")
+        If isBorrower Then
+            btnView.BackColor = Color.FromArgb(251, 108, 0)
+        Else
+            btnView.BackColor = Color.FromArgb(231, 140, 20)
+        End If
     End Sub
     Private Sub btnView_MouseLeave(sender As Object, e As EventArgs) Handles btnView.MouseLeave
-        btnView.BackColor = Color.FromArgb(249, 182, 55)
+        Dim isBorrower As Boolean = (_borrowerFilterID > 0 OrElse SessionManager.CurrentRole = "Borrower")
+        If isBorrower Then
+            btnView.BackColor = Color.FromArgb(231, 63, 30)
+        Else
+            btnView.BackColor = Color.FromArgb(249, 182, 55)
+        End If
     End Sub
     Private Sub btnDelete_MouseEnter(sender As Object, e As EventArgs) Handles btnDelete.MouseEnter
         btnDelete.BackColor = Color.FromArgb(160, 40, 30)

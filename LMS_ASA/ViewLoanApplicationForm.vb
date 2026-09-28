@@ -34,6 +34,9 @@ Public Class ViewLoanApplicationForm
     Private pnlFooter As Panel
     Private pnlDividerBottom As Panel
     Friend WithEvents btnBack As Button
+    Friend WithEvents btnApprove As Button
+    Friend WithEvents btnReject As Button
+    Private _applicationID As Integer = 0
 
     Public Sub New(applicationID As Integer)
         InitializeComponent()
@@ -73,6 +76,8 @@ Public Class ViewLoanApplicationForm
         pnlFooter = New Panel()
         pnlDividerBottom = New Panel()
         btnBack = New Button()
+        btnApprove = New Button()
+        btnReject = New Button()
 
         SuspendLayout()
 
@@ -342,6 +347,33 @@ Public Class ViewLoanApplicationForm
         btnBack.Location = New Point(16, 12)
         btnBack.Cursor = Cursors.Hand
 
+        ' btnApprove
+        btnApprove.Text = "✓ Approve Application"
+        btnApprove.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        btnApprove.BackColor = Color.FromArgb(40, 167, 69)
+        btnApprove.ForeColor = Color.White
+        btnApprove.FlatStyle = FlatStyle.Flat
+        btnApprove.FlatAppearance.BorderSize = 0
+        btnApprove.Size = New Size(175, 38)
+        btnApprove.Location = New Point(156, 12)
+        btnApprove.Cursor = Cursors.Hand
+        btnApprove.Visible = False
+
+        ' btnReject
+        btnReject.Text = "✗ Reject"
+        btnReject.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        btnReject.BackColor = Color.FromArgb(220, 53, 69)
+        btnReject.ForeColor = Color.White
+        btnReject.FlatStyle = FlatStyle.Flat
+        btnReject.FlatAppearance.BorderSize = 0
+        btnReject.Size = New Size(100, 38)
+        btnReject.Location = New Point(340, 12)
+        btnReject.Cursor = Cursors.Hand
+        btnReject.Visible = False
+
+        pnlFooter.Controls.Add(btnReject)
+        pnlFooter.Controls.Add(btnApprove)
+
         ' ── Form ──────────────────────────────────────────────────────
         Me.Text = "LMS - Loan Application Details"
         Me.ClientSize = New Size(880, 620)
@@ -390,6 +422,15 @@ Public Class ViewLoanApplicationForm
                 Case Else
                     lblStatusValue.ForeColor = Color.FromArgb(231, 63, 30)
             End Select
+
+            Dim isAdmin As Boolean = (SessionManager.CurrentRole = "Admin" OrElse SessionManager.CurrentRole = "Staff" OrElse SessionManager.CurrentRole = "Loan Officer")
+            If isAdmin AndAlso status = "Pending" Then
+                btnApprove.Visible = True
+                btnReject.Visible = True
+            Else
+                btnApprove.Visible = False
+                btnReject.Visible = False
+            End If
         Catch ex As Exception
             MessageBox.Show($"Failed to load application: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -397,6 +438,58 @@ Public Class ViewLoanApplicationForm
 
     ' ── Form Load ─────────────────────────────────────────────────
     Private Sub ViewLoanApplicationForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    End Sub
+
+    ' ── Approve Button Click ──────────────────────────────────────
+    Private Sub btnApprove_Click(sender As Object, e As EventArgs) Handles btnApprove.Click
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Approve this loan application for {txtBorrowerName.Text} ({txtPrincipalAmount.Text})?" & vbCrLf & vbCrLf &
+            "This will create and activate an official loan record in the system.",
+            "Confirm Loan Approval",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question)
+        If confirm <> DialogResult.Yes Then Return
+
+        Try
+            Dim newRef As String = ""
+            Dim ok As Boolean = LoanApplicationRepository.ApproveApplication(_applicationID, SessionManager.CurrentUsername, newRef)
+            If ok Then
+                MessageBox.Show(
+                    $"Loan application approved successfully!" & vbCrLf & vbCrLf &
+                    $"Official Loan Reference: {newRef}" & vbCrLf &
+                    $"Client: {txtBorrowerName.Text}",
+                    "Loan Approved & Activated",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information)
+                LoadApplication(_applicationID)
+            Else
+                MessageBox.Show("Failed to approve application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        Catch ex As Exception
+            MessageBox.Show($"Approval failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' ── Reject Button Click ───────────────────────────────────────
+    Private Sub btnReject_Click(sender As Object, e As EventArgs) Handles btnReject.Click
+        Dim confirm As DialogResult = MessageBox.Show(
+            $"Are you sure you want to reject this loan application for {txtBorrowerName.Text}?",
+            "Confirm Rejection",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Warning)
+        If confirm <> DialogResult.Yes Then Return
+
+        Try
+            Dim ok As Boolean = LoanApplicationRepository.RejectApplication(_applicationID, SessionManager.CurrentUsername)
+            If ok Then
+                MessageBox.Show("Loan application has been marked as Rejected.", "Application Rejected", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                LoadApplication(_applicationID)
+            Else
+                MessageBox.Show("Failed to reject application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        Catch ex As Exception
+            MessageBox.Show($"Rejection failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' ── Back Button ───────────────────────────────────────────────
@@ -410,6 +503,20 @@ Public Class ViewLoanApplicationForm
     End Sub
     Private Sub btnBack_MouseLeave(sender As Object, e As EventArgs) Handles btnBack.MouseLeave
         btnBack.BackColor = Color.FromArgb(231, 63, 30)
+    End Sub
+
+    Private Sub btnApprove_MouseEnter(sender As Object, e As EventArgs) Handles btnApprove.MouseEnter
+        btnApprove.BackColor = Color.FromArgb(34, 142, 58)
+    End Sub
+    Private Sub btnApprove_MouseLeave(sender As Object, e As EventArgs) Handles btnApprove.MouseLeave
+        btnApprove.BackColor = Color.FromArgb(40, 167, 69)
+    End Sub
+
+    Private Sub btnReject_MouseEnter(sender As Object, e As EventArgs) Handles btnReject.MouseEnter
+        btnReject.BackColor = Color.FromArgb(189, 33, 48)
+    End Sub
+    Private Sub btnReject_MouseLeave(sender As Object, e As EventArgs) Handles btnReject.MouseLeave
+        btnReject.BackColor = Color.FromArgb(220, 53, 69)
     End Sub
 
 End Class

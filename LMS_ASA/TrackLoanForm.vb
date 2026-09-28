@@ -43,7 +43,7 @@ Public Class TrackLoanForm
         lblTitle.Location = New Point(16, 10)
 
         ' ── lblSubtitle ───────────────────────────────────────────────
-        lblSubtitle.Text = "View the status of your submitted loan applications"
+        lblSubtitle.Text = "View the status of your loans and submitted applications"
         lblSubtitle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblSubtitle.ForeColor = Color.Gray
         lblSubtitle.AutoSize = False
@@ -159,60 +159,111 @@ Public Class TrackLoanForm
         LoadApplications()
     End Sub
 
-    ' ?? Load Applications from DB ?????????????????????????????????
+    ' ── Load Applications and Loans from DB ───────────────────────
     Private Sub LoadApplications()
         Cursor.Current = Cursors.WaitCursor
         Try
+            If Not dgvTrackLoans.Columns.Contains("RecordID") Then
+                Dim colID As New DataGridViewTextBoxColumn()
+                colID.Name = "RecordID"
+                colID.Visible = False
+                dgvTrackLoans.Columns.Insert(0, colID)
+            End If
+
+            If Not dgvTrackLoans.Columns.Contains("RecordType") Then
+                Dim colType As New DataGridViewTextBoxColumn()
+                colType.Name = "RecordType"
+                colType.Visible = False
+                dgvTrackLoans.Columns.Insert(1, colType)
+            End If
+
             If Not dgvTrackLoans.Columns.Contains("AppID") Then
                 Dim colHidden As New DataGridViewTextBoxColumn()
                 colHidden.Name = "AppID"
                 colHidden.Visible = False
-                dgvTrackLoans.Columns.Insert(0, colHidden)
+                dgvTrackLoans.Columns.Insert(2, colHidden)
             End If
 
             dgvTrackLoans.Rows.Clear()
-            Dim dt As DataTable = LoanApplicationRepository.GetByBorrowerID(SessionManager.CurrentBorrowerID)
-            For Each row As DataRow In dt.Rows
+
+            Dim borrowerID As Integer = SessionManager.CurrentBorrowerID
+            If borrowerID = 0 AndAlso SessionManager.CurrentUserID > 0 Then
+                Dim bDt As DataTable = BorrowerRepository.GetByUserID(SessionManager.CurrentUserID)
+                If bDt.Rows.Count > 0 Then
+                    borrowerID = CInt(bDt.Rows(0)("BorrowerID"))
+                    SessionManager.CurrentBorrowerID = borrowerID
+                End If
+            End If
+
+            ' 1. Official Loans added or approved by Admin (from tbl_Loans)
+            Dim loansDt As DataTable = LoanRepository.GetByBorrowerID(borrowerID)
+            For Each row As DataRow In loansDt.Rows
+                Dim loanID As Integer = CInt(row("LoanID"))
+                Dim rowIdx As Integer = dgvTrackLoans.Rows.Add()
+                dgvTrackLoans.Rows(rowIdx).Cells("RecordID").Value = loanID
+                dgvTrackLoans.Rows(rowIdx).Cells("RecordType").Value = "Loan"
+                dgvTrackLoans.Rows(rowIdx).Cells("AppID").Value = loanID
+                dgvTrackLoans.Rows(rowIdx).Cells("LoanReferenceID").Value = row("LoanReferenceID").ToString()
+                dgvTrackLoans.Rows(rowIdx).Cells("Amount").Value = $"PHP {CDec(row("PrincipalAmount")):N2}"
+                dgvTrackLoans.Rows(rowIdx).Cells("LoanType").Value = row("LoanType").ToString()
+                dgvTrackLoans.Rows(rowIdx).Cells("Status").Value = row("Status").ToString()
+            Next
+
+            ' 2. Submitted Applications filed by Borrower (from tbl_LoanApplications)
+            Dim appsDt As DataTable = LoanApplicationRepository.GetByBorrowerID(borrowerID)
+            For Each row As DataRow In appsDt.Rows
                 Dim appID As Integer = CInt(row("ApplicationID"))
                 Dim rowIdx As Integer = dgvTrackLoans.Rows.Add()
+                dgvTrackLoans.Rows(rowIdx).Cells("RecordID").Value = appID
+                dgvTrackLoans.Rows(rowIdx).Cells("RecordType").Value = "Application"
                 dgvTrackLoans.Rows(rowIdx).Cells("AppID").Value = appID
                 dgvTrackLoans.Rows(rowIdx).Cells("LoanReferenceID").Value = $"APP-{appID:D4}"
                 dgvTrackLoans.Rows(rowIdx).Cells("Amount").Value = $"PHP {CDec(row("PrincipalAmount")):N2}"
                 dgvTrackLoans.Rows(rowIdx).Cells("LoanType").Value = row("LoanType").ToString()
                 dgvTrackLoans.Rows(rowIdx).Cells("Status").Value = row("Status").ToString()
             Next
+
             lblRecordCount.Text = $"Showing {dgvTrackLoans.Rows.Count} record(s)"
         Catch ex As Exception
-            MessageBox.Show($"Failed to load applications: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show($"Failed to load loans: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             lblRecordCount.Text = "0 record(s)"
         Finally
             Cursor.Current = Cursors.Default
         End Try
     End Sub
 
-    ' ?? View Button Click ?????????????????????????????????????????
+    ' ── View Button Click ─────────────────────────────────────────
     Private Sub dgvTrackLoans_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTrackLoans.CellContentClick
         If e.ColumnIndex = dgvTrackLoans.Columns("ViewBtn").Index AndAlso e.RowIndex >= 0 Then
-            Dim appID As Integer = CInt(dgvTrackLoans.Rows(e.RowIndex).Cells("AppID").Value)
-            Dim frm As New ViewLoanApplicationForm(appID)
-            frm.ShowDialog()
+            Dim recType As String = dgvTrackLoans.Rows(e.RowIndex).Cells("RecordType").Value?.ToString()
+            Dim recID As Integer = CInt(dgvTrackLoans.Rows(e.RowIndex).Cells("RecordID").Value)
+            If recType = "Loan" Then
+                Dim frm As New ViewLoanForm(recID)
+                frm.ShowDialog()
+            Else
+                Dim frm As New ViewLoanApplicationForm(recID)
+                frm.ShowDialog()
+            End If
         End If
     End Sub
 
-    ' ?? Status Color Coding ???????????????????????????????????????????
+    ' ── Status Color Coding ───────────────────────────────────────
     Private Sub dgvTrackLoans_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvTrackLoans.CellFormatting
         If e.RowIndex < 0 OrElse e.Value Is Nothing Then Return
         If dgvTrackLoans.Columns(e.ColumnIndex).Name <> "Status" Then Return
         Select Case e.Value.ToString()
-            Case "Approved"
+            Case "Approved", "Active"
                 e.CellStyle.BackColor = Color.FromArgb(212, 237, 218)
                 e.CellStyle.ForeColor = Color.FromArgb(21, 87, 36)
             Case "Pending"
                 e.CellStyle.BackColor = Color.FromArgb(255, 243, 205)
                 e.CellStyle.ForeColor = Color.FromArgb(133, 100, 4)
-            Case "Rejected"
+            Case "Overdue", "Rejected"
                 e.CellStyle.BackColor = Color.FromArgb(248, 215, 218)
                 e.CellStyle.ForeColor = Color.FromArgb(114, 28, 36)
+            Case "Closed"
+                e.CellStyle.BackColor = Color.FromArgb(226, 227, 229)
+                e.CellStyle.ForeColor = Color.FromArgb(56, 61, 65)
         End Select
         e.CellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
         e.FormattingApplied = True
