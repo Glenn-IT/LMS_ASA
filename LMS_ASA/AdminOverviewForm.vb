@@ -13,6 +13,11 @@ Public Class AdminOverviewForm
     Private lblBannerTitle As Label
     Private lblBannerSubtitle As Label
     Private btnRefresh As Button
+    Private btnPrint As Button
+    Private cmsPrintMenu As ContextMenuStrip
+    Private tsmiPrintApplicants As ToolStripMenuItem
+    Private tsmiPrintBorrowers As ToolStripMenuItem
+    Private tsmiPrintCombined As ToolStripMenuItem
     Private lblLastUpdated As Label
 
     ' KPI Cards
@@ -99,6 +104,44 @@ Public Class AdminOverviewForm
         lblBannerSubtitle.AutoSize = True
         pnlBanner.Controls.Add(lblBannerSubtitle)
 
+        ' ── Print Context Menu ────────────────────────────────────
+        cmsPrintMenu = New ContextMenuStrip()
+        tsmiPrintApplicants = New ToolStripMenuItem()
+        tsmiPrintApplicants.Text = "📄 Print All Applicants (Loan Applications)"
+        tsmiPrintApplicants.Font = New Font("Segoe UI", 9.5F, FontStyle.Regular)
+        AddHandler tsmiPrintApplicants.Click, AddressOf tsmiPrintApplicants_Click
+
+        tsmiPrintBorrowers = New ToolStripMenuItem()
+        tsmiPrintBorrowers.Text = "👥 Print All Borrowers (Registered Clients)"
+        tsmiPrintBorrowers.Font = New Font("Segoe UI", 9.5F, FontStyle.Regular)
+        AddHandler tsmiPrintBorrowers.Click, AddressOf tsmiPrintBorrowers_Click
+
+        tsmiPrintCombined = New ToolStripMenuItem()
+        tsmiPrintCombined.Text = "📑 Print All (Applicants & Borrowers)"
+        tsmiPrintCombined.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        AddHandler tsmiPrintCombined.Click, AddressOf tsmiPrintCombined_Click
+
+        cmsPrintMenu.Items.Add(tsmiPrintApplicants)
+        cmsPrintMenu.Items.Add(tsmiPrintBorrowers)
+        cmsPrintMenu.Items.Add(New ToolStripSeparator())
+        cmsPrintMenu.Items.Add(tsmiPrintCombined)
+
+        ' ── Print Reports Button ──────────────────────────────────
+        btnPrint = New Button()
+        btnPrint.Text = "🖨️ Print Reports ▾"
+        btnPrint.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnPrint.ForeColor = Color.White
+        btnPrint.BackColor = Color.FromArgb(41, 128, 185)
+        btnPrint.FlatStyle = FlatStyle.Flat
+        btnPrint.FlatAppearance.BorderSize = 0
+        btnPrint.Size = New Size(150, 36)
+        btnPrint.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnPrint.Location = New Point(pnlBanner.Width - 305, 16)
+        btnPrint.Cursor = Cursors.Hand
+        AddHandler btnPrint.Click, AddressOf btnPrint_Click
+        pnlBanner.Controls.Add(btnPrint)
+
+        ' ── Refresh Button ────────────────────────────────────────
         btnRefresh.Text = "🔄 Refresh Data"
         btnRefresh.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnRefresh.ForeColor = Color.White
@@ -217,6 +260,23 @@ Public Class AdminOverviewForm
 
     Private Sub btnRefresh_Click(sender As Object, e As EventArgs)
         LoadDashboardData()
+    End Sub
+
+    ' ── Print Actions ─────────────────────────────────────────────
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs)
+        cmsPrintMenu.Show(btnPrint, 0, btnPrint.Height)
+    End Sub
+
+    Private Sub tsmiPrintApplicants_Click(sender As Object, e As EventArgs)
+        ReportPrinter.PrintApplicants(Me)
+    End Sub
+
+    Private Sub tsmiPrintBorrowers_Click(sender As Object, e As EventArgs)
+        ReportPrinter.PrintBorrowers(Me)
+    End Sub
+
+    Private Sub tsmiPrintCombined_Click(sender As Object, e As EventArgs)
+        ReportPrinter.PrintCombined(Me)
     End Sub
 
     Public Sub LoadDashboardData()

@@ -9,6 +9,7 @@ Public Class BorrowerListForm
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnView As Button
+    Friend WithEvents btnPrint As Button
     Friend WithEvents btnDelete As Button
     Private lblSearch As Label
     Private WithEvents txtSearch As TextBox
@@ -35,6 +36,7 @@ Public Class BorrowerListForm
         lblSearch = New Label()
         txtSearch = New TextBox()
         btnDelete = New Button()
+        btnPrint = New Button()
         btnView = New Button()
         btnUpdate = New Button()
         btnAdd = New Button()
@@ -84,10 +86,10 @@ Public Class BorrowerListForm
         ' 
         ' pnlToolbar
         ' 
-        pnlToolbar.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
         pnlToolbar.Controls.Add(lblSearch)
         pnlToolbar.Controls.Add(txtSearch)
         pnlToolbar.Controls.Add(btnDelete)
+        pnlToolbar.Controls.Add(btnPrint)
         pnlToolbar.Controls.Add(btnView)
         pnlToolbar.Controls.Add(btnUpdate)
         pnlToolbar.Controls.Add(btnAdd)
@@ -102,7 +104,7 @@ Public Class BorrowerListForm
         lblSearch.AutoSize = True
         lblSearch.Font = New Font("Segoe UI", 9F)
         lblSearch.ForeColor = Color.Gray
-        lblSearch.Location = New Point(324, 21)
+        lblSearch.Location = New Point(410, 21)
         lblSearch.Name = "lblSearch"
         lblSearch.Size = New Size(52, 19)
         lblSearch.TabIndex = 0
@@ -113,10 +115,25 @@ Public Class BorrowerListForm
         txtSearch.BackColor = Color.White
         txtSearch.BorderStyle = BorderStyle.FixedSingle
         txtSearch.Font = New Font("Segoe UI", 9F)
-        txtSearch.Location = New Point(382, 19)
+        txtSearch.Location = New Point(465, 19)
         txtSearch.Name = "txtSearch"
-        txtSearch.Size = New Size(286, 25)
+        txtSearch.Size = New Size(240, 25)
         txtSearch.TabIndex = 1
+        ' 
+        ' btnPrint
+        ' 
+        btnPrint.BackColor = Color.FromArgb(41, 128, 185)
+        btnPrint.Cursor = Cursors.Hand
+        btnPrint.FlatAppearance.BorderSize = 0
+        btnPrint.FlatStyle = FlatStyle.Flat
+        btnPrint.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnPrint.ForeColor = Color.White
+        btnPrint.Location = New Point(306, 11)
+        btnPrint.Name = "btnPrint"
+        btnPrint.Size = New Size(90, 34)
+        btnPrint.TabIndex = 6
+        btnPrint.Text = "🖨️ Print"
+        btnPrint.UseVisualStyleBackColor = False
         ' 
         ' btnDelete
         ' 
@@ -330,6 +347,11 @@ Public Class BorrowerListForm
             End If
             If .Columns.Contains("Email") Then .Columns("Email").FillWeight = 27
         End With
+    End Sub
+
+    ' ── Print ─────────────────────────────────────────────────────
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        ReportPrinter.PrintBorrowers(Me)
     End Sub
 
     ' ── Search ────────────────────────────────────────────────────

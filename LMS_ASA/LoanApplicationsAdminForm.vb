@@ -34,6 +34,7 @@ Public Class LoanApplicationsAdminForm
     Friend WithEvents btnApprove As Button
     Friend WithEvents btnReject As Button
     Friend WithEvents btnView As Button
+    Friend WithEvents btnPrint As Button
     Private lblFilter As Label
     Friend WithEvents cmbFilter As ComboBox
     Private lblSearch As Label
@@ -78,6 +79,7 @@ Public Class LoanApplicationsAdminForm
         btnApprove = New Button()
         btnReject = New Button()
         btnView = New Button()
+        btnPrint = New Button()
         lblFilter = New Label()
         cmbFilter = New ComboBox()
         lblSearch = New Label()
@@ -147,6 +149,7 @@ Public Class LoanApplicationsAdminForm
         pnlToolbar.Controls.Add(txtSearch)
         pnlToolbar.Controls.Add(cmbFilter)
         pnlToolbar.Controls.Add(lblFilter)
+        pnlToolbar.Controls.Add(btnPrint)
         pnlToolbar.Controls.Add(btnView)
         pnlToolbar.Controls.Add(btnReject)
         pnlToolbar.Controls.Add(btnApprove)
@@ -184,12 +187,23 @@ Public Class LoanApplicationsAdminForm
         btnView.Location = New Point(218, 8)
         btnView.Cursor = Cursors.Hand
 
+        ' btnPrint
+        btnPrint.Text = "🖨️ Print"
+        btnPrint.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+        btnPrint.BackColor = Color.FromArgb(41, 128, 185)
+        btnPrint.ForeColor = Color.White
+        btnPrint.FlatStyle = FlatStyle.Flat
+        btnPrint.FlatAppearance.BorderSize = 0
+        btnPrint.Size = New Size(95, 34)
+        btnPrint.Location = New Point(336, 8)
+        btnPrint.Cursor = Cursors.Hand
+
         ' lblFilter
         lblFilter.Text = "Filter:"
         lblFilter.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         lblFilter.ForeColor = Color.Gray
         lblFilter.AutoSize = True
-        lblFilter.Location = New Point(340, 17)
+        lblFilter.Location = New Point(446, 17)
 
         ' cmbFilter
         cmbFilter.DropDownStyle = ComboBoxStyle.DropDownList
@@ -197,7 +211,7 @@ Public Class LoanApplicationsAdminForm
         cmbFilter.Items.AddRange(New Object() {"All Applications", "Pending Only", "Approved Only", "Rejected Only"})
         cmbFilter.SelectedIndex = 0
         cmbFilter.Size = New Size(140, 28)
-        cmbFilter.Location = New Point(380, 12)
+        cmbFilter.Location = New Point(486, 12)
 
         ' lblSearch
         lblSearch.Text = "Search:"
@@ -533,6 +547,11 @@ Public Class LoanApplicationsAdminForm
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
         ApplyFilter()
+    End Sub
+
+    ' ── Print Action ──────────────────────────────────────────────
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        ReportPrinter.PrintApplicants(Me)
     End Sub
 
     ' ── Approve Action ────────────────────────────────────────────
